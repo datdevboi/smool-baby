@@ -4,7 +4,20 @@
   "description": "The server for our smool baby app",
   "main": "index.js",
   "scripts": {
+    "start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
     "start:prisma": "docker-compose up -d"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.3.1",
+    "graphql": "^14.0.2"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "glob": "^7.1.3",
+    "merge-graphql-schemas": "^1.5.8",
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  }
 }
