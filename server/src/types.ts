@@ -1,3 +1,5 @@
+import { Prisma } from "../generated/prisma-client";
+
 export interface ServerResReq {
   req: Express.Request;
   res: Express.Response;
@@ -5,6 +7,7 @@ export interface ServerResReq {
 
 export interface Context extends ServerResReq {
   url: string;
+  prisma: Prisma;
 }
 
 export type Resolver = (
