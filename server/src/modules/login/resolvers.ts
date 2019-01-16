@@ -1,3 +1,5 @@
+import { ResolverMap } from "../../types";
+
 const books = [
   {
     title: "Harry Potter and the Chamber of Secrets",
@@ -9,8 +11,10 @@ const books = [
   }
 ];
 
-export const resolvers = {
+export const resolvers: ResolverMap = {
   Query: {
-    books: () => books
+    books: (_, __, ctx) => {
+      return books;
+    }
   }
 };
