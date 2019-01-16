@@ -1,4 +1,12 @@
 type User {
   id: ID! @unique
+  email: String!
+  password: String!
+  babies: [Baby!]
+}
+
+type Baby {
+  id: ID! @unique
   name: String!
+  dob: DateTime!
 }
