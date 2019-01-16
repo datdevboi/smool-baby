@@ -14,7 +14,7 @@ export const genSchema = () => {
     .map(resolver => require(resolver).resolvers);
 
   return {
-    typeDefs: mergeTypes(graphqlTypes),
+    typeDefs: mergeTypes(graphqlTypes) as any,
     resolvers: mergeResolvers(resolvers)
   };
 };
