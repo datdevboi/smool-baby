@@ -7,9 +7,17 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.4.2",
+    "apollo-client": "^2.4.11",
+    "apollo-link-http": "^1.5.9",
     "expo": "^32.0.0",
+    "formik": "^1.4.2",
+    "graphql": "^14.1.1",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
+    "react-apollo": "^2.3.3",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-elements": "^1.0.0-beta7",
+    "react-navigation": "^3.0.9"
   },
   "devDependencies": {
     "@types/expo": "^31.0.7",
