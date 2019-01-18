@@ -1,9 +1,10 @@
 import { ResolverMap } from "../../types";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const resolvers: ResolverMap = {
   Mutation: {
-    login: async (_, args, { prisma }) => {
+    login: async (_, args, { prisma, res }) => {
       const { email, password } = args.input;
 
       // check if user exist with that email
@@ -37,7 +38,18 @@ export const resolvers: ResolverMap = {
         };
       }
 
-      // the user is valid
+      const token = jwt.sign(
+        {
+          userId: user.id
+        },
+        "randomtokenapp"
+      );
+
+      // the user is valid, so set cookie and then return user
+      res.cookie("token", token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365
+      });
 
       return {
         user
