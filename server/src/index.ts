@@ -47,7 +47,9 @@ app.use(async (req: any, res, next) => {
       id: req.userId
     });
 
-    console.log(user);
+    const { password, ...userInfo } = user;
+
+    req.user = userInfo;
   }
 
   next();
