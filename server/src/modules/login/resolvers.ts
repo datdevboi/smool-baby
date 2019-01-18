@@ -1,20 +1,47 @@
 import { ResolverMap } from "../../types";
-
-const books = [
-  {
-    title: "Harry Potter and the Chamber of Secrets",
-    author: "J.K. Rowling"
-  },
-  {
-    title: "Jurassic Park",
-    author: "Michael Crichton"
-  }
-];
+import bcrypt from "bcryptjs";
 
 export const resolvers: ResolverMap = {
-  Query: {
-    books: (_, __, ctx) => {
-      return books;
+  Mutation: {
+    login: async (_, args, { prisma }) => {
+      const { email, password } = args.input;
+
+      // check if user exist with that email
+      const user = await prisma.user({
+        email
+      });
+
+      if (!user) {
+        return {
+          errors: [
+            {
+              path: "email",
+              message: "invalid credentials"
+            }
+          ]
+        };
+      }
+
+      // check password
+
+      const isValidPassword = await bcrypt.compare(password, user.password);
+
+      if (!isValidPassword) {
+        return {
+          errors: [
+            {
+              path: "password",
+              message: "invalid crendentials"
+            }
+          ]
+        };
+      }
+
+      // the user is valid
+
+      return {
+        user
+      };
     }
   }
 };
