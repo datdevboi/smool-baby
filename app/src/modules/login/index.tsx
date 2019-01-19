@@ -33,16 +33,22 @@ export class Login extends React.Component<any> {
   render() {
     return (
       <Mutation mutation={LoginMutation}>
-        {login => (
+        {loginMutation => (
           <Formik<FormValues>
             initialValues={{
               email: "nani@test.com",
               password: "ffffff"
             }}
-            onSubmit={async values => {
-              const response = await login({ variables: values });
+            onSubmit={async (values, actions) => {
+              const { data } = await loginMutation({ variables: values });
 
-              console.log(response);
+              const { login } = data;
+              if (login && login.errors) {
+                const firstErr = login.errors[0];
+                actions.setFieldError("email", firstErr.message);
+                actions.setFieldError("password", firstErr.message);
+                actions.setSubmitting(false);
+              }
             }}
           >
             {({ handleSubmit, isSubmitting }) => (
