@@ -19,6 +19,7 @@ export class InputField extends React.Component<
       <TextField
         {...props}
         onChangeText={this.onChangeText}
+        error={form.errors[field.name]}
         value={field.value}
       />
     );
