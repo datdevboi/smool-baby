@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
-
+import { Query } from "react-apollo";
 import { Button, Card } from "react-native-ui-lib";
 import { Field, Formik } from "formik";
 import gql from "graphql-tag";
@@ -12,36 +12,43 @@ interface FormValues {
   password: string;
 }
 
+const LoginMutation = gql`
+  query LoginMutation($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      email
+    }
+  }
+`;
+
 export class Login extends React.Component<any> {
   handlePress = () => {
     this.props.navigation.navigate("Register");
   };
   render() {
     return (
-      <View
-        style={{
-          display: "flex",
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center"
+      <Formik<FormValues>
+        initialValues={{
+          email: "",
+          password: ""
+        }}
+        onSubmit={values => {
+          console.log(values);
         }}
       >
-        <Formik<FormValues>
-          initialValues={{
-            email: "",
-            password: ""
-          }}
-          onSubmit={values => {
-            console.log(values);
-          }}
-        >
-          {({ handleSubmit, isSubmitting }) => (
+        {({ handleSubmit, isSubmitting }) => (
+          <View
+            style={{
+              display: "flex",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
             <Card
               width={400}
-              height={350}
+              height={375}
               containerStyle={{
-                padding: 20,
-                marginBottom: 15
+                padding: 15
               }}
             >
               <View style={styles.inputView}>
@@ -51,6 +58,7 @@ export class Login extends React.Component<any> {
                   title="email"
                   autoCapitalize="none"
                   titleColor="black"
+                  enableErrors={true}
                 />
                 <Field
                   component={InputField}
@@ -75,9 +83,9 @@ export class Login extends React.Component<any> {
                 />
               </View>
             </Card>
-          )}
-        </Formik>
-      </View>
+          </View>
+        )}
+      </Formik>
     );
   }
 }
@@ -92,6 +100,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     marginTop: 5,
+    marginBottom: 5,
     justifyContent: "space-between"
   },
   buttonViewText: {
