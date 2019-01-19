@@ -28,7 +28,7 @@ export class Login extends React.Component<any> {
       >
         <Formik<FormValues>
           initialValues={{
-            email: "nani",
+            email: "",
             password: ""
           }}
           onSubmit={values => {
