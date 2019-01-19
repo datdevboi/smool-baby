@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 import { Button, Card } from "react-native-ui-lib";
 import { Field, Formik } from "formik";
@@ -35,37 +35,67 @@ export class Login extends React.Component<any> {
             console.log(values);
           }}
         >
-          {({ handleSubmit }) => (
+          {({ handleSubmit, isSubmitting }) => (
             <Card
+              width={400}
+              height={350}
               containerStyle={{
-                width: 200,
-                height: 200,
-                padding: 15,
+                padding: 20,
                 marginBottom: 15
               }}
             >
-              <Field
-                component={InputField}
-                name="email"
-                title="email"
-                autoCapitalize="none"
-                titleColor="black"
-              />
-              <Field
-                component={InputField}
-                name="password"
-                title="password"
-                secureTextEntry={true}
-                autoCapitalize="none"
-                titleColor="black"
-              />
-              <Button label="Login" onPress={() => handleSubmit()} />
+              <View style={styles.inputView}>
+                <Field
+                  component={InputField}
+                  name="email"
+                  title="email"
+                  autoCapitalize="none"
+                  titleColor="black"
+                />
+                <Field
+                  component={InputField}
+                  name="password"
+                  title="password"
+                  secureTextEntry={true}
+                  autoCapitalize="none"
+                  titleColor="black"
+                />
+              </View>
+              <View style={styles.buttonView}>
+                <Button
+                  label="Login"
+                  disabled={isSubmitting}
+                  onPress={() => handleSubmit()}
+                />
+                <Text style={styles.buttonViewText}>Or</Text>
+                <Button
+                  label="register"
+                  outline={true}
+                  onPress={this.handlePress}
+                />
+              </View>
             </Card>
           )}
         </Formik>
-
-        <Button label="register" onPress={this.handlePress} />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  inputView: {
+    flex: 2,
+    display: "flex",
+    justifyContent: "space-around"
+  },
+  buttonView: {
+    display: "flex",
+    flex: 1,
+    marginTop: 10,
+    justifyContent: "space-between"
+  },
+  buttonViewText: {
+    alignSelf: "center",
+    fontSize: 15
+  }
+});
