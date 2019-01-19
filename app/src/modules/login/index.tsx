@@ -86,16 +86,18 @@ const styles = StyleSheet.create({
   inputView: {
     flex: 2,
     display: "flex",
-    justifyContent: "space-around"
+    justifyContent: "center"
   },
   buttonView: {
     display: "flex",
     flex: 1,
-    marginTop: 10,
+    marginTop: 5,
     justifyContent: "space-between"
   },
   buttonViewText: {
     alignSelf: "center",
+    marginTop: 5,
+    marginBottom: 5,
     fontSize: 15
   }
 });
