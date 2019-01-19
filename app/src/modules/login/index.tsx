@@ -48,6 +48,8 @@ export class Login extends React.Component<any> {
                 actions.setFieldError("email", firstErr.message);
                 actions.setFieldError("password", firstErr.message);
                 actions.setSubmitting(false);
+              } else {
+                this.props.navigation.navigate("Dashboard");
               }
             }}
           >
