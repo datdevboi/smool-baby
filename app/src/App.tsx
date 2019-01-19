@@ -5,6 +5,7 @@ import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import { client } from "./client";
 import { Login } from "./modules/login/";
 import { Register } from "./modules/register";
+import { DashBoard } from "./modules/dashboard";
 
 const AppSwitchNavigator = createSwitchNavigator({
   Login: {
@@ -12,6 +13,9 @@ const AppSwitchNavigator = createSwitchNavigator({
   },
   Register: {
     screen: Register
+  },
+  Dashboard: {
+    screen: DashBoard
   }
 });
 
