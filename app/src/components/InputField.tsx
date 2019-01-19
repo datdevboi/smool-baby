@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { TextField as Input } from "react-native-ui-lib";
+import { TextField } from "react-native-ui-lib";
 import { FieldProps } from "formik";
 
 export class InputField extends React.Component<
@@ -16,7 +16,11 @@ export class InputField extends React.Component<
     const { field, form, value, ...props } = this.props;
 
     return (
-      <Input {...props} onChangeText={this.onChangeText} value={field.value} />
+      <TextField
+        {...props}
+        onChangeText={this.onChangeText}
+        value={field.value}
+      />
     );
   }
 }
