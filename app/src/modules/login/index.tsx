@@ -15,7 +15,13 @@ interface FormValues {
 const LoginMutation = gql`
   mutation LoginMutation($email: String!, $password: String!) {
     login(input: { email: $email, password: $password }) {
-      email
+      user {
+        email
+      }
+      errors {
+        path
+        message
+      }
     }
   }
 `;
@@ -27,14 +33,16 @@ export class Login extends React.Component<any> {
   render() {
     return (
       <Mutation mutation={LoginMutation}>
-        {({ mutate }) => (
+        {login => (
           <Formik<FormValues>
             initialValues={{
-              email: "",
-              password: ""
+              email: "nani@test.com",
+              password: "ffffff"
             }}
-            onSubmit={values => {
-              console.log(values);
+            onSubmit={async values => {
+              const response = await login({ variables: values });
+
+              console.log(response);
             }}
           >
             {({ handleSubmit, isSubmitting }) => (
