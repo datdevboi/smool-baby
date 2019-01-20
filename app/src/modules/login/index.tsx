@@ -36,8 +36,8 @@ export class Login extends React.Component<any> {
         {loginMutation => (
           <Formik<FormValues>
             initialValues={{
-              email: "nani@test.com",
-              password: "ffffff"
+              email: "",
+              password: ""
             }}
             onSubmit={async (values, actions) => {
               const { data } = await loginMutation({ variables: values });
