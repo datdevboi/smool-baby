@@ -1,11 +1,20 @@
 import jwt from "jsonwebtoken";
 import { ResolverMap } from "../../types";
 import bcrypt from "bcryptjs";
+import { registerSchema } from "../../schemas/registerSchema";
+import { formatYupError } from "../../utils/formatYupErrors";
 
 export const resolvers: ResolverMap = {
   Mutation: {
     register: async (_, args, { prisma, res }) => {
-      console.log(args);
+      try {
+        await registerSchema.validate(args.input, {
+          abortEarly: false
+        });
+      } catch (err) {
+        return formatYupError(err);
+      }
+
       // hash the password
       const password = await bcrypt.hash(args.input.password, 10);
 
@@ -27,7 +36,9 @@ export const resolvers: ResolverMap = {
         maxAge: 1000 * 60 * 60 * 24 * 365
       });
 
-      return user;
+      return {
+        user
+      };
     }
   }
 };
