@@ -12,7 +12,7 @@ export const resolvers: ResolverMap = {
           abortEarly: false
         });
       } catch (err) {
-        return formatYupError(err);
+        return { errors: formatYupError(err) };
       }
 
       // hash the password
