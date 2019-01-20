@@ -43,7 +43,7 @@ export class Login extends React.Component<any> {
               const { data } = await loginMutation({ variables: values });
 
               const { login } = data;
-              if (login && login.errors) {
+              if (login.errors) {
                 const firstErr = login.errors[0];
                 actions.setFieldError("email", firstErr.message);
                 actions.setFieldError("password", firstErr.message);
