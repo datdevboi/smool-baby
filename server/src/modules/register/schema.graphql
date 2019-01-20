@@ -9,6 +9,11 @@ input RegisterInput {
   password: String!
 }
 
+type RegisterResponse {
+  user: User
+  errors: [Error!]
+}
+
 type Mutation {
-  register(input: RegisterInput): User
+  register(input: RegisterInput): RegisterResponse!
 }
