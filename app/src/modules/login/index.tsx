@@ -70,6 +70,7 @@ export class Login extends React.Component<any> {
                   }}
                 >
                   <View style={styles.inputView}>
+                    <Text style={styles.title}>Login</Text>
                     <Field
                       component={InputField}
                       name="email"
@@ -115,6 +116,11 @@ const styles = StyleSheet.create({
     flex: 2,
     display: "flex",
     justifyContent: "center"
+  },
+  title: {
+    alignSelf: "center",
+    marginBottom: 10,
+    fontSize: 20
   },
   buttonView: {
     display: "flex",
