@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Mutation } from "react-apollo";
+import { SecureStore } from "expo";
 import { Button, Card } from "react-native-ui-lib";
 import { Field, Formik } from "formik";
 import gql from "graphql-tag";
@@ -17,6 +18,7 @@ const RegisterMutation = gql`
     register(input: { email: $email, password: $password }) {
       user {
         email
+        id
       }
       errors {
         path
@@ -48,6 +50,7 @@ export class Register extends React.Component<any> {
                 actions.setFieldError(err.path, err.message);
                 actions.setSubmitting(false);
               } else {
+                SecureStore.setItemAsync("sid", register.user.id);
                 this.props.navigation.navigate("Dashboard");
               }
             }}
