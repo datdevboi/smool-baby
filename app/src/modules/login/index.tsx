@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Mutation } from "react-apollo";
+import { SecureStore } from "expo";
 import { Button, Card } from "react-native-ui-lib";
 import { Field, Formik } from "formik";
 import gql from "graphql-tag";
@@ -17,6 +18,7 @@ const LoginMutation = gql`
     login(input: { email: $email, password: $password }) {
       user {
         email
+        id
       }
       errors {
         path
@@ -28,7 +30,7 @@ const LoginMutation = gql`
 
 export class Login extends React.Component<any> {
   handlePress = () => {
-    this.props.navigation.navigate("Register");
+    this.props.navigation.navigate("Dashboard");
   };
   render() {
     return (
@@ -49,6 +51,7 @@ export class Login extends React.Component<any> {
                 actions.setFieldError("password", firstErr.message);
                 actions.setSubmitting(false);
               } else {
+                SecureStore.setItemAsync("sid", login.user.id);
                 this.props.navigation.navigate("Dashboard");
               }
             }}
