@@ -1,0 +1,20 @@
+type Baby {
+  name: String!
+  dob: DateTime!
+  parent: User!
+}
+
+scalar DateTime
+
+input CreateBabyInput {
+  name: String!
+  dob: DateTime!
+}
+
+type CreateBabyResponse {
+  errors: [Error!]
+}
+
+type Mutation {
+  createBaby(input: CreateBabyInput): Boolean!
+}
