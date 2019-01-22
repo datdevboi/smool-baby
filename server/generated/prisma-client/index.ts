@@ -172,14 +172,104 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface BabyUpdateInput {
-  name?: String;
-  dob?: DateTimeInput;
+export interface UserUpdateOneRequiredWithoutBabiesInput {
+  create?: UserCreateWithoutBabiesInput;
+  update?: UserUpdateWithoutBabiesDataInput;
+  upsert?: UserUpsertWithoutBabiesInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export type BabyWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface BabyUpdateManyWithoutParentInput {
+  create?: BabyCreateWithoutParentInput[] | BabyCreateWithoutParentInput;
+  delete?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
+  connect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
+  disconnect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
+  update?:
+    | BabyUpdateWithWhereUniqueWithoutParentInput[]
+    | BabyUpdateWithWhereUniqueWithoutParentInput;
+  upsert?:
+    | BabyUpsertWithWhereUniqueWithoutParentInput[]
+    | BabyUpsertWithWhereUniqueWithoutParentInput;
+  deleteMany?: BabyScalarWhereInput[] | BabyScalarWhereInput;
+  updateMany?:
+    | BabyUpdateManyWithWhereNestedInput[]
+    | BabyUpdateManyWithWhereNestedInput;
+}
+
+export interface UserCreateInput {
+  email: String;
+  password: String;
+  babies?: BabyCreateManyWithoutParentInput;
+}
+
+export interface UserUpdateInput {
+  email?: String;
+  password?: String;
+  babies?: BabyUpdateManyWithoutParentInput;
+}
+
+export interface UserUpsertWithoutBabiesInput {
+  update: UserUpdateWithoutBabiesDataInput;
+  create: UserCreateWithoutBabiesInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: String;
+  password?: String;
+}
+
+export interface BabyCreateInput {
+  name: String;
+  dob: DateTimeInput;
+  parent: UserCreateOneWithoutBabiesInput;
+}
+
+export interface BabyUpdateManyWithWhereNestedInput {
+  where: BabyScalarWhereInput;
+  data: BabyUpdateManyDataInput;
+}
+
+export interface UserCreateOneWithoutBabiesInput {
+  create?: UserCreateWithoutBabiesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface BabyUpsertWithWhereUniqueWithoutParentInput {
+  where: BabyWhereUniqueInput;
+  update: BabyUpdateWithoutParentDataInput;
+  create: BabyCreateWithoutParentInput;
+}
+
+export interface UserCreateWithoutBabiesInput {
+  email: String;
+  password: String;
+}
+
+export interface BabyUpdateWithoutParentDataInput {
+  name?: String;
+  dob?: DateTimeInput;
+}
+
+export interface BabyUpdateInput {
+  name?: String;
+  dob?: DateTimeInput;
+  parent?: UserUpdateOneRequiredWithoutBabiesInput;
+}
 
 export interface UserWhereInput {
   id?: ID_Input;
@@ -232,13 +322,22 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface UserCreateInput {
-  email: String;
-  password: String;
-  babies?: BabyCreateManyInput;
+export interface BabyCreateWithoutParentInput {
+  name: String;
+  dob: DateTimeInput;
 }
 
-export interface BabyUpdateDataInput {
+export interface BabyUpdateManyDataInput {
+  name?: String;
+  dob?: DateTimeInput;
+}
+
+export interface BabyCreateManyWithoutParentInput {
+  create?: BabyCreateWithoutParentInput[] | BabyCreateWithoutParentInput;
+  connect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
+}
+
+export interface BabyUpdateManyMutationInput {
   name?: String;
   dob?: DateTimeInput;
 }
@@ -280,53 +379,15 @@ export interface BabyWhereInput {
   dob_lte?: DateTimeInput;
   dob_gt?: DateTimeInput;
   dob_gte?: DateTimeInput;
+  parent?: UserWhereInput;
   AND?: BabyWhereInput[] | BabyWhereInput;
   OR?: BabyWhereInput[] | BabyWhereInput;
   NOT?: BabyWhereInput[] | BabyWhereInput;
 }
 
-export interface BabyUpdateWithWhereUniqueNestedInput {
-  where: BabyWhereUniqueInput;
-  data: BabyUpdateDataInput;
-}
-
-export interface BabySubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: BabyWhereInput;
-  AND?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
-  OR?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
-  NOT?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
-}
-
-export interface BabyUpdateManyInput {
-  create?: BabyCreateInput[] | BabyCreateInput;
-  update?:
-    | BabyUpdateWithWhereUniqueNestedInput[]
-    | BabyUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | BabyUpsertWithWhereUniqueNestedInput[]
-    | BabyUpsertWithWhereUniqueNestedInput;
-  delete?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
-  connect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
-  disconnect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
-  deleteMany?: BabyScalarWhereInput[] | BabyScalarWhereInput;
-  updateMany?:
-    | BabyUpdateManyWithWhereNestedInput[]
-    | BabyUpdateManyWithWhereNestedInput;
-}
-
-export interface BabyUpdateManyDataInput {
-  name?: String;
-  dob?: DateTimeInput;
-}
-
-export interface UserUpdateInput {
+export interface UserUpdateWithoutBabiesDataInput {
   email?: String;
   password?: String;
-  babies?: BabyUpdateManyInput;
 }
 
 export interface BabyScalarWhereInput {
@@ -371,36 +432,20 @@ export interface BabyScalarWhereInput {
   NOT?: BabyScalarWhereInput[] | BabyScalarWhereInput;
 }
 
-export interface BabyUpsertWithWhereUniqueNestedInput {
-  where: BabyWhereUniqueInput;
-  update: BabyUpdateDataInput;
-  create: BabyCreateInput;
-}
-
-export interface BabyUpdateManyMutationInput {
-  name?: String;
-  dob?: DateTimeInput;
-}
-
-export interface BabyCreateManyInput {
-  create?: BabyCreateInput[] | BabyCreateInput;
-  connect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
-}
-
-export interface BabyCreateInput {
-  name: String;
-  dob: DateTimeInput;
-}
-
-export interface UserSubscriptionWhereInput {
+export interface BabySubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  node?: BabyWhereInput;
+  AND?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
+  OR?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
+  NOT?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
+}
+
+export interface BabyUpdateWithWhereUniqueWithoutParentInput {
+  where: BabyWhereUniqueInput;
+  data: BabyUpdateWithoutParentDataInput;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -408,51 +453,8 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: String;
 }>;
 
-export interface BabyUpdateManyWithWhereNestedInput {
-  where: BabyScalarWhereInput;
-  data: BabyUpdateManyDataInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: String;
-  password?: String;
-}
-
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface BabyEdge {
-  node: Baby;
-  cursor: String;
-}
-
-export interface BabyEdgePromise extends Promise<BabyEdge>, Fragmentable {
-  node: <T = BabyPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface BabyEdgeSubscription
-  extends Promise<AsyncIterator<BabyEdge>>,
-    Fragmentable {
-  node: <T = BabySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserPreviousValues {
@@ -477,26 +479,117 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BabyPreviousValues {
+export interface AggregateBaby {
+  count: Int;
+}
+
+export interface AggregateBabyPromise
+  extends Promise<AggregateBaby>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBabySubscription
+  extends Promise<AsyncIterator<AggregateBaby>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Baby {
   id: ID_Output;
   name: String;
   dob: DateTimeOutput;
 }
 
-export interface BabyPreviousValuesPromise
-  extends Promise<BabyPreviousValues>,
-    Fragmentable {
+export interface BabyPromise extends Promise<Baby>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   dob: () => Promise<DateTimeOutput>;
+  parent: <T = UserPromise>() => T;
 }
 
-export interface BabyPreviousValuesSubscription
-  extends Promise<AsyncIterator<BabyPreviousValues>>,
+export interface BabySubscription
+  extends Promise<AsyncIterator<Baby>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   dob: () => Promise<AsyncIterator<DateTimeOutput>>;
+  parent: <T = UserSubscription>() => T;
+}
+
+export interface BabyEdge {
+  node: Baby;
+  cursor: String;
+}
+
+export interface BabyEdgePromise extends Promise<BabyEdge>, Fragmentable {
+  node: <T = BabyPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BabyEdgeSubscription
+  extends Promise<AsyncIterator<BabyEdge>>,
+    Fragmentable {
+  node: <T = BabySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface User {
+  id: ID_Output;
+  email: String;
+  password: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  babies: <T = FragmentableArray<Baby>>(
+    args?: {
+      where?: BabyWhereInput;
+      orderBy?: BabyOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  babies: <T = Promise<AsyncIterator<BabySubscription>>>(
+    args?: {
+      where?: BabyWhereInput;
+      orderBy?: BabyOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface BabySubscriptionPayload {
@@ -522,26 +615,6 @@ export interface BabySubscriptionPayloadSubscription
   node: <T = BabySubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = BabyPreviousValuesSubscription>() => T;
-}
-
-export interface Baby {
-  id: ID_Output;
-  name: String;
-  dob: DateTimeOutput;
-}
-
-export interface BabyPromise extends Promise<Baby>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  dob: () => Promise<DateTimeOutput>;
-}
-
-export interface BabySubscription
-  extends Promise<AsyncIterator<Baby>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  dob: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface BabyConnection {
@@ -588,20 +661,20 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  count: () => Promise<Int>;
+  count: () => Promise<Long>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface UserEdge {
@@ -619,64 +692,6 @@ export interface UserEdgeSubscription
     Fragmentable {
   node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateBaby {
-  count: Int;
-}
-
-export interface AggregateBabyPromise
-  extends Promise<AggregateBaby>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateBabySubscription
-  extends Promise<AsyncIterator<AggregateBaby>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface User {
-  id: ID_Output;
-  email: String;
-  password: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  babies: <T = FragmentableArray<Baby>>(
-    args?: {
-      where?: BabyWhereInput;
-      orderBy?: BabyOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  babies: <T = Promise<AsyncIterator<BabySubscription>>>(
-    args?: {
-      where?: BabyWhereInput;
-      orderBy?: BabyOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
 }
 
 export interface UserSubscriptionPayload {
@@ -702,6 +717,28 @@ export interface UserSubscriptionPayloadSubscription
   node: <T = UserSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface BabyPreviousValues {
+  id: ID_Output;
+  name: String;
+  dob: DateTimeOutput;
+}
+
+export interface BabyPreviousValuesPromise
+  extends Promise<BabyPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  dob: () => Promise<DateTimeOutput>;
+}
+
+export interface BabyPreviousValuesSubscription
+  extends Promise<AsyncIterator<BabyPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  dob: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserConnection {
@@ -739,16 +776,6 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
-
-/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -757,6 +784,16 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /**
  * Model Metadata

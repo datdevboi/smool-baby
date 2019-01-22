@@ -2,11 +2,12 @@ type User {
   id: ID! @unique
   email: String! @unique
   password: String!
-  babies: [Baby!]
+  babies: [Baby!]!
 }
 
 type Baby {
   id: ID! @unique
   name: String!
   dob: DateTime!
+  parent: User!
 }

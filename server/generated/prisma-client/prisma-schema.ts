@@ -10,6 +10,7 @@ type Baby {
   id: ID!
   name: String!
   dob: DateTime!
+  parent: User!
 }
 
 type BabyConnection {
@@ -21,11 +22,17 @@ type BabyConnection {
 input BabyCreateInput {
   name: String!
   dob: DateTime!
+  parent: UserCreateOneWithoutBabiesInput!
 }
 
-input BabyCreateManyInput {
-  create: [BabyCreateInput!]
+input BabyCreateManyWithoutParentInput {
+  create: [BabyCreateWithoutParentInput!]
   connect: [BabyWhereUniqueInput!]
+}
+
+input BabyCreateWithoutParentInput {
+  name: String!
+  dob: DateTime!
 }
 
 type BabyEdge {
@@ -112,14 +119,10 @@ input BabySubscriptionWhereInput {
   NOT: [BabySubscriptionWhereInput!]
 }
 
-input BabyUpdateDataInput {
-  name: String
-  dob: DateTime
-}
-
 input BabyUpdateInput {
   name: String
   dob: DateTime
+  parent: UserUpdateOneRequiredWithoutBabiesInput
 }
 
 input BabyUpdateManyDataInput {
@@ -127,20 +130,20 @@ input BabyUpdateManyDataInput {
   dob: DateTime
 }
 
-input BabyUpdateManyInput {
-  create: [BabyCreateInput!]
-  update: [BabyUpdateWithWhereUniqueNestedInput!]
-  upsert: [BabyUpsertWithWhereUniqueNestedInput!]
-  delete: [BabyWhereUniqueInput!]
-  connect: [BabyWhereUniqueInput!]
-  disconnect: [BabyWhereUniqueInput!]
-  deleteMany: [BabyScalarWhereInput!]
-  updateMany: [BabyUpdateManyWithWhereNestedInput!]
-}
-
 input BabyUpdateManyMutationInput {
   name: String
   dob: DateTime
+}
+
+input BabyUpdateManyWithoutParentInput {
+  create: [BabyCreateWithoutParentInput!]
+  delete: [BabyWhereUniqueInput!]
+  connect: [BabyWhereUniqueInput!]
+  disconnect: [BabyWhereUniqueInput!]
+  update: [BabyUpdateWithWhereUniqueWithoutParentInput!]
+  upsert: [BabyUpsertWithWhereUniqueWithoutParentInput!]
+  deleteMany: [BabyScalarWhereInput!]
+  updateMany: [BabyUpdateManyWithWhereNestedInput!]
 }
 
 input BabyUpdateManyWithWhereNestedInput {
@@ -148,15 +151,20 @@ input BabyUpdateManyWithWhereNestedInput {
   data: BabyUpdateManyDataInput!
 }
 
-input BabyUpdateWithWhereUniqueNestedInput {
-  where: BabyWhereUniqueInput!
-  data: BabyUpdateDataInput!
+input BabyUpdateWithoutParentDataInput {
+  name: String
+  dob: DateTime
 }
 
-input BabyUpsertWithWhereUniqueNestedInput {
+input BabyUpdateWithWhereUniqueWithoutParentInput {
   where: BabyWhereUniqueInput!
-  update: BabyUpdateDataInput!
-  create: BabyCreateInput!
+  data: BabyUpdateWithoutParentDataInput!
+}
+
+input BabyUpsertWithWhereUniqueWithoutParentInput {
+  where: BabyWhereUniqueInput!
+  update: BabyUpdateWithoutParentDataInput!
+  create: BabyCreateWithoutParentInput!
 }
 
 input BabyWhereInput {
@@ -196,6 +204,7 @@ input BabyWhereInput {
   dob_lte: DateTime
   dob_gt: DateTime
   dob_gte: DateTime
+  parent: UserWhereInput
   AND: [BabyWhereInput!]
   OR: [BabyWhereInput!]
   NOT: [BabyWhereInput!]
@@ -276,7 +285,17 @@ type UserConnection {
 input UserCreateInput {
   email: String!
   password: String!
-  babies: BabyCreateManyInput
+  babies: BabyCreateManyWithoutParentInput
+}
+
+input UserCreateOneWithoutBabiesInput {
+  create: UserCreateWithoutBabiesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutBabiesInput {
+  email: String!
+  password: String!
 }
 
 type UserEdge {
@@ -324,12 +343,29 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   password: String
-  babies: BabyUpdateManyInput
+  babies: BabyUpdateManyWithoutParentInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
   password: String
+}
+
+input UserUpdateOneRequiredWithoutBabiesInput {
+  create: UserCreateWithoutBabiesInput
+  update: UserUpdateWithoutBabiesDataInput
+  upsert: UserUpsertWithoutBabiesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutBabiesDataInput {
+  email: String
+  password: String
+}
+
+input UserUpsertWithoutBabiesInput {
+  update: UserUpdateWithoutBabiesDataInput!
+  create: UserCreateWithoutBabiesInput!
 }
 
 input UserWhereInput {
