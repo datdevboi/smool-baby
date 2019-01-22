@@ -1,6 +1,6 @@
-import { ResolverMap } from "../../types";
+import { IResolvers } from "apollo-server";
 
-export const resolvers: ResolverMap = {
+export const resolvers: IResolvers = {
   Query: {
     me: async (_, args, { prisma, req }: any) => {
       if (!req.userId) {
@@ -9,6 +9,19 @@ export const resolvers: ResolverMap = {
 
       return prisma.user({
         id: req.userId
+      });
+    }
+  },
+  User: {
+    babies: (parent, _, { prisma }, info) => {
+      const userId = parent.id;
+
+      return prisma.babies({
+        where: {
+          parent: {
+            id: userId
+          }
+        }
       });
     }
   }
