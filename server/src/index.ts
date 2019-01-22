@@ -37,23 +37,23 @@ app.use((req: any, res, next) => {
   next();
 });
 
-app.use(async (req: any, res, next) => {
-  if (req.user) {
-    next();
-  }
+// app.use(async (req: any, res, next) => {
+//   if (req.user) {
+//     next();
+//   }
 
-  if (req.userId) {
-    const user = await prisma.user({
-      id: req.userId
-    });
+//   if (req.userId) {
+//     const user = await prisma.user({
+//       id: req.userId
+//     });
 
-    const { password, ...userInfo } = user;
+//     const { password, ...userInfo } = user;
 
-    req.user = userInfo;
-  }
+//     req.user = userInfo;
+//   }
 
-  next();
-});
+//   next();
+// });
 
 server.applyMiddleware({ app });
 
