@@ -8,14 +8,13 @@ import {
   Platform
 } from "react-native";
 
-import { BabyImage } from "../../components/BabyImage";
+import { BabyDescription } from "../../components/BabyDescription";
 
 export class DashBoard extends React.Component<any> {
   render() {
     return (
       <SafeAreaView style={styles.mainView}>
-        <Text>Hello from Dashboard</Text>
-        <BabyImage />
+        <BabyDescription />
         <Button
           title="Add baby"
           onPress={() => this.props.navigation.navigate("AddBaby")}
