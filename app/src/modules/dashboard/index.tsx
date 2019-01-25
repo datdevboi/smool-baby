@@ -2,6 +2,10 @@ import * as React from "react";
 import { View, Text, Button } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
+import {
+  NavigationScreenProp,
+  NavigationNavigatorProps
+} from "react-navigation";
 
 export class DashBoard extends React.Component<any> {
   render() {

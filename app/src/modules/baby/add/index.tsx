@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Text, View, Button } from "react-native";
-import { NavigationScreenProp } from "react-navigation";
+import { Button, Text, View } from "react-native";
 
 export class AddBaby extends React.Component<any> {
   static navigationOptions = {
