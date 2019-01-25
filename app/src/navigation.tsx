@@ -1,19 +1,20 @@
+import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
 import {
-  createSwitchNavigator,
   createAppContainer,
-  createDrawerNavigator,
+  createBottomTabNavigator,
   createStackNavigator,
-  createBottomTabNavigator
+  createSwitchNavigator
 } from "react-navigation";
-import { Text, View } from "react-native";
-
+import { Platform } from "react-native";
+import { AuthLoadingScreen } from "./modules/auth";
+import { AddBaby } from "./modules/baby/add";
+import { DashBoard } from "./modules/dashboard";
 import { Login } from "./modules/login/";
 import { Register } from "./modules/register";
-import { DashBoard } from "./modules/dashboard";
-import { AuthLoadingScreen } from "./modules/auth";
 import { Settings } from "./modules/settings";
-import { AddBaby } from "./modules/baby/add";
+
+const OS = Platform.OS;
 
 const HomeScreenStackNavigator = createStackNavigator(
   {
@@ -30,12 +31,19 @@ const MainScreen = createBottomTabNavigator(
   {
     Home: {
       screen: HomeScreenStackNavigator,
-      navigationOptions: () => {
-        header: null;
-      }
+      navigationOptions: () => ({
+        tabBarIcon: () => <Ionicons name={OS === "ios" ? "home" : "md-home"} />,
+        title: ""
+      })
     },
     Settings: {
-      screen: Settings
+      screen: Settings,
+      navigationOptions: () => ({
+        tabBarIcon: () => (
+          <Ionicons name={OS === "ios" ? "settings" : "md-settings"} />
+        ),
+        title: ""
+      })
     }
   },
   {
