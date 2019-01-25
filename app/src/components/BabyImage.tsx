@@ -1,18 +1,22 @@
 import * as React from "react";
-import { Image } from "react-native-ui-lib";
+import { Image, Avatar } from "react-native-ui-lib";
 
 interface Props {
   src: any;
+  style?: any;
 }
 export class BabyImage extends React.Component<Props> {
   render() {
     return (
-      <Image
-        style={{
-          width: 50,
-          height: 50
-        }}
-        source={{ uri: this.props.src }}
+      <Avatar
+        imageStyle={[
+          {
+            width: 60,
+            height: 60
+          },
+          this.props.style
+        ]}
+        imageSource={{ uri: this.props.src }}
       />
     );
   }
