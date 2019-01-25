@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start"
   },
   babyName: {
-    fontSize: 20
+    fontSize: 20,
+    fontWeight: "300"
   }
 });
