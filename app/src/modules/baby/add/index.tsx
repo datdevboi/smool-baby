@@ -18,7 +18,7 @@ export class AddBaby extends React.Component<any> {
         <Text> Add baby </Text>
         <Button
           title="Go back"
-          onPress={() => this.props.navigation.navigate.goBack()}
+          onPress={() => this.props.navigation.goBack()}
         />
       </View>
     );
