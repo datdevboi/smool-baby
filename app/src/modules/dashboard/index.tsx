@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
   },
   listView: {
     flex: 10,
-    backgroundColor: "red"
+    backgroundColor: "#f6f1ed"
   }
 });

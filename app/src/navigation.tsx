@@ -33,7 +33,11 @@ const MainScreen = createBottomTabNavigator(
       screen: HomeScreenStackNavigator,
       navigationOptions: () => ({
         tabBarIcon: () => (
-          <Ionicons name={OS === "ios" ? "home" : "md-home"} size={30} />
+          <Ionicons
+            name={OS === "ios" ? "home" : "md-home"}
+            size={30}
+            color="#6534ff"
+          />
         ),
         title: ""
       })
@@ -45,6 +49,7 @@ const MainScreen = createBottomTabNavigator(
           <Ionicons
             name={OS === "ios" ? "settings" : "md-settings"}
             size={30}
+            color="#6534ff"
           />
         ),
         title: ""
@@ -52,7 +57,12 @@ const MainScreen = createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Home",
+    tabBarOptions: {
+      style: {
+        backgroundColor: "#fccdd3"
+      }
+    }
   }
 );
 

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Platform } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { BabyImage } from "./BabyImage";
 
 interface Props {
@@ -8,6 +9,8 @@ interface Props {
   date: String;
   style?: any;
 }
+
+const OS = Platform.OS;
 
 export class BabyDescription extends React.Component<Props> {
   render() {
@@ -23,7 +26,12 @@ export class BabyDescription extends React.Component<Props> {
         </View>
 
         <View style={styles.changeBabyContainer}>
-          <Text style={styles.changeBaby}>hi</Text>
+          <Ionicons
+            size={35}
+            name={OS === "ios" ? "switch" : "md-switch"}
+            style={{ marginRight: 10 }}
+            color="#6534ff"
+          />
         </View>
       </View>
     );
@@ -32,6 +40,7 @@ export class BabyDescription extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#bbc4ef",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -49,9 +58,6 @@ const styles = StyleSheet.create({
     flex: 6,
     flexDirection: "row",
     justifyContent: "flex-end"
-  },
-  changeBaby: {
-    alignSelf: "flex-start"
   },
   babyName: {
     fontSize: 20,
