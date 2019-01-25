@@ -1,7 +1,10 @@
 import * as React from "react";
 import { Image } from "react-native-ui-lib";
 
-export class BabyImage extends React.Component {
+interface Props {
+  src: any;
+}
+export class BabyImage extends React.Component<Props> {
   render() {
     return (
       <Image
@@ -9,10 +12,7 @@ export class BabyImage extends React.Component {
           width: 50,
           height: 50
         }}
-        source={{
-          uri:
-            "https://www.momjunction.com/wp-content/uploads/2014/05/Sweet-Cute-Baby-Girl-Names-With-Meanings.jpg"
-        }}
+        source={{ uri: this.props.src }}
       />
     );
   }
