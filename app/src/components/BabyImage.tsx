@@ -3,8 +3,7 @@ import { Image, Avatar } from "react-native-ui-lib";
 
 interface Props {
   src: any;
-  babyName?: string;
-  style?: any;
+  babyName: string;
 }
 export class BabyImage extends React.Component<Props> {
   render() {
@@ -12,13 +11,6 @@ export class BabyImage extends React.Component<Props> {
       <Avatar
         ribbonLabel={this.props.babyName}
         size={80}
-        // imageStyle={[
-        //   {
-        //     width: 60,
-        //     height: 60
-        //   },
-        //   this.props.style
-        // ]}
         imageSource={{ uri: this.props.src }}
       />
     );
