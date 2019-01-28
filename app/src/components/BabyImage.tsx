@@ -11,7 +11,7 @@ export class BabyImage extends React.Component<Props> {
     return (
       <Avatar
         ribbonLabel={this.props.babyName}
-        size={70}
+        size={80}
         // imageStyle={[
         //   {
         //     width: 60,
