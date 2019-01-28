@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image, Avatar } from "react-native-ui-lib";
+import { Avatar } from "react-native-ui-lib";
 
 interface Props {
   src: any;
