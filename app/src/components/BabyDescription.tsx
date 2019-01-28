@@ -1,26 +1,25 @@
 import * as React from "react";
-import { View, StyleSheet, Text, Platform } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { View, StyleSheet, TouchableHighlight } from "react-native";
+
 import { BabyImage } from "./BabyImage";
 
 interface Props {
   imageSrc: any;
   babyName: String;
-  date: String;
+  handlePress: () => void;
   style?: any;
 }
-
-const OS = Platform.OS;
 
 export class BabyDescription extends React.Component<Props> {
   render() {
     return (
       <View style={[styles.container, this.props.style]}>
-        <BabyImage
-          src={this.props.imageSrc}
-          style={styles.babyPic}
-          babyName="Ivy"
-        />
+        <TouchableHighlight onPress={this.props.handlePress}>
+          <BabyImage
+            src={this.props.imageSrc}
+            babyName={this.props.babyName as string}
+          />
+        </TouchableHighlight>
       </View>
     );
   }
