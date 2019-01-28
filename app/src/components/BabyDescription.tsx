@@ -16,23 +16,11 @@ export class BabyDescription extends React.Component<Props> {
   render() {
     return (
       <View style={[styles.container, this.props.style]}>
-        <View style={styles.babyDetails}>
-          <BabyImage src={this.props.imageSrc} style={styles.babyPic} />
-
-          <View>
-            <Text style={styles.babyName}>{this.props.babyName}</Text>
-            <Text>{this.props.date}</Text>
-          </View>
-        </View>
-
-        <View style={styles.changeBabyContainer}>
-          <Ionicons
-            size={35}
-            name={OS === "ios" ? "switch" : "md-switch"}
-            style={{ marginRight: 10 }}
-            color="#6534ff"
-          />
-        </View>
+        <BabyImage
+          src={this.props.imageSrc}
+          style={styles.babyPic}
+          babyName="Ivy"
+        />
       </View>
     );
   }
@@ -43,7 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#bbc4ef",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center"
   },
   babyDetails: {
