@@ -17,7 +17,7 @@ const BR = (
 );
 export class DashBoard extends React.Component<any> {
   state = {
-    modalOpen: false
+    modalOpen: true
   };
 
   openModal = () => {
@@ -84,9 +84,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f6f1ed"
   },
   modalViewContainer: {
-    height: 100,
+    alignSelf: "center",
+    marginTop: "auto",
+    marginBottom: "auto",
+    height: 200,
     justifyContent: "center",
     alignItems: "center",
-    width: 100
+    width: 200
   }
 });
