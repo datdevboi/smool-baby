@@ -11,13 +11,14 @@ import { BlurView } from "expo";
 import { Button, Card, Modal } from "react-native-ui-lib";
 
 import { BabyDescription } from "../../components/BabyDescription";
+import { BabyModal } from "../../components/BabyModal";
 
 const BR = (
   <BlurView tint="light" intensity={50} style={StyleSheet.absoluteFill} />
 );
 export class DashBoard extends React.Component<any> {
   state = {
-    modalOpen: true
+    modalOpen: false
   };
 
   openModal = () => {
@@ -46,24 +47,7 @@ export class DashBoard extends React.Component<any> {
           <Text>List</Text>
         </View>
 
-        <Modal
-          visible={this.state.modalOpen}
-          onRequestClose={this.closeModal}
-          transparent={true}
-          animationType="slide"
-        >
-          <BlurView
-            tint="light"
-            intensity={100}
-            style={styles.modalViewContainer}
-          >
-            <View>
-              <Button onPress={this.closeModal}>
-                <Text>Close modal</Text>
-              </Button>
-            </View>
-          </BlurView>
-        </Modal>
+        <BabyModal isOpen={this.state.modalOpen} closeModal={this.closeModal} />
       </SafeAreaView>
     );
   }
@@ -82,14 +66,5 @@ const styles = StyleSheet.create({
   listView: {
     flex: 10,
     backgroundColor: "#f6f1ed"
-  },
-  modalViewContainer: {
-    alignSelf: "center",
-    marginTop: "auto",
-    marginBottom: "auto",
-    height: 200,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 200
   }
 });
