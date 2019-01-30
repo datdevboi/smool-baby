@@ -30,7 +30,7 @@ const LoginMutation = gql`
 
 export class Login extends React.Component<any> {
   handlePress = () => {
-    this.props.navigation.navigate("Dashboard");
+    this.props.navigation.navigate("Register");
   };
   render() {
     return (
@@ -52,7 +52,7 @@ export class Login extends React.Component<any> {
                 actions.setSubmitting(false);
               } else {
                 SecureStore.setItemAsync("sid", login.user.id);
-                this.props.navigation.navigate("Dashboard");
+                this.props.navigation.navigate("Main");
               }
             }}
           >
