@@ -1,4 +1,5 @@
 type Baby {
+  id: ID!
   name: String!
   dob: DateTime!
   parent: User!
