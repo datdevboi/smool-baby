@@ -16,6 +16,7 @@ export class BabyDescription extends React.Component<Props> {
       <View style={[styles.container, this.props.style]}>
         <TouchableHighlight onPress={this.props.handlePress}>
           <BabyImage
+            size={80}
             src={this.props.imageSrc}
             babyName={this.props.babyName as string}
           />
