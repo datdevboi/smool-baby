@@ -6,7 +6,8 @@ const host = "http://10.0.0.87:4000/graphql";
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: host
+    uri: host,
+    credentials: "include"
   }),
   cache: new InMemoryCache()
 });
