@@ -13,7 +13,7 @@ export class AuthLoadingScreen extends React.Component<any> {
   _bootstrapAsync = async () => {
     const userToken = await SecureStore.getItemAsync("sid");
 
-    this.props.navigation.navigate(userToken ? "Dashboard" : "Login");
+    this.props.navigation.navigate(userToken ? "Main" : "Login");
   };
   render() {
     return <LoaderScreen loaderColor="blue" message="Loading..." />;
