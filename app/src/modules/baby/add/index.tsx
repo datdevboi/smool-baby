@@ -13,9 +13,11 @@ import {
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
 import { Formik, Field } from "formik";
+import { ImagePicker, Permissions } from "expo";
 import { Card, Button } from "react-native-ui-lib";
 import { InputField } from "../../../components/InputField";
 import { CONFIG } from "../../../config";
+import { Image } from "react-native-ui-lib";
 
 interface FormValues {
   name: string;
@@ -37,6 +39,29 @@ export class AddBaby extends React.Component<any> {
       }
     } catch ({ code, message }) {
       console.warn("Cannot open date picker", message);
+    }
+  };
+
+  getPicture = async () => {
+    const { status, permissions } = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+
+    if (status !== "granted") {
+      console.log(
+        "Hey! You might want to enable notifications for my app, they are good."
+      );
+    } else {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: "Images",
+        quality: 0.5,
+        allowsEditing: true,
+        base64: true
+      });
+
+      if (!result.cancelled) {
+        console.log(result.base64);
+      }
     }
   };
   render() {
@@ -92,7 +117,7 @@ export class AddBaby extends React.Component<any> {
                   )}
 
                   {CONFIG.OS == "android" && (
-                    <View style={{ alignSelf: "center" }}>
+                    <View>
                       <TouchableWithoutFeedback
                         onPress={() =>
                           this.callAndroidDatePicker(setFieldValue)
@@ -103,8 +128,8 @@ export class AddBaby extends React.Component<any> {
                     </View>
                   )}
 
-                  <View style={{ alignSelf: "center" }}>
-                    <TouchableWithoutFeedback onPress={() => null}>
+                  <View>
+                    <TouchableWithoutFeedback onPress={() => this.getPicture()}>
                       <Ionicons
                         name={CONFIG.OS == "ios" ? "ios-camera" : "md-camera"}
                         size={40}
