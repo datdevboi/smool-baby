@@ -10,6 +10,7 @@
     "apollo-cache-inmemory": "^1.4.2",
     "apollo-client": "^2.4.11",
     "apollo-link-http": "^1.5.9",
+    "apollo-upload-client": "^10.0.0",
     "expo": "^32.0.0",
     "formik": "^1.4.2",
     "graphql": "^14.1.1",
@@ -23,6 +24,7 @@
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {
+    "@types/apollo-upload-client": "^8.1.1",
     "@types/expo": "^31.0.9",
     "@types/expo__vector-icons": "^6.2.3",
     "@types/react": "^16.7.18",
