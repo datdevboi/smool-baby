@@ -18,11 +18,20 @@ const OS = Platform.OS;
 
 const HomeScreenStackNavigator = createStackNavigator(
   {
-    Home: DashBoard,
-    AddBaby
+    Home: {
+      screen: DashBoard,
+      navigationOptions: () => ({
+        header: null
+      })
+    },
+    AddBaby: {
+      screen: AddBaby,
+      navigationOptions: () => ({
+        // header: null
+      })
+    }
   },
   {
-    headerMode: "none",
     initialRouteName: "Home"
   }
 );
