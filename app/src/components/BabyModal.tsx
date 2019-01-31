@@ -12,6 +12,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { Modal, Button } from "react-native-ui-lib";
 import { Ionicons } from "@expo/vector-icons";
+import { BabyImage } from "./BabyImage";
 
 const OS = Platform.OS;
 
@@ -20,6 +21,7 @@ const ME_QUERY = gql`
     me {
       email
       babies {
+        id
         name
       }
     }
@@ -43,32 +45,46 @@ export const BabyModal: React.SFC<Props> = ({ isOpen, closeModal }) => {
         <View style={styles.closeView}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <Ionicons
-              size={25}
+              size={45}
               name={OS === "ios" ? "ios-close-circle" : "md-close-circle"}
             />
           </TouchableWithoutFeedback>
         </View>
 
-        <View>
-          <Query query={ME_QUERY}>
-            {({ data, loading }) => {
-              if (loading) {
-                return <Text>Loading..</Text>;
-              }
+        <Query query={ME_QUERY}>
+          {({ data, loading }) => {
+            if (loading) {
+              return <Text>Loading..</Text>;
+            }
 
-              return <Text>{data.me.email}</Text>;
-            }}
-          </Query>
-          <View>
-            <Ionicons
-              name={
-                OS === "ios"
-                  ? "ios-add-cirlce-outline"
-                  : "md-add-circle-outline"
-              }
-            />
-          </View>
-        </View>
+            if (data.me.babies) {
+              const Babies = data.me.babies.map((baby: any) => {
+                return (
+                  <BabyImage
+                    key={baby.id}
+                    babyName={baby.name}
+                    src="https://www.momjunction.com/wp-content/uploads/2014/05/Sweet-Cute-Baby-Girl-Names-With-Meanings.jpg"
+                    size={35}
+                  />
+                );
+              });
+
+              return (
+                <View style={styles.babies}>
+                  {Babies}
+                  <Ionicons
+                    size={35}
+                    name={
+                      OS === "ios"
+                        ? "ios-add-cirlce-outline"
+                        : "md-add-circle-outline"
+                    }
+                  />
+                </View>
+              );
+            }
+          }}
+        </Query>
       </BlurView>
     </Modal>
   );
@@ -85,8 +101,13 @@ const styles = StyleSheet.create({
     marginTop: "auto",
     marginBottom: "auto",
     height: 200,
-    // justifyContent: "center",
-    // alignItems: "center",
+
     width: 200
+  },
+  babies: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    flex: 1
   }
 });
