@@ -7,6 +7,10 @@ import {
   DatePickerAndroid,
   TouchableWithoutFeedback
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
 import { Formik, Field } from "formik";
 import { Card, Button } from "react-native-ui-lib";
@@ -60,8 +64,8 @@ export class AddBaby extends React.Component<any> {
               }}
             >
               <Card
-                width={450}
-                height={450}
+                width={wp("75%")}
+                height={hp("60%")}
                 containerStyle={{
                   padding: 10
                 }}
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
   inputView: {
     flex: 2,
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "space-between"
   },
   title: {
     alignSelf: "center",
@@ -138,16 +142,10 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     display: "flex",
-    flex: 1,
+
     marginTop: 5,
 
     marginBottom: 5,
     justifyContent: "space-between"
-  },
-  buttonViewText: {
-    alignSelf: "center",
-    marginTop: 5,
-    marginBottom: 5,
-    fontSize: 15
   }
 });
