@@ -31,9 +31,14 @@ const ME_QUERY = gql`
 interface Props {
   isOpen: boolean;
   closeModal: () => void;
+  goToAddBaby: () => void;
 }
 
-export const BabyModal: React.SFC<Props> = ({ isOpen, closeModal }) => {
+export const BabyModal: React.SFC<Props> = ({
+  isOpen,
+  closeModal,
+  goToAddBaby
+}) => {
   return (
     <Modal
       visible={isOpen}
@@ -72,14 +77,16 @@ export const BabyModal: React.SFC<Props> = ({ isOpen, closeModal }) => {
               return (
                 <View style={styles.babies}>
                   {Babies}
-                  <Ionicons
-                    size={35}
-                    name={
-                      OS === "ios"
-                        ? "ios-add-cirlce-outline"
-                        : "md-add-circle-outline"
-                    }
-                  />
+                  <TouchableWithoutFeedback onPress={goToAddBaby}>
+                    <Ionicons
+                      size={35}
+                      name={
+                        OS === "ios"
+                          ? "ios-add-cirlce-outline"
+                          : "md-add-circle-outline"
+                      }
+                    />
+                  </TouchableWithoutFeedback>
                 </View>
               );
             }

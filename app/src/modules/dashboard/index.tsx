@@ -32,6 +32,12 @@ export class DashBoard extends React.Component<any> {
       modalOpen: false
     });
   };
+
+  addBaby = () => {
+    this.closeModal();
+
+    this.props.navigation.navigate("AddBaby");
+  };
   render() {
     return (
       <SafeAreaView style={styles.mainView}>
@@ -47,7 +53,11 @@ export class DashBoard extends React.Component<any> {
           <Text>List</Text>
         </View>
 
-        <BabyModal isOpen={this.state.modalOpen} closeModal={this.closeModal} />
+        <BabyModal
+          goToAddBaby={this.addBaby}
+          isOpen={this.state.modalOpen}
+          closeModal={this.closeModal}
+        />
       </SafeAreaView>
     );
   }
