@@ -37,75 +37,77 @@ export class AddBaby extends React.Component<any> {
   };
   render() {
     return (
-      <View
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flex: 1
+      <Formik<FormValues>
+        initialValues={{
+          name: "",
+          dob: new Date(),
+          picture: ""
+        }}
+        onSubmit={async (values, actions) => {
+          actions.setSubmitting(false);
+          console.log(values);
+          actions.resetForm();
         }}
       >
-        <Formik<FormValues>
-          initialValues={{
-            name: "",
-            dob: new Date()
-          }}
-          onSubmit={async (values, actions) => {
-            actions.setSubmitting(false);
-            console.log(values);
-            actions.resetForm();
-          }}
-        >
-          {({ handleSubmit, isSubmitting, values, setFieldValue }) => {
-            return (
-              <View
-                style={{
-                  display: "flex",
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center"
+        {({ handleSubmit, isSubmitting, values, setFieldValue }) => {
+          return (
+            <View
+              style={{
+                display: "flex",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Card
+                width={450}
+                height={450}
+                containerStyle={{
+                  padding: 10
                 }}
               >
-                <Card
-                  width={450}
-                  height={400}
-                  containerStyle={{
-                    padding: 10
-                  }}
-                >
-                  <View style={styles.inputView}>
-                    <Text style={styles.title}>Add Baby</Text>
-                    <Field
-                      component={InputField}
-                      name="name"
-                      title="name"
-                      autoCapitalize="none"
-                      titleColor="black"
-                      enableErrors={true}
+                <View style={styles.inputView}>
+                  <Text style={styles.title}>Add Baby</Text>
+                  <Field
+                    component={InputField}
+                    name="name"
+                    title="name"
+                    autoCapitalize="none"
+                    titleColor="black"
+                    enableErrors={true}
+                  />
+                  {CONFIG.OS === "ios" && (
+                    <DatePickerIOS
+                      maximumDate={new Date()}
+                      mode="date"
+                      date={values.dob as any}
+                      onDateChange={date => {
+                        console.log(date);
+                      }}
                     />
-                    {CONFIG.OS === "ios" && (
-                      <DatePickerIOS
-                        maximumDate={new Date()}
-                        mode="date"
-                        date={values.dob as any}
-                        onDateChange={date => {
-                          console.log(date);
-                        }}
-                      />
-                    )}
+                  )}
 
-                    {CONFIG.OS == "android" && (
-                      <View style={{ alignSelf: "center" }}>
-                        <TouchableWithoutFeedback
-                          onPress={() =>
-                            this.callAndroidDatePicker(setFieldValue)
-                          }
-                        >
-                          <Ionicons name="md-calendar" size={40} />
-                        </TouchableWithoutFeedback>
-                      </View>
-                    )}
+                  {CONFIG.OS == "android" && (
+                    <View style={{ alignSelf: "center" }}>
+                      <TouchableWithoutFeedback
+                        onPress={() =>
+                          this.callAndroidDatePicker(setFieldValue)
+                        }
+                      >
+                        <Ionicons name="md-calendar" size={40} />
+                      </TouchableWithoutFeedback>
+                    </View>
+                  )}
+
+                  <View style={{ alignSelf: "center" }}>
+                    <TouchableWithoutFeedback onPress={() => null}>
+                      <Ionicons
+                        name={CONFIG.OS == "ios" ? "ios-camera" : "md-camera"}
+                        size={40}
+                      />
+                    </TouchableWithoutFeedback>
                   </View>
+
                   <View style={styles.buttonView}>
                     <Button
                       label="Add"
@@ -113,12 +115,12 @@ export class AddBaby extends React.Component<any> {
                       onPress={() => handleSubmit()}
                     />
                   </View>
-                </Card>
-              </View>
-            );
-          }}
-        </Formik>
-      </View>
+                </View>
+              </Card>
+            </View>
+          );
+        }}
+      </Formik>
     );
   }
 }
@@ -138,6 +140,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     marginTop: 5,
+
     marginBottom: 5,
     justifyContent: "space-between"
   },
