@@ -19,7 +19,7 @@ interface FormValues {
 }
 
 export class AddBaby extends React.Component<any> {
-  callAndroidDatePicker = async setFieldValue => {
+  callAndroidDatePicker = async (setFieldValue: any) => {
     try {
       const { action, year, month, day } = await DatePickerAndroid.open({
         // Use `new Date()` for current date.
@@ -51,8 +51,9 @@ export class AddBaby extends React.Component<any> {
             dob: new Date()
           }}
           onSubmit={async (values, actions) => {
-            console.log(values);
             actions.setSubmitting(false);
+            console.log(values);
+            actions.resetForm();
           }}
         >
           {({ handleSubmit, isSubmitting, values, setFieldValue }) => {
