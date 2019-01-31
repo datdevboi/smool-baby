@@ -589,9 +589,9 @@
     react-native-safe-area-view "^0.11.0"
     react-native-screens "^1.0.0 || ^1.0.0-alpha"
 
-"@types/expo@^31.0.7":
-  version "31.0.7"
-  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-31.0.7.tgz#d03f67bab9cb00c05715b5d60edad1c6c6633968"
+"@types/expo@^31.0.9":
+  version "31.0.9"
+  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-31.0.9.tgz#8b5f4328b2f5da57e1268375e307cb14fde4b2db"
   dependencies:
     "@types/fbemitter" "*"
     "@types/react" "*"
