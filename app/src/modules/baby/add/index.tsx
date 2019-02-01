@@ -81,6 +81,11 @@ export class AddBaby extends React.Component<any> {
         onSubmit={async (values, actions) => {
           actions.setSubmitting(false);
           console.log(values);
+          const file = new ReactNativeFile({
+            uri: values.pictureUri,
+            name: `${values.name}-${values.dob}`,
+            type: values.pictureType
+          });
           actions.resetForm();
         }}
       >
