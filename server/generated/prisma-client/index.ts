@@ -153,6 +153,8 @@ export type BabyOrderByInput =
   | "name_DESC"
   | "dob_ASC"
   | "dob_DESC"
+  | "pictureUrl_ASC"
+  | "pictureUrl_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -237,6 +239,7 @@ export interface BabyCreateInput {
   name: String;
   dob: DateTimeInput;
   parent: UserCreateOneWithoutBabiesInput;
+  pictureUrl?: String;
 }
 
 export interface BabyUpdateManyWithWhereNestedInput {
@@ -263,12 +266,14 @@ export interface UserCreateWithoutBabiesInput {
 export interface BabyUpdateWithoutParentDataInput {
   name?: String;
   dob?: DateTimeInput;
+  pictureUrl?: String;
 }
 
 export interface BabyUpdateInput {
   name?: String;
   dob?: DateTimeInput;
   parent?: UserUpdateOneRequiredWithoutBabiesInput;
+  pictureUrl?: String;
 }
 
 export interface UserWhereInput {
@@ -325,11 +330,13 @@ export interface UserWhereInput {
 export interface BabyCreateWithoutParentInput {
   name: String;
   dob: DateTimeInput;
+  pictureUrl?: String;
 }
 
 export interface BabyUpdateManyDataInput {
   name?: String;
   dob?: DateTimeInput;
+  pictureUrl?: String;
 }
 
 export interface BabyCreateManyWithoutParentInput {
@@ -340,6 +347,7 @@ export interface BabyCreateManyWithoutParentInput {
 export interface BabyUpdateManyMutationInput {
   name?: String;
   dob?: DateTimeInput;
+  pictureUrl?: String;
 }
 
 export interface BabyWhereInput {
@@ -380,6 +388,20 @@ export interface BabyWhereInput {
   dob_gt?: DateTimeInput;
   dob_gte?: DateTimeInput;
   parent?: UserWhereInput;
+  pictureUrl?: String;
+  pictureUrl_not?: String;
+  pictureUrl_in?: String[] | String;
+  pictureUrl_not_in?: String[] | String;
+  pictureUrl_lt?: String;
+  pictureUrl_lte?: String;
+  pictureUrl_gt?: String;
+  pictureUrl_gte?: String;
+  pictureUrl_contains?: String;
+  pictureUrl_not_contains?: String;
+  pictureUrl_starts_with?: String;
+  pictureUrl_not_starts_with?: String;
+  pictureUrl_ends_with?: String;
+  pictureUrl_not_ends_with?: String;
   AND?: BabyWhereInput[] | BabyWhereInput;
   OR?: BabyWhereInput[] | BabyWhereInput;
   NOT?: BabyWhereInput[] | BabyWhereInput;
@@ -427,6 +449,20 @@ export interface BabyScalarWhereInput {
   dob_lte?: DateTimeInput;
   dob_gt?: DateTimeInput;
   dob_gte?: DateTimeInput;
+  pictureUrl?: String;
+  pictureUrl_not?: String;
+  pictureUrl_in?: String[] | String;
+  pictureUrl_not_in?: String[] | String;
+  pictureUrl_lt?: String;
+  pictureUrl_lte?: String;
+  pictureUrl_gt?: String;
+  pictureUrl_gte?: String;
+  pictureUrl_contains?: String;
+  pictureUrl_not_contains?: String;
+  pictureUrl_starts_with?: String;
+  pictureUrl_not_starts_with?: String;
+  pictureUrl_ends_with?: String;
+  pictureUrl_not_ends_with?: String;
   AND?: BabyScalarWhereInput[] | BabyScalarWhereInput;
   OR?: BabyScalarWhereInput[] | BabyScalarWhereInput;
   NOT?: BabyScalarWhereInput[] | BabyScalarWhereInput;
@@ -499,6 +535,7 @@ export interface Baby {
   id: ID_Output;
   name: String;
   dob: DateTimeOutput;
+  pictureUrl?: String;
 }
 
 export interface BabyPromise extends Promise<Baby>, Fragmentable {
@@ -506,6 +543,7 @@ export interface BabyPromise extends Promise<Baby>, Fragmentable {
   name: () => Promise<String>;
   dob: () => Promise<DateTimeOutput>;
   parent: <T = UserPromise>() => T;
+  pictureUrl: () => Promise<String>;
 }
 
 export interface BabySubscription
@@ -515,6 +553,7 @@ export interface BabySubscription
   name: () => Promise<AsyncIterator<String>>;
   dob: () => Promise<AsyncIterator<DateTimeOutput>>;
   parent: <T = UserSubscription>() => T;
+  pictureUrl: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BabyEdge {
@@ -723,6 +762,7 @@ export interface BabyPreviousValues {
   id: ID_Output;
   name: String;
   dob: DateTimeOutput;
+  pictureUrl?: String;
 }
 
 export interface BabyPreviousValuesPromise
@@ -731,6 +771,7 @@ export interface BabyPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   dob: () => Promise<DateTimeOutput>;
+  pictureUrl: () => Promise<String>;
 }
 
 export interface BabyPreviousValuesSubscription
@@ -739,6 +780,7 @@ export interface BabyPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   dob: () => Promise<AsyncIterator<DateTimeOutput>>;
+  pictureUrl: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserConnection {

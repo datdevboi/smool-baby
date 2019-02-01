@@ -10,4 +10,5 @@ type Baby {
   name: String!
   dob: DateTime!
   parent: User!
+  pictureUrl: String
 }

@@ -11,6 +11,7 @@ type Baby {
   name: String!
   dob: DateTime!
   parent: User!
+  pictureUrl: String
 }
 
 type BabyConnection {
@@ -23,6 +24,7 @@ input BabyCreateInput {
   name: String!
   dob: DateTime!
   parent: UserCreateOneWithoutBabiesInput!
+  pictureUrl: String
 }
 
 input BabyCreateManyWithoutParentInput {
@@ -33,6 +35,7 @@ input BabyCreateManyWithoutParentInput {
 input BabyCreateWithoutParentInput {
   name: String!
   dob: DateTime!
+  pictureUrl: String
 }
 
 type BabyEdge {
@@ -47,6 +50,8 @@ enum BabyOrderByInput {
   name_DESC
   dob_ASC
   dob_DESC
+  pictureUrl_ASC
+  pictureUrl_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -57,6 +62,7 @@ type BabyPreviousValues {
   id: ID!
   name: String!
   dob: DateTime!
+  pictureUrl: String
 }
 
 input BabyScalarWhereInput {
@@ -96,6 +102,20 @@ input BabyScalarWhereInput {
   dob_lte: DateTime
   dob_gt: DateTime
   dob_gte: DateTime
+  pictureUrl: String
+  pictureUrl_not: String
+  pictureUrl_in: [String!]
+  pictureUrl_not_in: [String!]
+  pictureUrl_lt: String
+  pictureUrl_lte: String
+  pictureUrl_gt: String
+  pictureUrl_gte: String
+  pictureUrl_contains: String
+  pictureUrl_not_contains: String
+  pictureUrl_starts_with: String
+  pictureUrl_not_starts_with: String
+  pictureUrl_ends_with: String
+  pictureUrl_not_ends_with: String
   AND: [BabyScalarWhereInput!]
   OR: [BabyScalarWhereInput!]
   NOT: [BabyScalarWhereInput!]
@@ -123,16 +143,19 @@ input BabyUpdateInput {
   name: String
   dob: DateTime
   parent: UserUpdateOneRequiredWithoutBabiesInput
+  pictureUrl: String
 }
 
 input BabyUpdateManyDataInput {
   name: String
   dob: DateTime
+  pictureUrl: String
 }
 
 input BabyUpdateManyMutationInput {
   name: String
   dob: DateTime
+  pictureUrl: String
 }
 
 input BabyUpdateManyWithoutParentInput {
@@ -154,6 +177,7 @@ input BabyUpdateManyWithWhereNestedInput {
 input BabyUpdateWithoutParentDataInput {
   name: String
   dob: DateTime
+  pictureUrl: String
 }
 
 input BabyUpdateWithWhereUniqueWithoutParentInput {
@@ -205,6 +229,20 @@ input BabyWhereInput {
   dob_gt: DateTime
   dob_gte: DateTime
   parent: UserWhereInput
+  pictureUrl: String
+  pictureUrl_not: String
+  pictureUrl_in: [String!]
+  pictureUrl_not_in: [String!]
+  pictureUrl_lt: String
+  pictureUrl_lte: String
+  pictureUrl_gt: String
+  pictureUrl_gte: String
+  pictureUrl_contains: String
+  pictureUrl_not_contains: String
+  pictureUrl_starts_with: String
+  pictureUrl_not_starts_with: String
+  pictureUrl_ends_with: String
+  pictureUrl_not_ends_with: String
   AND: [BabyWhereInput!]
   OR: [BabyWhereInput!]
   NOT: [BabyWhereInput!]
