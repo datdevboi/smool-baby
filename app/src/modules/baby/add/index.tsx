@@ -18,6 +18,7 @@ import { Card, Button } from "react-native-ui-lib";
 import { InputField } from "../../../components/InputField";
 import { CONFIG } from "../../../config";
 import { Image } from "react-native-ui-lib";
+import { BabyImage } from "../../../components/BabyImage";
 
 interface FormValues {
   name: string;
@@ -138,6 +139,13 @@ export class AddBaby extends React.Component<any> {
                         size={40}
                       />
                     </TouchableWithoutFeedback>
+                    {!!values.pictureUri && (
+                      <BabyImage
+                        src={values.pictureUri}
+                        babyName={values.name}
+                        size={40}
+                      />
+                    )}
                   </View>
 
                   <View style={styles.buttonView}>
