@@ -3,13 +3,21 @@ type Baby {
   name: String!
   dob: DateTime!
   parent: User!
+  pictureUrl: String!
 }
 
 scalar DateTime
 
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
 input CreateBabyInput {
   name: String!
   dob: DateTime!
+  picture: Upload!
 }
 
 type CreateBabyResponse {
