@@ -22,6 +22,7 @@ import { Image } from "react-native-ui-lib";
 interface FormValues {
   name: string;
   dob: Date;
+  pictureUri: string;
 }
 
 export class AddBaby extends React.Component<any> {
@@ -42,7 +43,7 @@ export class AddBaby extends React.Component<any> {
     }
   };
 
-  getPicture = async () => {
+  getPicture = async (setFieldValue: any) => {
     const { status, permissions } = await Permissions.askAsync(
       Permissions.CAMERA_ROLL
     );
@@ -60,7 +61,7 @@ export class AddBaby extends React.Component<any> {
       });
 
       if (!result.cancelled) {
-        console.log(result.base64);
+        setFieldValue("pictureUri", result.uri);
       }
     }
   };
@@ -70,7 +71,7 @@ export class AddBaby extends React.Component<any> {
         initialValues={{
           name: "",
           dob: new Date(),
-          picture: ""
+          pictureUri: ""
         }}
         onSubmit={async (values, actions) => {
           actions.setSubmitting(false);
@@ -109,9 +110,9 @@ export class AddBaby extends React.Component<any> {
                     <DatePickerIOS
                       maximumDate={new Date()}
                       mode="date"
-                      date={values.dob as any}
+                      date={values.dob}
                       onDateChange={date => {
-                        console.log(date);
+                        setFieldValue("dob", date);
                       }}
                     />
                   )}
@@ -129,7 +130,9 @@ export class AddBaby extends React.Component<any> {
                   )}
 
                   <View>
-                    <TouchableWithoutFeedback onPress={() => this.getPicture()}>
+                    <TouchableWithoutFeedback
+                      onPress={() => this.getPicture(setFieldValue)}
+                    >
                       <Ionicons
                         name={CONFIG.OS == "ios" ? "ios-camera" : "md-camera"}
                         size={40}
