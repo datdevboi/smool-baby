@@ -11,6 +11,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
 import { ReactNativeFile } from "apollo-upload-client";
 import { Ionicons } from "@expo/vector-icons";
 import { Formik, Field } from "formik";
@@ -18,7 +20,7 @@ import { ImagePicker, Permissions } from "expo";
 import { Card, Button } from "react-native-ui-lib";
 import { InputField } from "../../../components/InputField";
 import { CONFIG } from "../../../config";
-import { Image } from "react-native-ui-lib";
+
 import { BabyImage } from "../../../components/BabyImage";
 
 interface FormValues {
@@ -27,6 +29,16 @@ interface FormValues {
   pictureUri: string;
   pictureType: string;
 }
+
+const ADD_BABY_MUTATION = gql`
+  mutation ADD_BABY_MUTATION(
+    $name: String!
+    $dob: DateTime!
+    $picture: Upload!
+  ) {
+    createBaby(input: { name: $name, dob: $dob, picture: $picture })
+  }
+`;
 
 export class AddBaby extends React.Component<any> {
   callAndroidDatePicker = async (setFieldValue: any) => {
@@ -71,105 +83,120 @@ export class AddBaby extends React.Component<any> {
   };
   render() {
     return (
-      <Formik<FormValues>
-        initialValues={{
-          name: "",
-          dob: new Date(),
-          pictureUri: "",
-          pictureType: ""
-        }}
-        onSubmit={async (values, actions) => {
-          actions.setSubmitting(false);
-          console.log(values);
-          const file = new ReactNativeFile({
-            uri: values.pictureUri,
-            name: `${values.name}-${values.dob}`,
-            type: values.pictureType
-          });
-          actions.resetForm();
-        }}
-      >
-        {({ handleSubmit, isSubmitting, values, setFieldValue }) => {
-          return (
-            <View
-              style={{
-                display: "flex",
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <Card
-                width={wp("75%")}
-                height={hp("60%")}
-                containerStyle={{
-                  padding: 10
-                }}
-              >
-                <View style={styles.inputView}>
-                  <Text style={styles.title}>Add Baby</Text>
-                  <Field
-                    component={InputField}
-                    name="name"
-                    title="name"
-                    autoCapitalize="none"
-                    titleColor="black"
-                    enableErrors={true}
-                  />
-                  {CONFIG.OS === "ios" && (
-                    <DatePickerIOS
-                      maximumDate={new Date()}
-                      mode="date"
-                      date={values.dob}
-                      onDateChange={date => {
-                        setFieldValue("dob", date);
-                      }}
-                    />
-                  )}
+      <Mutation mutation={ADD_BABY_MUTATION}>
+        {addBaby => (
+          <Formik<FormValues>
+            initialValues={{
+              name: "",
+              dob: new Date(),
+              pictureUri: "",
+              pictureType: ""
+            }}
+            onSubmit={async (values, actions) => {
+              actions.setSubmitting(false);
 
-                  {CONFIG.OS == "android" && (
-                    <View>
-                      <TouchableWithoutFeedback
-                        onPress={() =>
-                          this.callAndroidDatePicker(setFieldValue)
-                        }
-                      >
-                        <Ionicons name="md-calendar" size={40} />
-                      </TouchableWithoutFeedback>
+              const file = new ReactNativeFile({
+                uri: values.pictureUri,
+                name: `${values.name}-${values.dob}`,
+                type: values.pictureType
+              });
+
+              await addBaby({
+                variables: {
+                  name: values.name,
+                  dob: values.dob,
+                  picture: file
+                }
+              });
+
+              actions.resetForm();
+            }}
+          >
+            {({ handleSubmit, isSubmitting, values, setFieldValue }) => {
+              return (
+                <View
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <Card
+                    width={wp("75%")}
+                    height={hp("60%")}
+                    containerStyle={{
+                      padding: 10
+                    }}
+                  >
+                    <View style={styles.inputView}>
+                      <Text style={styles.title}>Add Baby</Text>
+                      <Field
+                        component={InputField}
+                        name="name"
+                        title="name"
+                        autoCapitalize="none"
+                        titleColor="black"
+                        enableErrors={true}
+                      />
+                      {CONFIG.OS === "ios" && (
+                        <DatePickerIOS
+                          maximumDate={new Date()}
+                          mode="date"
+                          date={values.dob}
+                          onDateChange={date => {
+                            setFieldValue("dob", date);
+                          }}
+                        />
+                      )}
+
+                      {CONFIG.OS == "android" && (
+                        <View>
+                          <TouchableWithoutFeedback
+                            onPress={() =>
+                              this.callAndroidDatePicker(setFieldValue)
+                            }
+                          >
+                            <Ionicons name="md-calendar" size={40} />
+                          </TouchableWithoutFeedback>
+                        </View>
+                      )}
+
+                      <View>
+                        <TouchableWithoutFeedback
+                          onPress={() => this.getPicture(setFieldValue)}
+                        >
+                          <Ionicons
+                            name={
+                              CONFIG.OS == "ios" ? "ios-camera" : "md-camera"
+                            }
+                            size={40}
+                          />
+                        </TouchableWithoutFeedback>
+                        {!!values.pictureUri && (
+                          <BabyImage
+                            src={values.pictureUri}
+                            babyName={values.name}
+                            size={40}
+                          />
+                        )}
+                      </View>
+
+                      <View style={styles.buttonView}>
+                        <Button
+                          label="Add"
+                          disabled={isSubmitting}
+                          onPress={() => handleSubmit()}
+                        />
+                      </View>
                     </View>
-                  )}
-
-                  <View>
-                    <TouchableWithoutFeedback
-                      onPress={() => this.getPicture(setFieldValue)}
-                    >
-                      <Ionicons
-                        name={CONFIG.OS == "ios" ? "ios-camera" : "md-camera"}
-                        size={40}
-                      />
-                    </TouchableWithoutFeedback>
-                    {!!values.pictureUri && (
-                      <BabyImage
-                        src={values.pictureUri}
-                        babyName={values.name}
-                        size={40}
-                      />
-                    )}
-                  </View>
-
-                  <View style={styles.buttonView}>
-                    <Button
-                      label="Add"
-                      disabled={isSubmitting}
-                      onPress={() => handleSubmit()}
-                    />
-                  </View>
+                  </Card>
                 </View>
-              </Card>
-            </View>
-          );
-        }}
-      </Formik>
+              );
+            }}
+          </Formik>
+        )}
+      </Mutation>
     );
   }
 }
