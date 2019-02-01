@@ -10,6 +10,9 @@ export const resolvers: IResolvers = {
       return prisma.user({
         id: req.userId
       });
+    },
+    babies: async (_, __, { prisma }) => {
+      return prisma.babies();
     }
   },
   User: {
