@@ -11,6 +11,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import { ReactNativeFile } from "apollo-upload-client";
 import { Ionicons } from "@expo/vector-icons";
 import { Formik, Field } from "formik";
 import { ImagePicker, Permissions } from "expo";
@@ -24,6 +25,7 @@ interface FormValues {
   name: string;
   dob: Date;
   pictureUri: string;
+  pictureType: string;
 }
 
 export class AddBaby extends React.Component<any> {
@@ -63,6 +65,7 @@ export class AddBaby extends React.Component<any> {
 
       if (!result.cancelled) {
         setFieldValue("pictureUri", result.uri);
+        setFieldValue("pictureType", result.type);
       }
     }
   };
@@ -72,7 +75,8 @@ export class AddBaby extends React.Component<any> {
         initialValues={{
           name: "",
           dob: new Date(),
-          pictureUri: ""
+          pictureUri: "",
+          pictureType: ""
         }}
         onSubmit={async (values, actions) => {
           actions.setSubmitting(false);
