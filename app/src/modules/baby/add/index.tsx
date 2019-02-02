@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  DatePickerIOS,
-  DatePickerAndroid,
-  TouchableWithoutFeedback
-} from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -19,10 +12,10 @@ import { Formik, Field } from "formik";
 
 import { Card, Button } from "react-native-ui-lib";
 import { InputField } from "../../../components/InputField";
-import { CONFIG } from "../../../config";
 
 import { BabyImage } from "../../../components/BabyImage";
 import { PictureInput } from "../../../components/PictureInput";
+import { CalendarInput } from "../../../components/CalendarInput";
 
 interface FormValues {
   name: string;
@@ -44,23 +37,6 @@ const ADD_BABY_MUTATION = gql`
 `;
 
 export class AddBaby extends React.Component<any> {
-  callAndroidDatePicker = async (setFieldValue: any) => {
-    try {
-      const { action, year, month, day } = await DatePickerAndroid.open({
-        // Use `new Date()` for current date.
-
-        date: new Date()
-      });
-      if (action !== DatePickerAndroid.dismissedAction) {
-        // Selected year, month (0-11), day
-
-        setFieldValue("dob", new Date(year, month, day));
-      }
-    } catch ({ code, message }) {
-      console.warn("Cannot open date picker", message);
-    }
-  };
-
   render() {
     return (
       <Mutation mutation={ADD_BABY_MUTATION}>
@@ -96,7 +72,7 @@ export class AddBaby extends React.Component<any> {
               }
             }}
           >
-            {({ handleSubmit, isSubmitting, values, setFieldValue }) => {
+            {({ handleSubmit, isSubmitting, values }) => {
               return (
                 <View
                   style={{
@@ -123,40 +99,9 @@ export class AddBaby extends React.Component<any> {
                         titleColor="black"
                         enableErrors={true}
                       />
-                      {CONFIG.OS === "ios" && (
-                        <DatePickerIOS
-                          maximumDate={new Date()}
-                          mode="date"
-                          date={values.dob}
-                          onDateChange={date => {
-                            setFieldValue("dob", date);
-                          }}
-                        />
-                      )}
-
-                      {CONFIG.OS == "android" && (
-                        <View>
-                          <TouchableWithoutFeedback
-                            onPress={() =>
-                              this.callAndroidDatePicker(setFieldValue)
-                            }
-                          >
-                            <Ionicons name="md-calendar" size={40} />
-                          </TouchableWithoutFeedback>
-                        </View>
-                      )}
+                      <Field component={CalendarInput} name="dob" />
 
                       <View>
-                        {/* <TouchableWithoutFeedback
-                          onPress={() => this.getPicture(setFieldValue)}
-                        >
-                          <Ionicons
-                            name={
-                              CONFIG.OS == "ios" ? "ios-camera" : "md-camera"
-                            }
-                            size={40}
-                          />
-                        </TouchableWithoutFeedback> */}
                         <Field component={PictureInput} name="picture" />
                         {!!values.picture.pictureUri && (
                           <BabyImage
