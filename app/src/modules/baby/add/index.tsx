@@ -16,18 +16,21 @@ import { Mutation } from "react-apollo";
 import { ReactNativeFile } from "apollo-upload-client";
 import { Ionicons } from "@expo/vector-icons";
 import { Formik, Field } from "formik";
-import { ImagePicker, Permissions } from "expo";
+
 import { Card, Button } from "react-native-ui-lib";
 import { InputField } from "../../../components/InputField";
 import { CONFIG } from "../../../config";
 
 import { BabyImage } from "../../../components/BabyImage";
+import { PictureInput } from "../../../components/PictureInput";
 
 interface FormValues {
   name: string;
   dob: Date;
-  pictureUri: string;
-  pictureType: string;
+  picture: {
+    pictureUri: string;
+    pictureType: string;
+  };
 }
 
 const ADD_BABY_MUTATION = gql`
@@ -58,29 +61,6 @@ export class AddBaby extends React.Component<any> {
     }
   };
 
-  getPicture = async (setFieldValue: any) => {
-    const { status, permissions } = await Permissions.askAsync(
-      Permissions.CAMERA_ROLL
-    );
-
-    if (status !== "granted") {
-      console.log(
-        "Hey! You might want to enable notifications for my app, they are good."
-      );
-    } else {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: "Images",
-        quality: 0.5,
-        allowsEditing: true,
-        base64: true
-      });
-
-      if (!result.cancelled) {
-        setFieldValue("pictureUri", result.uri);
-        setFieldValue("pictureType", result.type);
-      }
-    }
-  };
   render() {
     return (
       <Mutation mutation={ADD_BABY_MUTATION}>
@@ -89,16 +69,18 @@ export class AddBaby extends React.Component<any> {
             initialValues={{
               name: "",
               dob: new Date(),
-              pictureUri: "",
-              pictureType: ""
+              picture: {
+                pictureUri: "",
+                pictureType: ""
+              }
             }}
             onSubmit={async (values, actions) => {
               actions.setSubmitting(false);
 
               const file = new ReactNativeFile({
-                uri: values.pictureUri,
+                uri: values.picture.pictureUri,
                 name: `${values.name}-${values.dob}`,
-                type: values.pictureType
+                type: values.picture.pictureType
               });
 
               try {
@@ -165,7 +147,7 @@ export class AddBaby extends React.Component<any> {
                       )}
 
                       <View>
-                        <TouchableWithoutFeedback
+                        {/* <TouchableWithoutFeedback
                           onPress={() => this.getPicture(setFieldValue)}
                         >
                           <Ionicons
@@ -174,10 +156,11 @@ export class AddBaby extends React.Component<any> {
                             }
                             size={40}
                           />
-                        </TouchableWithoutFeedback>
-                        {!!values.pictureUri && (
+                        </TouchableWithoutFeedback> */}
+                        <Field component={PictureInput} name="picture" />
+                        {!!values.picture.pictureUri && (
                           <BabyImage
-                            src={values.pictureUri}
+                            src={values.picture.pictureUri}
                             babyName={values.name}
                             size={40}
                           />
