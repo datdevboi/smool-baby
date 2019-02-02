@@ -9,7 +9,6 @@ import { Permissions, ImagePicker } from "expo";
 export class PictureInput extends React.Component<
   FieldProps<any> & {
     name: string;
-    value: string;
   }
 > {
   getPicture = async (setFieldValue: any, name: string) => {
