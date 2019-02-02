@@ -101,15 +101,17 @@ export class AddBaby extends React.Component<any> {
                 type: values.pictureType
               });
 
-              await addBaby({
-                variables: {
-                  name: values.name,
-                  dob: values.dob,
-                  picture: file
-                }
-              });
-
-              actions.resetForm();
+              try {
+                const response = await addBaby({
+                  variables: {
+                    name: values.name,
+                    dob: values.dob,
+                    picture: file
+                  }
+                });
+              } catch (err) {
+                console.log(err);
+              }
             }}
           >
             {({ handleSubmit, isSubmitting, values, setFieldValue }) => {
