@@ -9,7 +9,8 @@ import {
   TouchableWithoutFeedback,
   DatePickerAndroid,
   TouchableOpacity,
-  Text
+  Text,
+  StyleSheet
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo";
@@ -93,35 +94,43 @@ export class CalendarInput extends React.Component<
             <BlurView
               tint="default"
               intensity={75}
-              style={{
-                alignSelf: "center",
-                marginTop: "auto",
-                marginBottom: "auto",
-                height: hp("45%"),
-                width: wp("50%")
-              }}
+              style={[StyleSheet.absoluteFill]}
             >
-              <View>
-                <TouchableOpacity onPress={this.closeCalendar}>
-                  <Ionicons
-                    size={40}
-                    name={
-                      CONFIG.OS === "ios"
-                        ? "ios-close-circle"
-                        : "md-close-circle"
-                    }
-                  />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <DatePickerIOS
-                  maximumDate={new Date()}
-                  mode="date"
-                  date={values[name]}
-                  onDateChange={date => {
-                    setFieldValue(name, date);
+              <View
+                style={{
+                  alignSelf: "center",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  height: hp("40%"),
+                  width: wp("50%"),
+                  backgroundColor: "white"
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                    alignItems: "center"
                   }}
-                />
+                >
+                  <TouchableOpacity onPress={this.closeCalendar}>
+                    <Ionicons
+                      size={40}
+                      name="ios-checkmark-circle-outline"
+                      color="green"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, justifyContent: "center" }}>
+                  <DatePickerIOS
+                    maximumDate={new Date()}
+                    mode="date"
+                    date={values[name]}
+                    onDateChange={date => {
+                      setFieldValue(name, date);
+                    }}
+                  />
+                </View>
               </View>
             </BlurView>
           </Modal>
