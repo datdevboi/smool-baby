@@ -1,15 +1,22 @@
 import * as React from "react";
 
-import { TextField } from "react-native-ui-lib";
 import { FieldProps } from "formik";
 import { CONFIG } from "../config";
+import { Modal } from "react-native-ui-lib";
 import {
   DatePickerIOS,
   View,
   TouchableWithoutFeedback,
-  DatePickerAndroid
+  DatePickerAndroid,
+  TouchableOpacity,
+  Text
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { BlurView } from "expo";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 export class CalendarInput extends React.Component<
   FieldProps<any> & {
@@ -17,6 +24,29 @@ export class CalendarInput extends React.Component<
     value: string;
   }
 > {
+  state = {
+    showCalendar: false
+  };
+
+  closeCalendar = () => {
+    this.setState(() => ({
+      showCalendar: false
+    }));
+  };
+
+  openCalendar = async () => {
+    const {
+      field: { name },
+      form: { values, setFieldValue }
+    } = this.props;
+    if (CONFIG.OS === "ios") {
+      this.setState(() => ({
+        showCalendar: true
+      }));
+    } else {
+      await this.callAndroidDatePicker(setFieldValue, name);
+    }
+  };
   callAndroidDatePicker = async (setFieldValue: any, name: string) => {
     try {
       const { action, year, month, day } = await DatePickerAndroid.open({
@@ -42,28 +72,61 @@ export class CalendarInput extends React.Component<
     } = this.props;
 
     return (
-      <>
-        {CONFIG.OS === "ios" && (
-          <DatePickerIOS
-            maximumDate={new Date()}
-            mode="date"
-            date={values[name]}
-            onDateChange={date => {
-              setFieldValue(name, date);
-            }}
+      <View>
+        <TouchableOpacity onPress={() => this.openCalendar()}>
+          <Ionicons
+            name={CONFIG.OS === "ios" ? "ios-calendar" : "md-calendar"}
+            size={40}
           />
-        )}
+        </TouchableOpacity>
+        <View>
+          <Text>{values[name].toString()}</Text>
+        </View>
 
-        {CONFIG.OS == "android" && (
-          <View>
-            <TouchableWithoutFeedback
-              onPress={() => this.callAndroidDatePicker(setFieldValue, name)}
+        {CONFIG.OS === "ios" && (
+          <Modal
+            visible={this.state.showCalendar}
+            onRequestClose={this.closeCalendar}
+            transparent={true}
+            animationType="slide"
+          >
+            <BlurView
+              tint="default"
+              intensity={75}
+              style={{
+                alignSelf: "center",
+                marginTop: "auto",
+                marginBottom: "auto",
+                height: hp("45%"),
+                width: wp("50%")
+              }}
             >
-              <Ionicons name="md-calendar" size={40} />
-            </TouchableWithoutFeedback>
-          </View>
+              <View>
+                <TouchableOpacity onPress={this.closeCalendar}>
+                  <Ionicons
+                    size={40}
+                    name={
+                      CONFIG.OS === "ios"
+                        ? "ios-close-circle"
+                        : "md-close-circle"
+                    }
+                  />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <DatePickerIOS
+                  maximumDate={new Date()}
+                  mode="date"
+                  date={values[name]}
+                  onDateChange={date => {
+                    setFieldValue(name, date);
+                  }}
+                />
+              </View>
+            </BlurView>
+          </Modal>
         )}
-      </>
+      </View>
     );
   }
 }
