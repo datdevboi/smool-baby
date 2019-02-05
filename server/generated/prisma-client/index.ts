@@ -15,6 +15,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 
 export interface Exists {
   baby: (where?: BabyWhereInput) => Promise<boolean>;
+  diaper: (where?: DiaperWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -60,6 +61,29 @@ export interface Prisma {
       last?: Int;
     }
   ) => BabyConnectionPromise;
+  diaper: (where: DiaperWhereUniqueInput) => DiaperPromise;
+  diapers: (
+    args?: {
+      where?: DiaperWhereInput;
+      orderBy?: DiaperOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<Diaper>;
+  diapersConnection: (
+    args?: {
+      where?: DiaperWhereInput;
+      orderBy?: DiaperOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => DiaperConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserPromise;
   users: (
     args?: {
@@ -105,6 +129,22 @@ export interface Prisma {
   ) => BabyPromise;
   deleteBaby: (where: BabyWhereUniqueInput) => BabyPromise;
   deleteManyBabies: (where?: BabyWhereInput) => BatchPayloadPromise;
+  createDiaper: (data: DiaperCreateInput) => DiaperPromise;
+  updateDiaper: (
+    args: { data: DiaperUpdateInput; where: DiaperWhereUniqueInput }
+  ) => DiaperPromise;
+  updateManyDiapers: (
+    args: { data: DiaperUpdateManyMutationInput; where?: DiaperWhereInput }
+  ) => BatchPayloadPromise;
+  upsertDiaper: (
+    args: {
+      where: DiaperWhereUniqueInput;
+      create: DiaperCreateInput;
+      update: DiaperUpdateInput;
+    }
+  ) => DiaperPromise;
+  deleteDiaper: (where: DiaperWhereUniqueInput) => DiaperPromise;
+  deleteManyDiapers: (where?: DiaperWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (
     args: { data: UserUpdateInput; where: UserWhereUniqueInput }
@@ -133,6 +173,9 @@ export interface Subscription {
   baby: (
     where?: BabySubscriptionWhereInput
   ) => BabySubscriptionPayloadSubscription;
+  diaper: (
+    where?: DiaperSubscriptionWhereInput
+  ) => DiaperSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -146,6 +189,8 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type DiaperType = "Mixed" | "Pee" | "Poop";
+
 export type BabyOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -155,6 +200,18 @@ export type BabyOrderByInput =
   | "dob_DESC"
   | "pictureUrl_ASC"
   | "pictureUrl_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type DiaperOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "type_ASC"
+  | "type_DESC"
+  | "time_ASC"
+  | "time_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -174,106 +231,18 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpdateOneRequiredWithoutBabiesInput {
-  create?: UserCreateWithoutBabiesInput;
-  update?: UserUpdateWithoutBabiesDataInput;
-  upsert?: UserUpsertWithoutBabiesInput;
-  connect?: UserWhereUniqueInput;
+export interface UserUpdateWithoutBabiesDataInput {
+  email?: String;
+  password?: String;
 }
 
 export type BabyWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface BabyUpdateManyWithoutParentInput {
-  create?: BabyCreateWithoutParentInput[] | BabyCreateWithoutParentInput;
-  delete?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
-  connect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
-  disconnect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
-  update?:
-    | BabyUpdateWithWhereUniqueWithoutParentInput[]
-    | BabyUpdateWithWhereUniqueWithoutParentInput;
-  upsert?:
-    | BabyUpsertWithWhereUniqueWithoutParentInput[]
-    | BabyUpsertWithWhereUniqueWithoutParentInput;
-  deleteMany?: BabyScalarWhereInput[] | BabyScalarWhereInput;
-  updateMany?:
-    | BabyUpdateManyWithWhereNestedInput[]
-    | BabyUpdateManyWithWhereNestedInput;
-}
-
-export interface UserCreateInput {
-  email: String;
-  password: String;
-  babies?: BabyCreateManyWithoutParentInput;
-}
-
-export interface UserUpdateInput {
-  email?: String;
-  password?: String;
-  babies?: BabyUpdateManyWithoutParentInput;
-}
-
-export interface UserUpsertWithoutBabiesInput {
-  update: UserUpdateWithoutBabiesDataInput;
-  create: UserCreateWithoutBabiesInput;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: String;
-  password?: String;
-}
-
-export interface BabyCreateInput {
-  name: String;
-  dob: DateTimeInput;
-  parent: UserCreateOneWithoutBabiesInput;
-  pictureUrl?: String;
-}
-
-export interface BabyUpdateManyWithWhereNestedInput {
-  where: BabyScalarWhereInput;
-  data: BabyUpdateManyDataInput;
-}
-
-export interface UserCreateOneWithoutBabiesInput {
-  create?: UserCreateWithoutBabiesInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface BabyUpsertWithWhereUniqueWithoutParentInput {
-  where: BabyWhereUniqueInput;
-  update: BabyUpdateWithoutParentDataInput;
-  create: BabyCreateWithoutParentInput;
-}
-
-export interface UserCreateWithoutBabiesInput {
-  email: String;
-  password: String;
-}
-
-export interface BabyUpdateWithoutParentDataInput {
-  name?: String;
-  dob?: DateTimeInput;
-  pictureUrl?: String;
-}
-
-export interface BabyUpdateInput {
-  name?: String;
-  dob?: DateTimeInput;
-  parent?: UserUpdateOneRequiredWithoutBabiesInput;
-  pictureUrl?: String;
+export interface DiaperUpdateWithWhereUniqueNestedInput {
+  where: DiaperWhereUniqueInput;
+  data: DiaperUpdateDataInput;
 }
 
 export interface UserWhereInput {
@@ -327,27 +296,9 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface BabyCreateWithoutParentInput {
-  name: String;
-  dob: DateTimeInput;
-  pictureUrl?: String;
-}
-
-export interface BabyUpdateManyDataInput {
-  name?: String;
-  dob?: DateTimeInput;
-  pictureUrl?: String;
-}
-
-export interface BabyCreateManyWithoutParentInput {
-  create?: BabyCreateWithoutParentInput[] | BabyCreateWithoutParentInput;
-  connect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
-}
-
-export interface BabyUpdateManyMutationInput {
-  name?: String;
-  dob?: DateTimeInput;
-  pictureUrl?: String;
+export interface DiaperUpdateDataInput {
+  type?: DiaperType;
+  time?: DateTimeInput;
 }
 
 export interface BabyWhereInput {
@@ -402,14 +353,80 @@ export interface BabyWhereInput {
   pictureUrl_not_starts_with?: String;
   pictureUrl_ends_with?: String;
   pictureUrl_not_ends_with?: String;
+  diapers_every?: DiaperWhereInput;
+  diapers_some?: DiaperWhereInput;
+  diapers_none?: DiaperWhereInput;
   AND?: BabyWhereInput[] | BabyWhereInput;
   OR?: BabyWhereInput[] | BabyWhereInput;
   NOT?: BabyWhereInput[] | BabyWhereInput;
 }
 
-export interface UserUpdateWithoutBabiesDataInput {
+export interface BabyCreateInput {
+  name: String;
+  dob: DateTimeInput;
+  parent: UserCreateOneWithoutBabiesInput;
+  pictureUrl?: String;
+  diapers?: DiaperCreateManyInput;
+}
+
+export interface DiaperUpdateInput {
+  type?: DiaperType;
+  time?: DateTimeInput;
+}
+
+export interface UserCreateOneWithoutBabiesInput {
+  create?: UserCreateWithoutBabiesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface DiaperUpsertWithWhereUniqueNestedInput {
+  where: DiaperWhereUniqueInput;
+  update: DiaperUpdateDataInput;
+  create: DiaperCreateInput;
+}
+
+export interface UserCreateWithoutBabiesInput {
+  email: String;
+  password: String;
+}
+
+export interface DiaperSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: DiaperWhereInput;
+  AND?: DiaperSubscriptionWhereInput[] | DiaperSubscriptionWhereInput;
+  OR?: DiaperSubscriptionWhereInput[] | DiaperSubscriptionWhereInput;
+  NOT?: DiaperSubscriptionWhereInput[] | DiaperSubscriptionWhereInput;
+}
+
+export interface DiaperCreateManyInput {
+  create?: DiaperCreateInput[] | DiaperCreateInput;
+  connect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
+}
+
+export interface UserUpdateManyMutationInput {
   email?: String;
   password?: String;
+}
+
+export interface DiaperCreateInput {
+  type: DiaperType;
+  time: DateTimeInput;
+}
+
+export interface BabyUpdateManyWithWhereNestedInput {
+  where: BabyScalarWhereInput;
+  data: BabyUpdateManyDataInput;
+}
+
+export interface BabyUpdateInput {
+  name?: String;
+  dob?: DateTimeInput;
+  parent?: UserUpdateOneRequiredWithoutBabiesInput;
+  pictureUrl?: String;
+  diapers?: DiaperUpdateManyInput;
 }
 
 export interface BabyScalarWhereInput {
@@ -468,6 +485,58 @@ export interface BabyScalarWhereInput {
   NOT?: BabyScalarWhereInput[] | BabyScalarWhereInput;
 }
 
+export interface UserUpdateOneRequiredWithoutBabiesInput {
+  create?: UserCreateWithoutBabiesInput;
+  update?: UserUpdateWithoutBabiesDataInput;
+  upsert?: UserUpsertWithoutBabiesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface BabyUpdateWithoutParentDataInput {
+  name?: String;
+  dob?: DateTimeInput;
+  pictureUrl?: String;
+  diapers?: DiaperUpdateManyInput;
+}
+
+export interface BabyCreateManyWithoutParentInput {
+  create?: BabyCreateWithoutParentInput[] | BabyCreateWithoutParentInput;
+  connect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
+}
+
+export interface BabyUpdateWithWhereUniqueWithoutParentInput {
+  where: BabyWhereUniqueInput;
+  data: BabyUpdateWithoutParentDataInput;
+}
+
+export interface UserUpsertWithoutBabiesInput {
+  update: UserUpdateWithoutBabiesDataInput;
+  create: UserCreateWithoutBabiesInput;
+}
+
+export interface UserUpdateInput {
+  email?: String;
+  password?: String;
+  babies?: BabyUpdateManyWithoutParentInput;
+}
+
+export interface DiaperUpdateManyInput {
+  create?: DiaperCreateInput[] | DiaperCreateInput;
+  update?:
+    | DiaperUpdateWithWhereUniqueNestedInput[]
+    | DiaperUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | DiaperUpsertWithWhereUniqueNestedInput[]
+    | DiaperUpsertWithWhereUniqueNestedInput;
+  delete?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
+  connect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
+  disconnect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
+  deleteMany?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
+  updateMany?:
+    | DiaperUpdateManyWithWhereNestedInput[]
+    | DiaperUpdateManyWithWhereNestedInput;
+}
+
 export interface BabySubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -479,15 +548,152 @@ export interface BabySubscriptionWhereInput {
   NOT?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
 }
 
-export interface BabyUpdateWithWhereUniqueWithoutParentInput {
-  where: BabyWhereUniqueInput;
-  data: BabyUpdateWithoutParentDataInput;
+export interface DiaperWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  type?: DiaperType;
+  type_not?: DiaperType;
+  type_in?: DiaperType[] | DiaperType;
+  type_not_in?: DiaperType[] | DiaperType;
+  time?: DateTimeInput;
+  time_not?: DateTimeInput;
+  time_in?: DateTimeInput[] | DateTimeInput;
+  time_not_in?: DateTimeInput[] | DateTimeInput;
+  time_lt?: DateTimeInput;
+  time_lte?: DateTimeInput;
+  time_gt?: DateTimeInput;
+  time_gte?: DateTimeInput;
+  AND?: DiaperWhereInput[] | DiaperWhereInput;
+  OR?: DiaperWhereInput[] | DiaperWhereInput;
+  NOT?: DiaperWhereInput[] | DiaperWhereInput;
+}
+
+export type DiaperWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserCreateInput {
+  email: String;
+  password: String;
+  babies?: BabyCreateManyWithoutParentInput;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   email?: String;
 }>;
+
+export interface DiaperUpdateManyMutationInput {
+  type?: DiaperType;
+  time?: DateTimeInput;
+}
+
+export interface BabyCreateWithoutParentInput {
+  name: String;
+  dob: DateTimeInput;
+  pictureUrl?: String;
+  diapers?: DiaperCreateManyInput;
+}
+
+export interface BabyUpdateManyMutationInput {
+  name?: String;
+  dob?: DateTimeInput;
+  pictureUrl?: String;
+}
+
+export interface DiaperUpdateManyDataInput {
+  type?: DiaperType;
+  time?: DateTimeInput;
+}
+
+export interface DiaperUpdateManyWithWhereNestedInput {
+  where: DiaperScalarWhereInput;
+  data: DiaperUpdateManyDataInput;
+}
+
+export interface DiaperScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  type?: DiaperType;
+  type_not?: DiaperType;
+  type_in?: DiaperType[] | DiaperType;
+  type_not_in?: DiaperType[] | DiaperType;
+  time?: DateTimeInput;
+  time_not?: DateTimeInput;
+  time_in?: DateTimeInput[] | DateTimeInput;
+  time_not_in?: DateTimeInput[] | DateTimeInput;
+  time_lt?: DateTimeInput;
+  time_lte?: DateTimeInput;
+  time_gt?: DateTimeInput;
+  time_gte?: DateTimeInput;
+  AND?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
+  OR?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
+  NOT?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface BabyUpdateManyWithoutParentInput {
+  create?: BabyCreateWithoutParentInput[] | BabyCreateWithoutParentInput;
+  delete?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
+  connect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
+  disconnect?: BabyWhereUniqueInput[] | BabyWhereUniqueInput;
+  update?:
+    | BabyUpdateWithWhereUniqueWithoutParentInput[]
+    | BabyUpdateWithWhereUniqueWithoutParentInput;
+  upsert?:
+    | BabyUpsertWithWhereUniqueWithoutParentInput[]
+    | BabyUpsertWithWhereUniqueWithoutParentInput;
+  deleteMany?: BabyScalarWhereInput[] | BabyScalarWhereInput;
+  updateMany?:
+    | BabyUpdateManyWithWhereNestedInput[]
+    | BabyUpdateManyWithWhereNestedInput;
+}
+
+export interface BabyUpsertWithWhereUniqueWithoutParentInput {
+  where: BabyWhereUniqueInput;
+  update: BabyUpdateWithoutParentDataInput;
+  create: BabyCreateWithoutParentInput;
+}
+
+export interface BabyUpdateManyDataInput {
+  name?: String;
+  dob?: DateTimeInput;
+  pictureUrl?: String;
+}
 
 export interface NodeNode {
   id: ID_Output;
@@ -515,6 +721,65 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
+export interface DiaperEdge {
+  node: Diaper;
+  cursor: String;
+}
+
+export interface DiaperEdgePromise extends Promise<DiaperEdge>, Fragmentable {
+  node: <T = DiaperPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface DiaperEdgeSubscription
+  extends Promise<AsyncIterator<DiaperEdge>>,
+    Fragmentable {
+  node: <T = DiaperSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BabyConnection {
+  pageInfo: PageInfo;
+  edges: BabyEdge[];
+}
+
+export interface BabyConnectionPromise
+  extends Promise<BabyConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BabyEdge>>() => T;
+  aggregate: <T = AggregateBabyPromise>() => T;
+}
+
+export interface BabyConnectionSubscription
+  extends Promise<AsyncIterator<BabyConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BabyEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBabySubscription>() => T;
+}
+
+export interface DiaperConnection {
+  pageInfo: PageInfo;
+  edges: DiaperEdge[];
+}
+
+export interface DiaperConnectionPromise
+  extends Promise<DiaperConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DiaperEdge>>() => T;
+  aggregate: <T = AggregateDiaperPromise>() => T;
+}
+
+export interface DiaperConnectionSubscription
+  extends Promise<AsyncIterator<DiaperConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DiaperEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDiaperSubscription>() => T;
+}
+
 export interface AggregateBaby {
   count: Int;
 }
@@ -531,46 +796,20 @@ export interface AggregateBabySubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Baby {
-  id: ID_Output;
-  name: String;
-  dob: DateTimeOutput;
-  pictureUrl?: String;
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface BabyPromise extends Promise<Baby>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  dob: () => Promise<DateTimeOutput>;
-  parent: <T = UserPromise>() => T;
-  pictureUrl: () => Promise<String>;
-}
-
-export interface BabySubscription
-  extends Promise<AsyncIterator<Baby>>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  dob: () => Promise<AsyncIterator<DateTimeOutput>>;
-  parent: <T = UserSubscription>() => T;
-  pictureUrl: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Long>;
 }
 
-export interface BabyEdge {
-  node: Baby;
-  cursor: String;
-}
-
-export interface BabyEdgePromise extends Promise<BabyEdge>, Fragmentable {
-  node: <T = BabyPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface BabyEdgeSubscription
-  extends Promise<AsyncIterator<BabyEdge>>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  node: <T = BabySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface User {
@@ -615,6 +854,23 @@ export interface UserSubscription
   ) => T;
 }
 
+export interface BabyEdge {
+  node: Baby;
+  cursor: String;
+}
+
+export interface BabyEdgePromise extends Promise<BabyEdge>, Fragmentable {
+  node: <T = BabyPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BabyEdgeSubscription
+  extends Promise<AsyncIterator<BabyEdge>>,
+    Fragmentable {
+  node: <T = BabySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface AggregateUser {
   count: Int;
 }
@@ -631,131 +887,66 @@ export interface AggregateUserSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface BabySubscriptionPayload {
+export interface DiaperSubscriptionPayload {
   mutation: MutationType;
-  node: Baby;
+  node: Diaper;
   updatedFields: String[];
-  previousValues: BabyPreviousValues;
+  previousValues: DiaperPreviousValues;
 }
 
-export interface BabySubscriptionPayloadPromise
-  extends Promise<BabySubscriptionPayload>,
+export interface DiaperSubscriptionPayloadPromise
+  extends Promise<DiaperSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = BabyPromise>() => T;
+  node: <T = DiaperPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = BabyPreviousValuesPromise>() => T;
+  previousValues: <T = DiaperPreviousValuesPromise>() => T;
 }
 
-export interface BabySubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<BabySubscriptionPayload>>,
+export interface DiaperSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<DiaperSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = BabySubscription>() => T;
+  node: <T = DiaperSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = BabyPreviousValuesSubscription>() => T;
+  previousValues: <T = DiaperPreviousValuesSubscription>() => T;
 }
 
-export interface BabyConnection {
+export interface UserConnection {
   pageInfo: PageInfo;
-  edges: BabyEdge[];
+  edges: UserEdge[];
 }
 
-export interface BabyConnectionPromise
-  extends Promise<BabyConnection>,
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<BabyEdge>>() => T;
-  aggregate: <T = AggregateBabyPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface BabyConnectionSubscription
-  extends Promise<AsyncIterator<BabyConnection>>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<BabyEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateBabySubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+export interface AggregateDiaper {
+  count: Int;
 }
 
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
+export interface AggregateDiaperPromise
+  extends Promise<AggregateDiaper>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
 }
 
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface AggregateDiaperSubscription
+  extends Promise<AsyncIterator<AggregateDiaper>>,
     Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface BabyPreviousValues {
@@ -783,39 +974,191 @@ export interface BabyPreviousValuesSubscription
   pictureUrl: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
+export interface BabySubscriptionPayload {
+  mutation: MutationType;
+  node: Baby;
+  updatedFields: String[];
+  previousValues: BabyPreviousValues;
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface BabySubscriptionPayloadPromise
+  extends Promise<BabySubscriptionPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  mutation: () => Promise<MutationType>;
+  node: <T = BabyPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BabyPreviousValuesPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface BabySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BabySubscriptionPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BabySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BabyPreviousValuesSubscription>() => T;
+}
+
+export interface Baby {
+  id: ID_Output;
+  name: String;
+  dob: DateTimeOutput;
+  pictureUrl?: String;
+}
+
+export interface BabyPromise extends Promise<Baby>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  dob: () => Promise<DateTimeOutput>;
+  parent: <T = UserPromise>() => T;
+  pictureUrl: () => Promise<String>;
+  diapers: <T = FragmentableArray<Diaper>>(
+    args?: {
+      where?: DiaperWhereInput;
+      orderBy?: DiaperOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface BabySubscription
+  extends Promise<AsyncIterator<Baby>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  dob: () => Promise<AsyncIterator<DateTimeOutput>>;
+  parent: <T = UserSubscription>() => T;
+  pictureUrl: () => Promise<AsyncIterator<String>>;
+  diapers: <T = Promise<AsyncIterator<DiaperSubscription>>>(
+    args?: {
+      where?: DiaperWhereInput;
+      orderBy?: DiaperOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface DiaperPreviousValues {
+  id: ID_Output;
+  type: DiaperType;
+  time: DateTimeOutput;
+}
+
+export interface DiaperPreviousValuesPromise
+  extends Promise<DiaperPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  type: () => Promise<DiaperType>;
+  time: () => Promise<DateTimeOutput>;
+}
+
+export interface DiaperPreviousValuesSubscription
+  extends Promise<AsyncIterator<DiaperPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  type: () => Promise<AsyncIterator<DiaperType>>;
+  time: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Diaper {
+  id: ID_Output;
+  type: DiaperType;
+  time: DateTimeOutput;
+}
+
+export interface DiaperPromise extends Promise<Diaper>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  type: () => Promise<DiaperType>;
+  time: () => Promise<DateTimeOutput>;
+}
+
+export interface DiaperSubscription
+  extends Promise<AsyncIterator<Diaper>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  type: () => Promise<AsyncIterator<DiaperType>>;
+  time: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
-export type Boolean = boolean;
+export type Int = number;
 
 export type Long = string;
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -828,14 +1171,20 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
+/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type Int = number;
+export type Boolean = boolean;
 
 /**
  * Model Metadata
@@ -844,6 +1193,14 @@ export type Int = number;
 export const models: Model[] = [
   {
     name: "Baby",
+    embedded: false
+  },
+  {
+    name: "Diaper",
+    embedded: false
+  },
+  {
+    name: "DiaperType",
     embedded: false
   },
   {

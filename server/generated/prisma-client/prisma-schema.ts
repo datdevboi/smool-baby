@@ -2,6 +2,10 @@ export const typeDefs = /* GraphQL */ `type AggregateBaby {
   count: Int!
 }
 
+type AggregateDiaper {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -12,6 +16,7 @@ type Baby {
   dob: DateTime!
   parent: User!
   pictureUrl: String
+  diapers(where: DiaperWhereInput, orderBy: DiaperOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Diaper!]
 }
 
 type BabyConnection {
@@ -25,6 +30,7 @@ input BabyCreateInput {
   dob: DateTime!
   parent: UserCreateOneWithoutBabiesInput!
   pictureUrl: String
+  diapers: DiaperCreateManyInput
 }
 
 input BabyCreateManyWithoutParentInput {
@@ -36,6 +42,7 @@ input BabyCreateWithoutParentInput {
   name: String!
   dob: DateTime!
   pictureUrl: String
+  diapers: DiaperCreateManyInput
 }
 
 type BabyEdge {
@@ -144,6 +151,7 @@ input BabyUpdateInput {
   dob: DateTime
   parent: UserUpdateOneRequiredWithoutBabiesInput
   pictureUrl: String
+  diapers: DiaperUpdateManyInput
 }
 
 input BabyUpdateManyDataInput {
@@ -178,6 +186,7 @@ input BabyUpdateWithoutParentDataInput {
   name: String
   dob: DateTime
   pictureUrl: String
+  diapers: DiaperUpdateManyInput
 }
 
 input BabyUpdateWithWhereUniqueWithoutParentInput {
@@ -243,6 +252,9 @@ input BabyWhereInput {
   pictureUrl_not_starts_with: String
   pictureUrl_ends_with: String
   pictureUrl_not_ends_with: String
+  diapers_every: DiaperWhereInput
+  diapers_some: DiaperWhereInput
+  diapers_none: DiaperWhereInput
   AND: [BabyWhereInput!]
   OR: [BabyWhereInput!]
   NOT: [BabyWhereInput!]
@@ -258,6 +270,191 @@ type BatchPayload {
 
 scalar DateTime
 
+type Diaper {
+  id: ID!
+  type: DiaperType!
+  time: DateTime!
+}
+
+type DiaperConnection {
+  pageInfo: PageInfo!
+  edges: [DiaperEdge]!
+  aggregate: AggregateDiaper!
+}
+
+input DiaperCreateInput {
+  type: DiaperType!
+  time: DateTime!
+}
+
+input DiaperCreateManyInput {
+  create: [DiaperCreateInput!]
+  connect: [DiaperWhereUniqueInput!]
+}
+
+type DiaperEdge {
+  node: Diaper!
+  cursor: String!
+}
+
+enum DiaperOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  time_ASC
+  time_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type DiaperPreviousValues {
+  id: ID!
+  type: DiaperType!
+  time: DateTime!
+}
+
+input DiaperScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: DiaperType
+  type_not: DiaperType
+  type_in: [DiaperType!]
+  type_not_in: [DiaperType!]
+  time: DateTime
+  time_not: DateTime
+  time_in: [DateTime!]
+  time_not_in: [DateTime!]
+  time_lt: DateTime
+  time_lte: DateTime
+  time_gt: DateTime
+  time_gte: DateTime
+  AND: [DiaperScalarWhereInput!]
+  OR: [DiaperScalarWhereInput!]
+  NOT: [DiaperScalarWhereInput!]
+}
+
+type DiaperSubscriptionPayload {
+  mutation: MutationType!
+  node: Diaper
+  updatedFields: [String!]
+  previousValues: DiaperPreviousValues
+}
+
+input DiaperSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: DiaperWhereInput
+  AND: [DiaperSubscriptionWhereInput!]
+  OR: [DiaperSubscriptionWhereInput!]
+  NOT: [DiaperSubscriptionWhereInput!]
+}
+
+enum DiaperType {
+  Mixed
+  Pee
+  Poop
+}
+
+input DiaperUpdateDataInput {
+  type: DiaperType
+  time: DateTime
+}
+
+input DiaperUpdateInput {
+  type: DiaperType
+  time: DateTime
+}
+
+input DiaperUpdateManyDataInput {
+  type: DiaperType
+  time: DateTime
+}
+
+input DiaperUpdateManyInput {
+  create: [DiaperCreateInput!]
+  update: [DiaperUpdateWithWhereUniqueNestedInput!]
+  upsert: [DiaperUpsertWithWhereUniqueNestedInput!]
+  delete: [DiaperWhereUniqueInput!]
+  connect: [DiaperWhereUniqueInput!]
+  disconnect: [DiaperWhereUniqueInput!]
+  deleteMany: [DiaperScalarWhereInput!]
+  updateMany: [DiaperUpdateManyWithWhereNestedInput!]
+}
+
+input DiaperUpdateManyMutationInput {
+  type: DiaperType
+  time: DateTime
+}
+
+input DiaperUpdateManyWithWhereNestedInput {
+  where: DiaperScalarWhereInput!
+  data: DiaperUpdateManyDataInput!
+}
+
+input DiaperUpdateWithWhereUniqueNestedInput {
+  where: DiaperWhereUniqueInput!
+  data: DiaperUpdateDataInput!
+}
+
+input DiaperUpsertWithWhereUniqueNestedInput {
+  where: DiaperWhereUniqueInput!
+  update: DiaperUpdateDataInput!
+  create: DiaperCreateInput!
+}
+
+input DiaperWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: DiaperType
+  type_not: DiaperType
+  type_in: [DiaperType!]
+  type_not_in: [DiaperType!]
+  time: DateTime
+  time_not: DateTime
+  time_in: [DateTime!]
+  time_not_in: [DateTime!]
+  time_lt: DateTime
+  time_lte: DateTime
+  time_gt: DateTime
+  time_gte: DateTime
+  AND: [DiaperWhereInput!]
+  OR: [DiaperWhereInput!]
+  NOT: [DiaperWhereInput!]
+}
+
+input DiaperWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
@@ -267,6 +464,12 @@ type Mutation {
   upsertBaby(where: BabyWhereUniqueInput!, create: BabyCreateInput!, update: BabyUpdateInput!): Baby!
   deleteBaby(where: BabyWhereUniqueInput!): Baby
   deleteManyBabies(where: BabyWhereInput): BatchPayload!
+  createDiaper(data: DiaperCreateInput!): Diaper!
+  updateDiaper(data: DiaperUpdateInput!, where: DiaperWhereUniqueInput!): Diaper
+  updateManyDiapers(data: DiaperUpdateManyMutationInput!, where: DiaperWhereInput): BatchPayload!
+  upsertDiaper(where: DiaperWhereUniqueInput!, create: DiaperCreateInput!, update: DiaperUpdateInput!): Diaper!
+  deleteDiaper(where: DiaperWhereUniqueInput!): Diaper
+  deleteManyDiapers(where: DiaperWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -296,6 +499,9 @@ type Query {
   baby(where: BabyWhereUniqueInput!): Baby
   babies(where: BabyWhereInput, orderBy: BabyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Baby]!
   babiesConnection(where: BabyWhereInput, orderBy: BabyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BabyConnection!
+  diaper(where: DiaperWhereUniqueInput!): Diaper
+  diapers(where: DiaperWhereInput, orderBy: DiaperOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Diaper]!
+  diapersConnection(where: DiaperWhereInput, orderBy: DiaperOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DiaperConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -304,6 +510,7 @@ type Query {
 
 type Subscription {
   baby(where: BabySubscriptionWhereInput): BabySubscriptionPayload
+  diaper(where: DiaperSubscriptionWhereInput): DiaperSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

@@ -5,10 +5,23 @@ type User {
   babies: [Baby!]!
 }
 
+enum DiaperType {
+  Mixed
+  Pee
+  Poop
+}
+
+type Diaper {
+  id: ID! @unique
+  type: DiaperType!
+  time: DateTime!
+}
+
 type Baby {
   id: ID! @unique
   name: String!
   dob: DateTime!
   parent: User!
   pictureUrl: String
+  diapers: [Diaper!]
 }
