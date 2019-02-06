@@ -18,11 +18,17 @@ type Diaper {
   baby: Baby!
 }
 
+type Bath {
+  time: DateTime!
+  baby: Baby!
+}
+
 type Baby {
   id: ID! @unique
   name: String!
   dob: DateTime!
   parent: User!
   pictureUrl: String
-  diapers: [Diaper!]
+  diapers: [Diaper!]!
+  baths: [Bath!]!
 }
