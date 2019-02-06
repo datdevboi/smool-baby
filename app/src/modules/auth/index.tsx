@@ -1,21 +1,34 @@
 import * as React from "react";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
 
 import { LoaderScreen } from "react-native-ui-lib";
-import { SecureStore } from "expo";
+
+const ME_QUERY = gql`
+  query {
+    me {
+      email
+    }
+  }
+`;
 
 export class AuthLoadingScreen extends React.Component<any> {
-  constructor(props) {
-    super(props);
-
-    this._bootstrapAsync();
-  }
-
-  _bootstrapAsync = async () => {
-    const userToken = await SecureStore.getItemAsync("sid");
-
-    this.props.navigation.navigate(userToken ? "Main" : "Login");
-  };
   render() {
-    return <LoaderScreen loaderColor="blue" message="Loading..." />;
+    return (
+      <Query
+        query={ME_QUERY}
+        onCompleted={data => {
+          if (data.me.email) {
+            this.props.navigation.navigate("Main");
+          } else {
+            this.props.navigation.navigate("Login");
+          }
+        }}
+      >
+        {({ data, loading }) => {
+          return <LoaderScreen loaderColor="blue" message="Loading..." />;
+        }}
+      </Query>
+    );
   }
 }
