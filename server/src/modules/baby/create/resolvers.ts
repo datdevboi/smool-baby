@@ -28,32 +28,32 @@ export const resolvers: IResolvers = {
   Mutation: {
     createBaby: async (_, args, { prisma, res, req }) => {
       const pictureUrl = await processUpload(args.input.picture);
-      console.log(pictureUrl);
-      console.log(args.input.name);
 
-      // const query = `
-      //   mutation createBaby($name: String!, $dob: DateTime!, $userId: ID!) {
-      //     createBaby(data: {
-      //       name: $name,
-      //       dob: $dob,
-      //       parent: {
-      //         connect: {
-      //           id: $userId
-      //         }
-      //       }
-      //     }) {
-      //       name
-      //       dob
-      //     }
-      //   }
+      const query = `
+        mutation createBaby($name: String!, $dob: DateTime!, $userId: ID!, $pictureUrl: String!) {
+          createBaby(data: {
+            name: $name,
+            dob: $dob,
+            pictureUrl: $pictureUrl,
+            parent: {
+              connect: {
+                id: $userId
+              }
+            }
+          }) {
+            name
+            dob
+          }
+        }
 
-      // `;
+      `;
 
-      // const baby = await prisma.$graphql(query, {
-      //   name: args.input.name,
-      //   dob: args.input.dob,
-      //   userId: req.userId
-      // });
+      const baby = await prisma.$graphql(query, {
+        name: args.input.name,
+        dob: args.input.dob,
+        userId: req.userId,
+        pictureUrl
+      });
 
       return true;
     }
