@@ -1,0 +1,15 @@
+enum DiaperType {
+  Mixed
+  Pee
+  Poop
+}
+
+type Diaper {
+  id: ID!
+  type: DiaperType!
+  time: DateTime!
+}
+
+type Mutation {
+  addDiaper(babyId: ID!, type: DiaperType!, time: DateTime!): Boolean!
+}
