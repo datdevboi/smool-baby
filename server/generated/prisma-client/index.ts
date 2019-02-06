@@ -231,18 +231,45 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpdateWithoutBabiesDataInput {
-  email?: String;
-  password?: String;
+export interface DiaperUpdateWithWhereUniqueWithoutBabyInput {
+  where: DiaperWhereUniqueInput;
+  data: DiaperUpdateWithoutBabyDataInput;
 }
 
 export type BabyWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface DiaperUpdateWithWhereUniqueNestedInput {
-  where: DiaperWhereUniqueInput;
-  data: DiaperUpdateDataInput;
+export interface DiaperScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  type?: DiaperType;
+  type_not?: DiaperType;
+  type_in?: DiaperType[] | DiaperType;
+  type_not_in?: DiaperType[] | DiaperType;
+  time?: DateTimeInput;
+  time_not?: DateTimeInput;
+  time_in?: DateTimeInput[] | DateTimeInput;
+  time_not_in?: DateTimeInput[] | DateTimeInput;
+  time_lt?: DateTimeInput;
+  time_lte?: DateTimeInput;
+  time_gt?: DateTimeInput;
+  time_gte?: DateTimeInput;
+  AND?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
+  OR?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
+  NOT?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
 }
 
 export interface UserWhereInput {
@@ -296,9 +323,9 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface DiaperUpdateDataInput {
-  type?: DiaperType;
-  time?: DateTimeInput;
+export interface DiaperUpdateManyWithWhereNestedInput {
+  where: DiaperScalarWhereInput;
+  data: DiaperUpdateManyDataInput;
 }
 
 export interface BabyWhereInput {
@@ -361,33 +388,34 @@ export interface BabyWhereInput {
   NOT?: BabyWhereInput[] | BabyWhereInput;
 }
 
-export interface BabyCreateInput {
-  name: String;
-  dob: DateTimeInput;
-  parent: UserCreateOneWithoutBabiesInput;
-  pictureUrl?: String;
-  diapers?: DiaperCreateManyInput;
+export interface DiaperCreateManyWithoutBabyInput {
+  create?: DiaperCreateWithoutBabyInput[] | DiaperCreateWithoutBabyInput;
+  connect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
 }
 
-export interface DiaperUpdateInput {
+export interface BabyUpdateOneRequiredWithoutDiapersInput {
+  create?: BabyCreateWithoutDiapersInput;
+  update?: BabyUpdateWithoutDiapersDataInput;
+  upsert?: BabyUpsertWithoutDiapersInput;
+  connect?: BabyWhereUniqueInput;
+}
+
+export interface DiaperCreateWithoutBabyInput {
+  type: DiaperType;
+  time: DateTimeInput;
+}
+
+export interface DiaperUpdateManyDataInput {
   type?: DiaperType;
   time?: DateTimeInput;
 }
 
-export interface UserCreateOneWithoutBabiesInput {
-  create?: UserCreateWithoutBabiesInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface DiaperUpsertWithWhereUniqueNestedInput {
-  where: DiaperWhereUniqueInput;
-  update: DiaperUpdateDataInput;
-  create: DiaperCreateInput;
-}
-
-export interface UserCreateWithoutBabiesInput {
-  email: String;
-  password: String;
+export interface BabyUpdateInput {
+  name?: String;
+  dob?: DateTimeInput;
+  parent?: UserUpdateOneRequiredWithoutBabiesInput;
+  pictureUrl?: String;
+  diapers?: DiaperUpdateManyWithoutBabyInput;
 }
 
 export interface DiaperSubscriptionWhereInput {
@@ -401,9 +429,11 @@ export interface DiaperSubscriptionWhereInput {
   NOT?: DiaperSubscriptionWhereInput[] | DiaperSubscriptionWhereInput;
 }
 
-export interface DiaperCreateManyInput {
-  create?: DiaperCreateInput[] | DiaperCreateInput;
-  connect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
+export interface UserUpdateOneRequiredWithoutBabiesInput {
+  create?: UserCreateWithoutBabiesInput;
+  update?: UserUpdateWithoutBabiesDataInput;
+  upsert?: UserUpsertWithoutBabiesInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -411,9 +441,9 @@ export interface UserUpdateManyMutationInput {
   password?: String;
 }
 
-export interface DiaperCreateInput {
-  type: DiaperType;
-  time: DateTimeInput;
+export interface UserUpdateWithoutBabiesDataInput {
+  email?: String;
+  password?: String;
 }
 
 export interface BabyUpdateManyWithWhereNestedInput {
@@ -421,12 +451,9 @@ export interface BabyUpdateManyWithWhereNestedInput {
   data: BabyUpdateManyDataInput;
 }
 
-export interface BabyUpdateInput {
-  name?: String;
-  dob?: DateTimeInput;
-  parent?: UserUpdateOneRequiredWithoutBabiesInput;
-  pictureUrl?: String;
-  diapers?: DiaperUpdateManyInput;
+export interface UserUpsertWithoutBabiesInput {
+  update: UserUpdateWithoutBabiesDataInput;
+  create: UserCreateWithoutBabiesInput;
 }
 
 export interface BabyScalarWhereInput {
@@ -485,18 +512,28 @@ export interface BabyScalarWhereInput {
   NOT?: BabyScalarWhereInput[] | BabyScalarWhereInput;
 }
 
-export interface UserUpdateOneRequiredWithoutBabiesInput {
-  create?: UserCreateWithoutBabiesInput;
-  update?: UserUpdateWithoutBabiesDataInput;
-  upsert?: UserUpsertWithoutBabiesInput;
-  connect?: UserWhereUniqueInput;
+export interface DiaperUpdateManyWithoutBabyInput {
+  create?: DiaperCreateWithoutBabyInput[] | DiaperCreateWithoutBabyInput;
+  delete?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
+  connect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
+  disconnect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
+  update?:
+    | DiaperUpdateWithWhereUniqueWithoutBabyInput[]
+    | DiaperUpdateWithWhereUniqueWithoutBabyInput;
+  upsert?:
+    | DiaperUpsertWithWhereUniqueWithoutBabyInput[]
+    | DiaperUpsertWithWhereUniqueWithoutBabyInput;
+  deleteMany?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
+  updateMany?:
+    | DiaperUpdateManyWithWhereNestedInput[]
+    | DiaperUpdateManyWithWhereNestedInput;
 }
 
 export interface BabyUpdateWithoutParentDataInput {
   name?: String;
   dob?: DateTimeInput;
   pictureUrl?: String;
-  diapers?: DiaperUpdateManyInput;
+  diapers?: DiaperUpdateManyWithoutBabyInput;
 }
 
 export interface BabyCreateManyWithoutParentInput {
@@ -509,9 +546,9 @@ export interface BabyUpdateWithWhereUniqueWithoutParentInput {
   data: BabyUpdateWithoutParentDataInput;
 }
 
-export interface UserUpsertWithoutBabiesInput {
-  update: UserUpdateWithoutBabiesDataInput;
-  create: UserCreateWithoutBabiesInput;
+export interface DiaperUpdateWithoutBabyDataInput {
+  type?: DiaperType;
+  time?: DateTimeInput;
 }
 
 export interface UserUpdateInput {
@@ -520,32 +557,15 @@ export interface UserUpdateInput {
   babies?: BabyUpdateManyWithoutParentInput;
 }
 
-export interface DiaperUpdateManyInput {
-  create?: DiaperCreateInput[] | DiaperCreateInput;
-  update?:
-    | DiaperUpdateWithWhereUniqueNestedInput[]
-    | DiaperUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | DiaperUpsertWithWhereUniqueNestedInput[]
-    | DiaperUpsertWithWhereUniqueNestedInput;
-  delete?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
-  connect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
-  disconnect?: DiaperWhereUniqueInput[] | DiaperWhereUniqueInput;
-  deleteMany?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
-  updateMany?:
-    | DiaperUpdateManyWithWhereNestedInput[]
-    | DiaperUpdateManyWithWhereNestedInput;
+export interface DiaperUpsertWithWhereUniqueWithoutBabyInput {
+  where: DiaperWhereUniqueInput;
+  update: DiaperUpdateWithoutBabyDataInput;
+  create: DiaperCreateWithoutBabyInput;
 }
 
-export interface BabySubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: BabyWhereInput;
-  AND?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
-  OR?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
-  NOT?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
+export interface UserCreateOneWithoutBabiesInput {
+  create?: UserCreateWithoutBabiesInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface DiaperWhereInput {
@@ -575,84 +595,10 @@ export interface DiaperWhereInput {
   time_lte?: DateTimeInput;
   time_gt?: DateTimeInput;
   time_gte?: DateTimeInput;
+  baby?: BabyWhereInput;
   AND?: DiaperWhereInput[] | DiaperWhereInput;
   OR?: DiaperWhereInput[] | DiaperWhereInput;
   NOT?: DiaperWhereInput[] | DiaperWhereInput;
-}
-
-export type DiaperWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserCreateInput {
-  email: String;
-  password: String;
-  babies?: BabyCreateManyWithoutParentInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export interface DiaperUpdateManyMutationInput {
-  type?: DiaperType;
-  time?: DateTimeInput;
-}
-
-export interface BabyCreateWithoutParentInput {
-  name: String;
-  dob: DateTimeInput;
-  pictureUrl?: String;
-  diapers?: DiaperCreateManyInput;
-}
-
-export interface BabyUpdateManyMutationInput {
-  name?: String;
-  dob?: DateTimeInput;
-  pictureUrl?: String;
-}
-
-export interface DiaperUpdateManyDataInput {
-  type?: DiaperType;
-  time?: DateTimeInput;
-}
-
-export interface DiaperUpdateManyWithWhereNestedInput {
-  where: DiaperScalarWhereInput;
-  data: DiaperUpdateManyDataInput;
-}
-
-export interface DiaperScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  type?: DiaperType;
-  type_not?: DiaperType;
-  type_in?: DiaperType[] | DiaperType;
-  type_not_in?: DiaperType[] | DiaperType;
-  time?: DateTimeInput;
-  time_not?: DateTimeInput;
-  time_in?: DateTimeInput[] | DateTimeInput;
-  time_not_in?: DateTimeInput[] | DateTimeInput;
-  time_lt?: DateTimeInput;
-  time_lte?: DateTimeInput;
-  time_gt?: DateTimeInput;
-  time_gte?: DateTimeInput;
-  AND?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
-  OR?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
-  NOT?: DiaperScalarWhereInput[] | DiaperScalarWhereInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -664,6 +610,35 @@ export interface UserSubscriptionWhereInput {
   AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
   OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
   NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface UserCreateInput {
+  email: String;
+  password: String;
+  babies?: BabyCreateManyWithoutParentInput;
+}
+
+export interface BabyUpdateManyDataInput {
+  name?: String;
+  dob?: DateTimeInput;
+  pictureUrl?: String;
+}
+
+export interface DiaperUpdateManyMutationInput {
+  type?: DiaperType;
+  time?: DateTimeInput;
+}
+
+export interface BabyUpsertWithWhereUniqueWithoutParentInput {
+  where: BabyWhereUniqueInput;
+  update: BabyUpdateWithoutParentDataInput;
+  create: BabyCreateWithoutParentInput;
+}
+
+export interface BabyUpdateManyMutationInput {
+  name?: String;
+  dob?: DateTimeInput;
+  pictureUrl?: String;
 }
 
 export interface BabyUpdateManyWithoutParentInput {
@@ -683,17 +658,81 @@ export interface BabyUpdateManyWithoutParentInput {
     | BabyUpdateManyWithWhereNestedInput;
 }
 
-export interface BabyUpsertWithWhereUniqueWithoutParentInput {
-  where: BabyWhereUniqueInput;
-  update: BabyUpdateWithoutParentDataInput;
-  create: BabyCreateWithoutParentInput;
+export interface BabyUpsertWithoutDiapersInput {
+  update: BabyUpdateWithoutDiapersDataInput;
+  create: BabyCreateWithoutDiapersInput;
 }
 
-export interface BabyUpdateManyDataInput {
+export interface BabyCreateInput {
+  name: String;
+  dob: DateTimeInput;
+  parent: UserCreateOneWithoutBabiesInput;
+  pictureUrl?: String;
+  diapers?: DiaperCreateManyWithoutBabyInput;
+}
+
+export interface BabyUpdateWithoutDiapersDataInput {
   name?: String;
   dob?: DateTimeInput;
+  parent?: UserUpdateOneRequiredWithoutBabiesInput;
   pictureUrl?: String;
 }
+
+export interface BabySubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: BabyWhereInput;
+  AND?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
+  OR?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
+  NOT?: BabySubscriptionWhereInput[] | BabySubscriptionWhereInput;
+}
+
+export interface DiaperUpdateInput {
+  type?: DiaperType;
+  time?: DateTimeInput;
+  baby?: BabyUpdateOneRequiredWithoutDiapersInput;
+}
+
+export interface BabyCreateWithoutDiapersInput {
+  name: String;
+  dob: DateTimeInput;
+  parent: UserCreateOneWithoutBabiesInput;
+  pictureUrl?: String;
+}
+
+export interface BabyCreateOneWithoutDiapersInput {
+  create?: BabyCreateWithoutDiapersInput;
+  connect?: BabyWhereUniqueInput;
+}
+
+export interface DiaperCreateInput {
+  type: DiaperType;
+  time: DateTimeInput;
+  baby: BabyCreateOneWithoutDiapersInput;
+}
+
+export type DiaperWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserCreateWithoutBabiesInput {
+  email: String;
+  password: String;
+}
+
+export interface BabyCreateWithoutParentInput {
+  name: String;
+  dob: DateTimeInput;
+  pictureUrl?: String;
+  diapers?: DiaperCreateManyWithoutBabyInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
 
 export interface NodeNode {
   id: ID_Output;
@@ -1143,6 +1182,7 @@ export interface DiaperPromise extends Promise<Diaper>, Fragmentable {
   id: () => Promise<ID_Output>;
   type: () => Promise<DiaperType>;
   time: () => Promise<DateTimeOutput>;
+  baby: <T = BabyPromise>() => T;
 }
 
 export interface DiaperSubscription
@@ -1151,6 +1191,7 @@ export interface DiaperSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   type: () => Promise<AsyncIterator<DiaperType>>;
   time: () => Promise<AsyncIterator<DateTimeOutput>>;
+  baby: <T = BabySubscription>() => T;
 }
 
 /*

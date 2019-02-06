@@ -30,7 +30,7 @@ input BabyCreateInput {
   dob: DateTime!
   parent: UserCreateOneWithoutBabiesInput!
   pictureUrl: String
-  diapers: DiaperCreateManyInput
+  diapers: DiaperCreateManyWithoutBabyInput
 }
 
 input BabyCreateManyWithoutParentInput {
@@ -38,11 +38,23 @@ input BabyCreateManyWithoutParentInput {
   connect: [BabyWhereUniqueInput!]
 }
 
+input BabyCreateOneWithoutDiapersInput {
+  create: BabyCreateWithoutDiapersInput
+  connect: BabyWhereUniqueInput
+}
+
+input BabyCreateWithoutDiapersInput {
+  name: String!
+  dob: DateTime!
+  parent: UserCreateOneWithoutBabiesInput!
+  pictureUrl: String
+}
+
 input BabyCreateWithoutParentInput {
   name: String!
   dob: DateTime!
   pictureUrl: String
-  diapers: DiaperCreateManyInput
+  diapers: DiaperCreateManyWithoutBabyInput
 }
 
 type BabyEdge {
@@ -151,7 +163,7 @@ input BabyUpdateInput {
   dob: DateTime
   parent: UserUpdateOneRequiredWithoutBabiesInput
   pictureUrl: String
-  diapers: DiaperUpdateManyInput
+  diapers: DiaperUpdateManyWithoutBabyInput
 }
 
 input BabyUpdateManyDataInput {
@@ -182,16 +194,35 @@ input BabyUpdateManyWithWhereNestedInput {
   data: BabyUpdateManyDataInput!
 }
 
+input BabyUpdateOneRequiredWithoutDiapersInput {
+  create: BabyCreateWithoutDiapersInput
+  update: BabyUpdateWithoutDiapersDataInput
+  upsert: BabyUpsertWithoutDiapersInput
+  connect: BabyWhereUniqueInput
+}
+
+input BabyUpdateWithoutDiapersDataInput {
+  name: String
+  dob: DateTime
+  parent: UserUpdateOneRequiredWithoutBabiesInput
+  pictureUrl: String
+}
+
 input BabyUpdateWithoutParentDataInput {
   name: String
   dob: DateTime
   pictureUrl: String
-  diapers: DiaperUpdateManyInput
+  diapers: DiaperUpdateManyWithoutBabyInput
 }
 
 input BabyUpdateWithWhereUniqueWithoutParentInput {
   where: BabyWhereUniqueInput!
   data: BabyUpdateWithoutParentDataInput!
+}
+
+input BabyUpsertWithoutDiapersInput {
+  update: BabyUpdateWithoutDiapersDataInput!
+  create: BabyCreateWithoutDiapersInput!
 }
 
 input BabyUpsertWithWhereUniqueWithoutParentInput {
@@ -274,6 +305,7 @@ type Diaper {
   id: ID!
   type: DiaperType!
   time: DateTime!
+  baby: Baby!
 }
 
 type DiaperConnection {
@@ -285,11 +317,17 @@ type DiaperConnection {
 input DiaperCreateInput {
   type: DiaperType!
   time: DateTime!
+  baby: BabyCreateOneWithoutDiapersInput!
 }
 
-input DiaperCreateManyInput {
-  create: [DiaperCreateInput!]
+input DiaperCreateManyWithoutBabyInput {
+  create: [DiaperCreateWithoutBabyInput!]
   connect: [DiaperWhereUniqueInput!]
+}
+
+input DiaperCreateWithoutBabyInput {
+  type: DiaperType!
+  time: DateTime!
 }
 
 type DiaperEdge {
@@ -372,14 +410,10 @@ enum DiaperType {
   Poop
 }
 
-input DiaperUpdateDataInput {
-  type: DiaperType
-  time: DateTime
-}
-
 input DiaperUpdateInput {
   type: DiaperType
   time: DateTime
+  baby: BabyUpdateOneRequiredWithoutDiapersInput
 }
 
 input DiaperUpdateManyDataInput {
@@ -387,20 +421,20 @@ input DiaperUpdateManyDataInput {
   time: DateTime
 }
 
-input DiaperUpdateManyInput {
-  create: [DiaperCreateInput!]
-  update: [DiaperUpdateWithWhereUniqueNestedInput!]
-  upsert: [DiaperUpsertWithWhereUniqueNestedInput!]
-  delete: [DiaperWhereUniqueInput!]
-  connect: [DiaperWhereUniqueInput!]
-  disconnect: [DiaperWhereUniqueInput!]
-  deleteMany: [DiaperScalarWhereInput!]
-  updateMany: [DiaperUpdateManyWithWhereNestedInput!]
-}
-
 input DiaperUpdateManyMutationInput {
   type: DiaperType
   time: DateTime
+}
+
+input DiaperUpdateManyWithoutBabyInput {
+  create: [DiaperCreateWithoutBabyInput!]
+  delete: [DiaperWhereUniqueInput!]
+  connect: [DiaperWhereUniqueInput!]
+  disconnect: [DiaperWhereUniqueInput!]
+  update: [DiaperUpdateWithWhereUniqueWithoutBabyInput!]
+  upsert: [DiaperUpsertWithWhereUniqueWithoutBabyInput!]
+  deleteMany: [DiaperScalarWhereInput!]
+  updateMany: [DiaperUpdateManyWithWhereNestedInput!]
 }
 
 input DiaperUpdateManyWithWhereNestedInput {
@@ -408,15 +442,20 @@ input DiaperUpdateManyWithWhereNestedInput {
   data: DiaperUpdateManyDataInput!
 }
 
-input DiaperUpdateWithWhereUniqueNestedInput {
-  where: DiaperWhereUniqueInput!
-  data: DiaperUpdateDataInput!
+input DiaperUpdateWithoutBabyDataInput {
+  type: DiaperType
+  time: DateTime
 }
 
-input DiaperUpsertWithWhereUniqueNestedInput {
+input DiaperUpdateWithWhereUniqueWithoutBabyInput {
   where: DiaperWhereUniqueInput!
-  update: DiaperUpdateDataInput!
-  create: DiaperCreateInput!
+  data: DiaperUpdateWithoutBabyDataInput!
+}
+
+input DiaperUpsertWithWhereUniqueWithoutBabyInput {
+  where: DiaperWhereUniqueInput!
+  update: DiaperUpdateWithoutBabyDataInput!
+  create: DiaperCreateWithoutBabyInput!
 }
 
 input DiaperWhereInput {
@@ -446,6 +485,7 @@ input DiaperWhereInput {
   time_lte: DateTime
   time_gt: DateTime
   time_gte: DateTime
+  baby: BabyWhereInput
   AND: [DiaperWhereInput!]
   OR: [DiaperWhereInput!]
   NOT: [DiaperWhereInput!]
