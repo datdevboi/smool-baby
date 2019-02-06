@@ -15,6 +15,7 @@ type Diaper {
   id: ID! @unique
   type: DiaperType!
   time: DateTime!
+  baby: Baby!
 }
 
 type Baby {
