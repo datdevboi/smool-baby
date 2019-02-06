@@ -18,7 +18,7 @@ export class AuthLoadingScreen extends React.Component<any> {
       <Query
         query={ME_QUERY}
         onCompleted={data => {
-          if (data.me.email) {
+          if (data.me && data.me.email) {
             this.props.navigation.navigate("Main");
           } else {
             this.props.navigation.navigate("Login");
