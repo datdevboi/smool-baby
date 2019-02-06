@@ -27,7 +27,7 @@ const HomeScreenStackNavigator = createStackNavigator(
     AddBaby: {
       screen: AddBaby,
       navigationOptions: () => ({
-        // header: null
+        header: null
       })
     }
   },
