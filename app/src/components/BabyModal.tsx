@@ -82,7 +82,7 @@ export const BabyModal: React.SFC<Props> = ({
                       size={35}
                       name={
                         OS === "ios"
-                          ? "ios-add-cirlce-outline"
+                          ? "ios-add-circle-outline"
                           : "md-add-circle-outline"
                       }
                     />
