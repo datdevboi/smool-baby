@@ -11,8 +11,28 @@ export const resolvers: IResolvers = {
         id: req.userId
       });
     },
-    babies: async (_, __, { prisma }) => {
-      return prisma.babies();
+    currentBaby: async (parent, _, { prisma, req }, info) => {
+      if (!req.userId) {
+        return null;
+      }
+      const userId = req.userId;
+
+      const babies = await prisma.babies({
+        where: {
+          parent: {
+            id: userId
+          }
+        },
+        orderBy: "updatedAt_DESC"
+      });
+
+      const baby = babies[0];
+
+      if (!baby) {
+        return null;
+      }
+
+      return baby;
     }
   },
   User: {
