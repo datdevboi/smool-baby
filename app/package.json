@@ -9,7 +9,9 @@
   "dependencies": {
     "apollo-cache-inmemory": "^1.4.2",
     "apollo-client": "^2.4.11",
+    "apollo-link": "^1.2.8",
     "apollo-link-http": "^1.5.9",
+    "apollo-link-state": "^0.4.2",
     "apollo-upload-client": "^10.0.0",
     "expo": "^32.0.0",
     "formik": "^1.4.2",
