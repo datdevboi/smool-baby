@@ -8,6 +8,10 @@ import {
   Alert
 } from "react-native";
 import { BlurView } from "expo";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { Modal, Button } from "react-native-ui-lib";
@@ -109,14 +113,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: "auto",
     marginBottom: "auto",
-    height: 200,
+    height: hp("40%"),
 
-    width: 200
+    width: wp("45%")
   },
   babies: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-evenly",
     flex: 1
   }
 });
