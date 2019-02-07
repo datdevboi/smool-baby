@@ -10,7 +10,7 @@ import { ReactNativeFile } from "apollo-upload-client";
 import { Ionicons } from "@expo/vector-icons";
 import { Formik, Field } from "formik";
 
-import { Card, Button } from "react-native-ui-lib";
+import { Card, Button, Toast } from "react-native-ui-lib";
 import { InputField } from "../../../components/InputField";
 
 import { BabyImage } from "../../../components/BabyImage";
@@ -37,6 +37,9 @@ const ADD_BABY_MUTATION = gql`
 `;
 
 export class AddBaby extends React.Component<any> {
+  state = {
+    showToast: false
+  };
   render() {
     return (
       <Mutation mutation={ADD_BABY_MUTATION}>
@@ -60,19 +63,35 @@ export class AddBaby extends React.Component<any> {
               });
 
               try {
-                const response = await addBaby({
+                const { data } = await addBaby({
                   variables: {
                     name: values.name,
                     dob: values.dob,
                     picture: file
                   }
                 });
+
+                if (data && data.createBaby) {
+                  this.props.navigation.navigate("Main");
+                } else {
+                  this.setState({ showToast: true });
+                }
               } catch (err) {
                 console.log(err);
+                this.setState({ showToast: true });
               }
             }}
           >
             {({ handleSubmit, isSubmitting, values }) => {
+              const action = true
+                ? [
+                    {
+                      label: "Undo",
+                      backgroundColor: "red",
+                      onPress: () => console.log("log")
+                    }
+                  ]
+                : [];
               return (
                 <View
                   style={{
@@ -82,6 +101,15 @@ export class AddBaby extends React.Component<any> {
                     alignItems: "center"
                   }}
                 >
+                  <Toast
+                    visible={this.state.showToast}
+                    position={"top"}
+                    backgroundColor={"#a50b14"}
+                    message="An error has occured, try in a little bit"
+                    onDismiss={() => this.setState({ showToast: false })}
+                    allowDismiss={true}
+                    zIndex={150}
+                  />
                   <Card
                     width={wp("75%")}
                     height={hp("60%")}
