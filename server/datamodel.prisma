@@ -27,6 +27,7 @@ type Baby {
   id: ID! @unique
   name: String!
   dob: DateTime!
+  updatedAt: DateTime!
   parent: User!
   pictureUrl: String
   diapers: [Diaper!]!
