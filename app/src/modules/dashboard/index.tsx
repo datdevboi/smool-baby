@@ -12,10 +12,20 @@ import { Button, Card, Modal } from "react-native-ui-lib";
 
 import { BabyDescription } from "../../components/BabyDescription";
 import { BabyModal } from "../../components/BabyModal";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+import { host } from "../../client";
 
-const BR = (
-  <BlurView tint="light" intensity={50} style={StyleSheet.absoluteFill} />
-);
+const CURRENT_BABY_QUERY = gql`
+  query {
+    currentBaby @client {
+      name
+      id
+      pictureUrl
+    }
+  }
+`;
+
 export class DashBoard extends React.Component<any> {
   state = {
     modalOpen: false
@@ -41,14 +51,26 @@ export class DashBoard extends React.Component<any> {
   render() {
     return (
       <SafeAreaView style={styles.mainView}>
-        <BabyDescription
-          imageSrc={
-            "https://www.momjunction.com/wp-content/uploads/2014/05/Sweet-Cute-Baby-Girl-Names-With-Meanings.jpg"
-          }
-          babyName={"Ivy"}
-          handlePress={this.openModal}
-          style={{ flex: 2 }}
-        />
+        <Query
+          query={CURRENT_BABY_QUERY}
+          onCompleted={data => console.log(data.name)}
+        >
+          {({ loading, data }) => {
+            if (loading) {
+              return <Text>Loading...</Text>;
+            }
+
+            return (
+              <BabyDescription
+                imageSrc={`${host}/images/${data.currentBaby.imageUrl}`}
+                babyName={data.currentBaby.name}
+                handlePress={this.openModal}
+                style={{ flex: 2 }}
+              />
+            );
+          }}
+        </Query>
+
         <View style={styles.listView}>
           <Text>List</Text>
         </View>
