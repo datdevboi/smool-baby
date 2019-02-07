@@ -72,7 +72,7 @@ export class AddBaby extends React.Component<any> {
                 });
 
                 if (data && data.createBaby) {
-                  this.props.navigation.navigate("Main");
+                  this.props.navigation.navigate("Home");
                 } else {
                   this.setState({ showToast: true });
                 }
