@@ -27,6 +27,8 @@ const processUpload = async (upload: any) => {
 export const resolvers: IResolvers = {
   Mutation: {
     createBaby: async (_, args, { prisma, res, req }) => {
+      const dob = dayjs(args.input.dob).format("YYYY-MM-DD");
+
       const pictureUrl = await processUpload(args.input.picture);
 
       const query = `
@@ -50,7 +52,7 @@ export const resolvers: IResolvers = {
 
       const baby = await prisma.$graphql(query, {
         name: args.input.name,
-        dob: args.input.dob,
+        dob,
         userId: req.userId,
         pictureUrl
       });
