@@ -1,5 +1,10 @@
 import * as React from "react";
-import { View, StyleSheet, TouchableHighlight } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableOpacity
+} from "react-native";
 
 import { BabyImage } from "./BabyImage";
 
@@ -14,13 +19,13 @@ export class BabyDescription extends React.Component<Props> {
   render() {
     return (
       <View style={[styles.container, this.props.style]}>
-        <TouchableHighlight onPress={this.props.handlePress}>
+        <TouchableOpacity onPress={this.props.handlePress}>
           <BabyImage
             size={80}
             src={this.props.imageSrc}
             babyName={this.props.babyName as string}
           />
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   }
