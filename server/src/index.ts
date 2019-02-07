@@ -37,6 +37,8 @@ app.use((req: any, res, next) => {
   next();
 });
 
+app.use("/images", express.static("images"));
+
 // app.use(async (req: any, res, next) => {
 //   if (req.user) {
 //     next();
