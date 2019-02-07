@@ -13,6 +13,7 @@ import gql from "graphql-tag";
 import { Modal, Button } from "react-native-ui-lib";
 import { Ionicons } from "@expo/vector-icons";
 import { BabyImage } from "./BabyImage";
+import { host } from "../client";
 
 const OS = Platform.OS;
 
@@ -23,6 +24,7 @@ const ME_QUERY = gql`
       babies {
         id
         name
+        pictureUrl
       }
     }
   }
@@ -68,7 +70,7 @@ export const BabyModal: React.SFC<Props> = ({
                   <BabyImage
                     key={baby.id}
                     babyName={baby.name}
-                    src="https://www.momjunction.com/wp-content/uploads/2014/05/Sweet-Cute-Baby-Girl-Names-With-Meanings.jpg"
+                    src={`${host}/images/${baby.pictureUrl}`}
                     size={35}
                   />
                 );
