@@ -18,6 +18,7 @@ type Baby {
   id: ID!
   name: String!
   dob: DateTime!
+  updatedAt: DateTime!
   parent: User!
   pictureUrl: String
   diapers(where: DiaperWhereInput, orderBy: DiaperOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Diaper!]
@@ -90,18 +91,19 @@ enum BabyOrderByInput {
   name_DESC
   dob_ASC
   dob_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   pictureUrl_ASC
   pictureUrl_DESC
   createdAt_ASC
   createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type BabyPreviousValues {
   id: ID!
   name: String!
   dob: DateTime!
+  updatedAt: DateTime!
   pictureUrl: String
 }
 
@@ -142,6 +144,14 @@ input BabyScalarWhereInput {
   dob_lte: DateTime
   dob_gt: DateTime
   dob_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   pictureUrl: String
   pictureUrl_not: String
   pictureUrl_in: [String!]
@@ -292,6 +302,14 @@ input BabyWhereInput {
   dob_lte: DateTime
   dob_gt: DateTime
   dob_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   parent: UserWhereInput
   pictureUrl: String
   pictureUrl_not: String

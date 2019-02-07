@@ -229,12 +229,12 @@ export type BabyOrderByInput =
   | "name_DESC"
   | "dob_ASC"
   | "dob_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
   | "pictureUrl_ASC"
   | "pictureUrl_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "createdAt_DESC";
 
 export type DiaperOrderByInput =
   | "id_ASC"
@@ -460,6 +460,14 @@ export interface BabyScalarWhereInput {
   dob_lte?: DateTimeInput;
   dob_gt?: DateTimeInput;
   dob_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
   pictureUrl?: String;
   pictureUrl_not?: String;
   pictureUrl_in?: String[] | String;
@@ -693,6 +701,14 @@ export interface BabyWhereInput {
   dob_lte?: DateTimeInput;
   dob_gt?: DateTimeInput;
   dob_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
   parent?: UserWhereInput;
   pictureUrl?: String;
   pictureUrl_not?: String;
@@ -1143,6 +1159,7 @@ export interface Baby {
   id: ID_Output;
   name: String;
   dob: DateTimeOutput;
+  updatedAt: DateTimeOutput;
   pictureUrl?: String;
 }
 
@@ -1150,6 +1167,7 @@ export interface BabyPromise extends Promise<Baby>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   dob: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
   parent: <T = UserPromise>() => T;
   pictureUrl: () => Promise<String>;
   diapers: <T = FragmentableArray<Diaper>>(
@@ -1182,6 +1200,7 @@ export interface BabySubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   dob: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   parent: <T = UserSubscription>() => T;
   pictureUrl: () => Promise<AsyncIterator<String>>;
   diapers: <T = Promise<AsyncIterator<DiaperSubscription>>>(
@@ -1373,6 +1392,7 @@ export interface BabyPreviousValues {
   id: ID_Output;
   name: String;
   dob: DateTimeOutput;
+  updatedAt: DateTimeOutput;
   pictureUrl?: String;
 }
 
@@ -1382,6 +1402,7 @@ export interface BabyPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   dob: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
   pictureUrl: () => Promise<String>;
 }
 
@@ -1391,6 +1412,7 @@ export interface BabyPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   dob: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   pictureUrl: () => Promise<AsyncIterator<String>>;
 }
 
