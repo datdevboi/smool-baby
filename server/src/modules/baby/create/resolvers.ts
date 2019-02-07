@@ -57,6 +57,10 @@ export const resolvers: IResolvers = {
         pictureUrl
       });
 
+      if (!baby) {
+        return false;
+      }
+
       return true;
     }
   }
