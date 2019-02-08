@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const defaults = {
-  currentBaby: {
+  baby: {
     __typename: "CurrentBaby",
     id: "",
     pictureUrl: "",
@@ -19,7 +19,7 @@ export const resolvers = {
     ) => {
       const data = {
         data: {
-          currenyBaby: {
+          currentBaby: {
             __typename: "CurrentBaby",
             id: babyId,
             pictureUrl: pictureUrl,
