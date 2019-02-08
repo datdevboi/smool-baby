@@ -19,7 +19,7 @@ export const resolvers = {
     ) => {
       const data = {
         data: {
-          currentBaby: {
+          baby: {
             __typename: "CurrentBaby",
             id: babyId,
             pictureUrl: pictureUrl,
