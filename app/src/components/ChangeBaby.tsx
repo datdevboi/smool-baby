@@ -3,10 +3,13 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
 const CHANGE_BABY_MUTATION = gql`
-  mutation {
-    mutation CHANGE_BABY_MUTATION($id: ID!, $pictureUrl: String!, $name: String!) {
-        changeCurrentBaby(name: $name, id: $id, pictureUrl: $pictureUrl) @client
-    }
+  mutation CHANGE_BABY_MUTATION(
+    $babyId: ID!
+    $pictureUrl: String!
+    $name: String!
+  ) {
+    changeCurrentBaby(name: $name, babyId: $babyId, pictureUrl: $pictureUrl)
+      @client
   }
 `;
 
