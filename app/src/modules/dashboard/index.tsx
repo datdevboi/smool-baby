@@ -18,7 +18,7 @@ import { host } from "../../client";
 
 const CURRENT_BABY_QUERY = gql`
   query {
-    currentBaby @client {
+    baby @client {
       name
       id
       pictureUrl
@@ -62,8 +62,8 @@ export class DashBoard extends React.Component<any> {
 
             return (
               <BabyDescription
-                imageSrc={`${host}/images/${data.currentBaby.imageUrl}`}
-                babyName={data.currentBaby.name}
+                imageSrc={`${host}/images/${data.baby.pictureUrl}`}
+                babyName={data.baby.name}
                 handlePress={this.openModal}
                 style={{ flex: 2 }}
               />
