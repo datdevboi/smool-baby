@@ -19,6 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { BabyImage } from "./BabyImage";
 import { host } from "../client";
 import { TouchableOpacity } from "react-native-ui-lib";
+import { ChangeBaby } from "./ChangeBaby";
 
 const OS = Platform.OS;
 
@@ -72,13 +73,27 @@ export const BabyModal: React.SFC<Props> = ({
             if (data.me.babies) {
               const Babies = data.me.babies.map((baby: any) => {
                 return (
-                  <TouchableOpacity key={baby.id}>
-                    <BabyImage
-                      babyName={baby.name}
-                      src={`${host}/images/${baby.pictureUrl}`}
-                      size={35}
-                    />
-                  </TouchableOpacity>
+                  <ChangeBaby key={baby.id}>
+                    {({ mutate }) => (
+                      <TouchableOpacity
+                        onPress={async () => {
+                          await mutate({
+                            variables: {
+                              name: baby.name,
+                              babyId: baby.id,
+                              pictureUrl: baby.pictureUrl
+                            }
+                          });
+                        }}
+                      >
+                        <BabyImage
+                          babyName={baby.name}
+                          src={`${host}/images/${baby.pictureUrl}`}
+                          size={35}
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </ChangeBaby>
                 );
               });
 
