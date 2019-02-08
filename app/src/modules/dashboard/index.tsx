@@ -53,7 +53,11 @@ export class DashBoard extends React.Component<any> {
       <SafeAreaView style={styles.mainView}>
         <Query
           query={CURRENT_BABY_QUERY}
-          onCompleted={data => console.log(data.name)}
+          onCompleted={data => {
+            if (data.baby.id === "") {
+              this.addBaby();
+            }
+          }}
         >
           {({ loading, data }) => {
             if (loading) {
