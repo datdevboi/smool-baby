@@ -18,6 +18,7 @@ import { Modal, Button } from "react-native-ui-lib";
 import { Ionicons } from "@expo/vector-icons";
 import { BabyImage } from "./BabyImage";
 import { host } from "../client";
+import { TouchableOpacity } from "react-native-ui-lib";
 
 const OS = Platform.OS;
 
@@ -71,12 +72,13 @@ export const BabyModal: React.SFC<Props> = ({
             if (data.me.babies) {
               const Babies = data.me.babies.map((baby: any) => {
                 return (
-                  <BabyImage
-                    key={baby.id}
-                    babyName={baby.name}
-                    src={`${host}/images/${baby.pictureUrl}`}
-                    size={35}
-                  />
+                  <TouchableOpacity key={baby.id}>
+                    <BabyImage
+                      babyName={baby.name}
+                      src={`${host}/images/${baby.pictureUrl}`}
+                      size={35}
+                    />
+                  </TouchableOpacity>
                 );
               });
 
