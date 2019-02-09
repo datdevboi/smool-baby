@@ -1,7 +1,11 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { Mutation } from "react-apollo";
-import { SecureStore } from "expo";
+import { Mutation, ApolloConsumer } from "react-apollo";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
+
 import { Button, Card } from "react-native-ui-lib";
 import { Field, Formik } from "formik";
 import gql from "graphql-tag";
@@ -28,6 +32,16 @@ const LoginMutation = gql`
   }
 `;
 
+const CURRENT_BABY_QUERY = gql`
+  query {
+    currentBaby {
+      id
+      name
+      pictureUrl
+    }
+  }
+`;
+
 export class Login extends React.Component<any> {
   handlePress = () => {
     this.props.navigation.navigate("Register");
@@ -36,78 +50,100 @@ export class Login extends React.Component<any> {
     return (
       <Mutation mutation={LoginMutation}>
         {loginMutation => (
-          <Formik<FormValues>
-            initialValues={{
-              email: "",
-              password: ""
-            }}
-            onSubmit={async (values, actions) => {
-              const { data } = await loginMutation({ variables: values });
+          <ApolloConsumer>
+            {client => (
+              <Formik<FormValues>
+                initialValues={{
+                  email: "",
+                  password: ""
+                }}
+                onSubmit={async (values, actions) => {
+                  const { data } = await loginMutation({ variables: values });
 
-              const { login } = data;
-              if (login.errors) {
-                const firstErr = login.errors[0];
-                actions.setFieldError("email", firstErr.message);
-                actions.setFieldError("password", firstErr.message);
-                actions.setSubmitting(false);
-              } else {
-                SecureStore.setItemAsync("sid", login.user.id);
-                this.props.navigation.navigate("Main");
-              }
-            }}
-          >
-            {({ handleSubmit, isSubmitting }) => (
-              <View
-                style={{
-                  display: "flex",
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center"
+                  const { login } = data;
+                  if (login.errors) {
+                    const firstErr = login.errors[0];
+                    actions.setFieldError("email", firstErr.message);
+                    actions.setFieldError("password", firstErr.message);
+                    actions.setSubmitting(false);
+                  } else {
+                    const {
+                      data: { currentBaby }
+                    } = await client.query({
+                      query: CURRENT_BABY_QUERY
+                    });
+
+                    if (currentBaby && currentBaby.id) {
+                      client.cache.writeData({
+                        data: {
+                          baby: {
+                            __typename: "CurrentBaby",
+                            id: currentBaby.id,
+                            pictureUrl: currentBaby.pictureUrl,
+                            name: currentBaby.name
+                          }
+                        }
+                      });
+                      this.props.navigation.navigate("Main");
+                    }
+                    this.props.navigation.navigate("Main");
+                  }
                 }}
               >
-                <Card
-                  width={400}
-                  height={375}
-                  containerStyle={{
-                    padding: 15
-                  }}
-                >
-                  <View style={styles.inputView}>
-                    <Text style={styles.title}>Login</Text>
-                    <Field
-                      component={InputField}
-                      name="email"
-                      title="email"
-                      autoCapitalize="none"
-                      titleColor="black"
-                      enableErrors={true}
-                    />
-                    <Field
-                      component={InputField}
-                      name="password"
-                      title="password"
-                      secureTextEntry={true}
-                      autoCapitalize="none"
-                      titleColor="black"
-                    />
+                {({ handleSubmit, isSubmitting }) => (
+                  <View
+                    style={{
+                      display: "flex",
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Card
+                      width={wp("80%")}
+                      height={hp("70%")}
+                      containerStyle={{
+                        padding: 15
+                      }}
+                    >
+                      <View style={styles.inputView}>
+                        <Text style={styles.title}>Login</Text>
+                        <Field
+                          component={InputField}
+                          name="email"
+                          title="email"
+                          autoCapitalize="none"
+                          titleColor="black"
+                          enableErrors={true}
+                        />
+                        <Field
+                          component={InputField}
+                          name="password"
+                          title="password"
+                          secureTextEntry={true}
+                          autoCapitalize="none"
+                          titleColor="black"
+                        />
+                      </View>
+                      <View style={styles.buttonView}>
+                        <Button
+                          label="Login"
+                          disabled={isSubmitting}
+                          onPress={() => handleSubmit()}
+                        />
+                        <Text style={styles.buttonViewText}>Or</Text>
+                        <Button
+                          label="register"
+                          outline={true}
+                          onPress={this.handlePress}
+                        />
+                      </View>
+                    </Card>
                   </View>
-                  <View style={styles.buttonView}>
-                    <Button
-                      label="Login"
-                      disabled={isSubmitting}
-                      onPress={() => handleSubmit()}
-                    />
-                    <Text style={styles.buttonViewText}>Or</Text>
-                    <Button
-                      label="register"
-                      outline={true}
-                      onPress={this.handlePress}
-                    />
-                  </View>
-                </Card>
-              </View>
+                )}
+              </Formik>
             )}
-          </Formik>
+          </ApolloConsumer>
         )}
       </Mutation>
     );
