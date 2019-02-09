@@ -43,7 +43,7 @@ export class AddBaby extends React.Component<any> {
   render() {
     return (
       <Mutation mutation={ADD_BABY_MUTATION}>
-        {addBaby => (
+        {(addBaby, { client }) => (
           <Formik<FormValues>
             initialValues={{
               name: "",
@@ -72,6 +72,16 @@ export class AddBaby extends React.Component<any> {
                 });
 
                 if (data && data.createBaby) {
+                  client.cache.writeData({
+                    data: {
+                      baby: {
+                        __typename: "CurrentBaby",
+                        id: data.createBaby.id,
+                        pictureUrl: data.createBaby.pictureUrl,
+                        name: data.createBaby.name
+                      }
+                    }
+                  });
                   this.props.navigation.navigate("Home");
                 } else {
                   this.setState({ showToast: true });
