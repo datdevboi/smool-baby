@@ -54,8 +54,11 @@ export class DashBoard extends React.Component<any> {
         <Query
           query={CURRENT_BABY_QUERY}
           onCompleted={data => {
-            if (data.baby.id === "") {
-              this.props.navigation.navigate("AddBaby");
+            if (!data.baby.id) {
+              // this.setState({
+              //   modalOpen: false
+              // });
+              // this.props.navigation.navigate("AddBaby");
             }
           }}
         >

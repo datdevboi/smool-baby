@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const defaults = {
   baby: {
     __typename: "CurrentBaby",
-    id: "",
+    id: null,
     pictureUrl: "",
     name: ""
   }
