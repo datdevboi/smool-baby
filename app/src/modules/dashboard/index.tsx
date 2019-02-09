@@ -55,7 +55,7 @@ export class DashBoard extends React.Component<any> {
           query={CURRENT_BABY_QUERY}
           onCompleted={data => {
             if (data.baby.id === "") {
-              this.addBaby();
+              this.props.navigation.navigate("AddBaby");
             }
           }}
         >
