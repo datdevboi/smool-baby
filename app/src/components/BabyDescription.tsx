@@ -5,6 +5,10 @@ import {
   TouchableHighlight,
   TouchableOpacity
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 import { BabyImage } from "./BabyImage";
 
@@ -21,7 +25,7 @@ export class BabyDescription extends React.Component<Props> {
       <View style={[styles.container, this.props.style]}>
         <TouchableOpacity onPress={this.props.handlePress}>
           <BabyImage
-            size={80}
+            size={hp("10%")}
             src={this.props.imageSrc}
             babyName={this.props.babyName as string}
           />
