@@ -70,7 +70,7 @@ export const BabyModal: React.SFC<Props> = ({
               return <Text>Loading..</Text>;
             }
 
-            if (data.me.babies) {
+            if (data.me && data.me.babies) {
               const Babies = data.me.babies.map((baby: any) => {
                 return (
                   <ChangeBaby key={baby.id}>
