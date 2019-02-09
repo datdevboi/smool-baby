@@ -45,6 +45,8 @@ export const resolvers: IResolvers = {
           }) {
             name
             dob
+            id
+            pictureUrl
           }
         }
 
@@ -58,10 +60,10 @@ export const resolvers: IResolvers = {
       });
 
       if (!baby) {
-        return false;
+        return null;
       }
 
-      return true;
+      return baby;
     }
   }
   //   Date: new GraphQLScalarType({
