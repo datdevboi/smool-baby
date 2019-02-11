@@ -4,7 +4,8 @@ import {
   createAppContainer,
   createBottomTabNavigator,
   createStackNavigator,
-  createSwitchNavigator
+  createSwitchNavigator,
+  createDrawerNavigator
 } from "react-navigation";
 import { Platform } from "react-native";
 import { AuthLoadingScreen } from "./modules/auth";
@@ -36,42 +37,23 @@ const HomeScreenStackNavigator = createStackNavigator(
   }
 );
 
-const MainScreen = createBottomTabNavigator(
+const MainScreen = createDrawerNavigator(
   {
     Home: {
       screen: HomeScreenStackNavigator,
       navigationOptions: () => ({
-        tabBarIcon: () => (
-          <Ionicons
-            name={OS === "ios" ? "ios-home" : "md-home"}
-            size={30}
-            color="#6534ff"
-          />
-        ),
-        title: ""
+        title: "Home"
       })
     },
     Settings: {
       screen: Settings,
       navigationOptions: () => ({
-        tabBarIcon: () => (
-          <Ionicons
-            name={OS === "ios" ? "ios-settings" : "md-settings"}
-            size={30}
-            color="#6534ff"
-          />
-        ),
-        title: ""
+        title: "Settings"
       })
     }
   },
   {
-    initialRouteName: "Home",
-    tabBarOptions: {
-      style: {
-        backgroundColor: "#fccdd3"
-      }
-    }
+    initialRouteName: "Home"
   }
 );
 
