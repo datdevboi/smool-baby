@@ -10,7 +10,7 @@ import {
 import { BlurView } from "expo";
 import { Button, Card, Modal } from "react-native-ui-lib";
 
-import { BabyDescription } from "../../components/BabyDescription";
+import { TopBar } from "../../components/TopBar";
 import { BabyModal } from "../../components/BabyModal";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
@@ -68,7 +68,7 @@ export class DashBoard extends React.Component<any> {
             }
 
             return (
-              <BabyDescription
+              <TopBar
                 imageSrc={`${host}/images/${data.baby.pictureUrl}`}
                 babyName={data.baby.name}
                 handlePress={this.openModal}
