@@ -73,6 +73,7 @@ export class DashBoard extends React.Component<any> {
                 babyName={data.baby.name}
                 handlePress={this.openModal}
                 style={{ flex: 2 }}
+                navigation={this.props.navigation}
               />
             );
           }}

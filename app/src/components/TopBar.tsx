@@ -18,20 +18,24 @@ interface Props {
   babyName: String;
   handlePress: () => void;
   style?: any;
+  navigation: any;
 }
 
 export class TopBar extends React.Component<Props> {
   render() {
     return (
       <View style={[styles.container, this.props.style]}>
-        <View
+        <TouchableOpacity
           style={{
             alignSelf: "flex-start",
             padding: 10
           }}
+          onPress={() => {
+            this.props.navigation.toggleDrawer();
+          }}
         >
           <Ionicons name="ios-menu" size={wp("4%")} />
-        </View>
+        </TouchableOpacity>
 
         <TouchableOpacity onPress={this.props.handlePress}>
           <BabyImage
