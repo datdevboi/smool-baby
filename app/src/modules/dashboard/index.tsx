@@ -15,6 +15,7 @@ import { BabyModal } from "../../components/BabyModal";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { host } from "../../client";
+import { ActionBtn } from "../../components/ActionBtn";
 
 const CURRENT_BABY_QUERY = gql`
   query {
@@ -81,6 +82,7 @@ export class DashBoard extends React.Component<any> {
 
         <View style={styles.listView}>
           <Text>List</Text>
+          <ActionBtn />
         </View>
 
         <BabyModal
