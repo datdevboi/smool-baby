@@ -54,6 +54,10 @@ export class AddBaby extends React.Component<any> {
               }
             }}
             onSubmit={async (values, actions) => {
+              if (values.name === "") {
+                actions.setFieldError("name", "Name is required");
+                return;
+              }
               actions.setSubmitting(false);
 
               const file = new ReactNativeFile({
