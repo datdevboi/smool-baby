@@ -2,7 +2,7 @@ import * as React from "react";
 import { View } from "react-native";
 
 import ActionButton from "react-native-circular-action-menu";
-import { Ionicons } from "@expo/vector-icons";
+
 import { BabyIcon } from "./icons/baby/BabyIcon";
 import { CONFIG } from "../config";
 
