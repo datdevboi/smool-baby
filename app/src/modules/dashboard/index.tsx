@@ -12,22 +12,11 @@ import { Button, Card, Modal } from "react-native-ui-lib";
 
 import { TopBar } from "../../components/TopBar";
 import { BabyModal } from "../../components/BabyModal";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
+
 import { host } from "../../client";
 import { ActionBtn } from "../../components/ActionBtn";
 import { CONFIG } from "../../config";
 import { CurrentBaby } from "../../components/CurrentBaby";
-
-const CURRENT_BABY_QUERY = gql`
-  query {
-    baby @client {
-      name
-      id
-      pictureUrl
-    }
-  }
-`;
 
 export class DashBoard extends React.Component<any> {
   state = {
