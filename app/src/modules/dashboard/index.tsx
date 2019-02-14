@@ -17,6 +17,7 @@ import { Query } from "react-apollo";
 import { host } from "../../client";
 import { ActionBtn } from "../../components/ActionBtn";
 import { CONFIG } from "../../config";
+import { CurrentBaby } from "../../components/CurrentBaby";
 
 const CURRENT_BABY_QUERY = gql`
   query {
@@ -53,17 +54,7 @@ export class DashBoard extends React.Component<any> {
   render() {
     return (
       <SafeAreaView style={styles.mainView}>
-        <Query
-          query={CURRENT_BABY_QUERY}
-          onCompleted={data => {
-            if (!data.baby.id) {
-              // this.setState({
-              //   modalOpen: false
-              // });
-              // this.props.navigation.navigate("AddBaby");
-            }
-          }}
-        >
+        <CurrentBaby>
           {({ loading, data }) => {
             if (loading) {
               return <Text>Loading...</Text>;
@@ -79,7 +70,7 @@ export class DashBoard extends React.Component<any> {
               />
             );
           }}
-        </Query>
+        </CurrentBaby>
 
         <View style={styles.listView}>
           <View style={{ flex: 1 }}>
