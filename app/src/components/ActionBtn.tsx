@@ -4,24 +4,29 @@ import { View } from "react-native";
 import ActionButton from "react-native-circular-action-menu";
 import { Ionicons } from "@expo/vector-icons";
 import { BabyIcon } from "./icons/baby/BabyIcon";
+import { CONFIG } from "../config";
 
 export const ActionBtn = () => (
-  <View style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
+  <View style={{ marginBottom: 15 }}>
     {/*Rest of App come ABOVE the action button component!*/}
-    <ActionButton buttonColor="rgba(231,76,60,1)">
+    <ActionButton buttonColor={CONFIG.colors.JORDY_BLUE}>
       <ActionButton.Item
-        buttonColor="#3498db"
+        buttonColor={CONFIG.colors.DARK_PASTEL_PURPLE}
         title="Diaper"
         onPress={() => {}}
       >
         <BabyIcon name="diaper" size={20} color={"white"} />
       </ActionButton.Item>
-      <ActionButton.Item buttonColor="black" title="Diaper" onPress={() => {}}>
+      <ActionButton.Item
+        buttonColor={CONFIG.colors.DARK_PASTEL_PURPLE}
+        title="Bottle"
+        onPress={() => {}}
+      >
         <BabyIcon name="baby-bottle" size={20} color={"white"} />
       </ActionButton.Item>
       <ActionButton.Item
-        buttonColor="#3498db"
-        title="Diaper"
+        buttonColor={CONFIG.colors.DARK_PASTEL_PURPLE}
+        title="Sleep"
         onPress={() => {}}
       >
         <BabyIcon name="moon" size={20} color={"white"} />
