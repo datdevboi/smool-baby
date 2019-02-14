@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { FieldProps } from "formik";
+import dayjs from "dayjs";
 import { CONFIG } from "../config";
 import { Modal } from "react-native-ui-lib";
 import {
@@ -74,14 +75,20 @@ export class CalendarInput extends React.Component<
 
     return (
       <View>
-        <TouchableOpacity onPress={() => this.openCalendar()}>
-          <Ionicons
-            name={CONFIG.OS === "ios" ? "ios-calendar" : "md-calendar"}
-            size={40}
-          />
-        </TouchableOpacity>
-        <View>
-          <Text>{values[name].toString()}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}
+        >
+          <TouchableOpacity onPress={() => this.openCalendar()}>
+            <Ionicons
+              name={CONFIG.OS === "ios" ? "ios-calendar" : "md-calendar"}
+              size={wp("7%")}
+            />
+          </TouchableOpacity>
+          <Text>{dayjs(values[name]).format("MM-DD-YYYY")}</Text>
         </View>
 
         {CONFIG.OS === "ios" && (
