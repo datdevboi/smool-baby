@@ -12,6 +12,7 @@ import {
 
 import { BabyImage } from "./BabyImage";
 import { Ionicons } from "@expo/vector-icons";
+import { CONFIG } from "../config";
 
 interface Props {
   imageSrc: any;
@@ -60,7 +61,7 @@ export class TopBar extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#bbc4ef",
+    backgroundColor: CONFIG.colors.UBE,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",

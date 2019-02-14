@@ -16,6 +16,7 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { host } from "../../client";
 import { ActionBtn } from "../../components/ActionBtn";
+import { CONFIG } from "../../config";
 
 const CURRENT_BABY_QUERY = gql`
   query {
@@ -81,7 +82,10 @@ export class DashBoard extends React.Component<any> {
         </Query>
 
         <View style={styles.listView}>
-          <Text>List</Text>
+          <View style={{ flex: 1 }}>
+            <Text>List</Text>
+          </View>
+
           <ActionBtn />
         </View>
 
@@ -99,6 +103,7 @@ const styles = StyleSheet.create({
   mainView: {
     display: "flex",
     flex: 1,
+    flexDirection: "column",
     ...Platform.select({
       android: {
         marginTop: StatusBar.currentHeight
@@ -107,6 +112,6 @@ const styles = StyleSheet.create({
   },
   listView: {
     flex: 10,
-    backgroundColor: "#f6f1ed"
+    backgroundColor: CONFIG.colors.AZUREISH_WHITE
   }
 });
