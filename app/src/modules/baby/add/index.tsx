@@ -25,6 +25,7 @@ interface FormValues {
     pictureUri: string;
     pictureType: string;
   };
+  gender: string;
 }
 
 const ADD_BABY_MUTATION = gql`
@@ -53,13 +54,19 @@ export class AddBaby extends React.Component<any> {
                 pictureUri: "",
                 pictureType: ""
               },
-              gender: ""
+              gender: "Male"
             }}
             onSubmit={async (values, actions) => {
               if (values.name === "") {
                 actions.setFieldError("name", "Name is required");
                 return;
               }
+
+              if (values.gender === "") {
+                actions.setFieldError("gender", "Name is required");
+                return;
+              }
+
               actions.setSubmitting(false);
 
               const file = new ReactNativeFile({
