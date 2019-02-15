@@ -16,6 +16,7 @@ import { InputField } from "../../../components/InputField";
 import { BabyImage } from "../../../components/BabyImage";
 import { PictureInput } from "../../../components/PictureInput";
 import { CalendarInput } from "../../../components/CalendarInput";
+import { PickerField } from "../../../components/PickerField";
 
 interface FormValues {
   name: string;
@@ -160,6 +161,20 @@ export class AddBaby extends React.Component<any> {
                               size={40}
                             />
                           )}
+                        </View>
+
+                        <View>
+                          <Field
+                            component={PickerField}
+                            name="gender"
+                            placeholder="Gender"
+                            showSearch={true}
+                            options={[
+                              { label: "Male", value: "Male" },
+                              { label: "Female", value: "Female" }
+                            ]}
+                            getLabel={() => <Text>Gender</Text>}
+                          />
                         </View>
                       </View>
 
