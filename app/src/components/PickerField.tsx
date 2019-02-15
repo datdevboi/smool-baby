@@ -6,7 +6,7 @@ import { FieldProps } from "formik";
 export class PickerField extends React.Component<
   FieldProps<any> & {
     value: string;
-    option: any;
+    options: any;
   }
 > {
   onChange = (text: string) => {
