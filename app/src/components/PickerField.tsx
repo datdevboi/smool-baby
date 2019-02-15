@@ -9,8 +9,8 @@ export class PickerField extends React.Component<
     options: any;
   }
 > {
-  onChange = (text: string) => {
-    this.props.form.setFieldValue(this.props.field.name, text);
+  onChange = (x: any) => {
+    this.props.form.setFieldValue(this.props.field.name, x.value);
   };
   render() {
     const { field, form, value, options, ...props } = this.props;
