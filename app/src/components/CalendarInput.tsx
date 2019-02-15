@@ -122,7 +122,7 @@ export class CalendarInput extends React.Component<
                 >
                   <TouchableOpacity onPress={this.closeCalendar}>
                     <Ionicons
-                      size={40}
+                      size={wp("5%")}
                       name="ios-checkmark-circle-outline"
                       color="green"
                     />
