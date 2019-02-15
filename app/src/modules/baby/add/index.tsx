@@ -17,6 +17,7 @@ import { BabyImage } from "../../../components/BabyImage";
 import { PictureInput } from "../../../components/PictureInput";
 import { CalendarInput } from "../../../components/CalendarInput";
 import { PickerField } from "../../../components/PickerField";
+import { CONFIG } from "../../../config";
 
 interface FormValues {
   name: string;
@@ -146,22 +147,22 @@ export class AddBaby extends React.Component<any> {
                         <Field
                           component={InputField}
                           name="name"
-                          placeholder="Name"
+                          title="Name:"
                           autoCapitalize="none"
-                          titleColor="black"
+                          titleColor={CONFIG.colors.JORDY_BLUE}
                           enableErrors={true}
                         />
 
                         <Field
                           component={PickerField}
+                          enableErrors={true}
                           name="gender"
-                          placeholder="Gender"
-                          showSearch={true}
+                          titleColor={CONFIG.colors.JORDY_BLUE}
+                          title="Gender:"
                           options={[
                             { label: "Male", value: "Male" },
                             { label: "Female", value: "Female" }
                           ]}
-                          getLabel={() => <Text>Gender</Text>}
                         />
 
                         <Field component={CalendarInput} name="dob" />
