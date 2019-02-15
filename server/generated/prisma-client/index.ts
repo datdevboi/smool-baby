@@ -229,6 +229,8 @@ export type BabyOrderByInput =
   | "name_DESC"
   | "dob_ASC"
   | "dob_DESC"
+  | "gender_ASC"
+  | "gender_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "pictureUrl_ASC"
@@ -247,6 +249,8 @@ export type DiaperOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
+
+export type GenderEnum = "Male" | "Female";
 
 export type BathOrderByInput =
   | "time_ASC"
@@ -388,6 +392,7 @@ export interface DiaperSubscriptionWhereInput {
 export interface BabyUpdateInput {
   name?: String;
   dob?: DateTimeInput;
+  gender?: GenderEnum;
   parent?: UserUpdateOneRequiredWithoutBabiesInput;
   pictureUrl?: String;
   diapers?: DiaperUpdateManyWithoutBabyInput;
@@ -415,6 +420,7 @@ export interface UserUpdateOneRequiredWithoutBabiesInput {
 export interface BabyUpdateManyDataInput {
   name?: String;
   dob?: DateTimeInput;
+  gender?: GenderEnum;
   pictureUrl?: String;
 }
 
@@ -460,6 +466,10 @@ export interface BabyScalarWhereInput {
   dob_lte?: DateTimeInput;
   dob_gt?: DateTimeInput;
   dob_gte?: DateTimeInput;
+  gender?: GenderEnum;
+  gender_not?: GenderEnum;
+  gender_in?: GenderEnum[] | GenderEnum;
+  gender_not_in?: GenderEnum[] | GenderEnum;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -495,6 +505,7 @@ export interface UserUpsertWithoutBabiesInput {
 export interface BabyUpdateWithoutParentDataInput {
   name?: String;
   dob?: DateTimeInput;
+  gender?: GenderEnum;
   pictureUrl?: String;
   diapers?: DiaperUpdateManyWithoutBabyInput;
   baths?: BathUpdateManyWithoutBabyInput;
@@ -535,6 +546,7 @@ export interface UserUpdateInput {
 export interface BabyUpdateWithoutDiapersDataInput {
   name?: String;
   dob?: DateTimeInput;
+  gender?: GenderEnum;
   parent?: UserUpdateOneRequiredWithoutBabiesInput;
   pictureUrl?: String;
   baths?: BathUpdateManyWithoutBabyInput;
@@ -602,6 +614,7 @@ export interface DiaperUpdateManyWithWhereNestedInput {
 export interface BabyCreateInput {
   name: String;
   dob: DateTimeInput;
+  gender?: GenderEnum;
   parent: UserCreateOneWithoutBabiesInput;
   pictureUrl?: String;
   diapers?: DiaperCreateManyWithoutBabyInput;
@@ -701,6 +714,10 @@ export interface BabyWhereInput {
   dob_lte?: DateTimeInput;
   dob_gt?: DateTimeInput;
   dob_gte?: DateTimeInput;
+  gender?: GenderEnum;
+  gender_not?: GenderEnum;
+  gender_in?: GenderEnum[] | GenderEnum;
+  gender_not_in?: GenderEnum[] | GenderEnum;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -793,6 +810,7 @@ export interface BabyUpdateManyWithoutParentInput {
 export interface BabyUpdateManyMutationInput {
   name?: String;
   dob?: DateTimeInput;
+  gender?: GenderEnum;
   pictureUrl?: String;
 }
 
@@ -815,6 +833,7 @@ export interface DiaperCreateManyWithoutBabyInput {
 export interface BabyCreateWithoutDiapersInput {
   name: String;
   dob: DateTimeInput;
+  gender?: GenderEnum;
   parent: UserCreateOneWithoutBabiesInput;
   pictureUrl?: String;
   baths?: BathCreateManyWithoutBabyInput;
@@ -833,6 +852,7 @@ export interface BathCreateInput {
 export interface BabyCreateWithoutParentInput {
   name: String;
   dob: DateTimeInput;
+  gender?: GenderEnum;
   pictureUrl?: String;
   diapers?: DiaperCreateManyWithoutBabyInput;
   baths?: BathCreateManyWithoutBabyInput;
@@ -851,6 +871,7 @@ export interface BathUpdateManyMutationInput {
 export interface BabyCreateWithoutBathsInput {
   name: String;
   dob: DateTimeInput;
+  gender?: GenderEnum;
   parent: UserCreateOneWithoutBabiesInput;
   pictureUrl?: String;
   diapers?: DiaperCreateManyWithoutBabyInput;
@@ -1159,6 +1180,7 @@ export interface Baby {
   id: ID_Output;
   name: String;
   dob: DateTimeOutput;
+  gender?: GenderEnum;
   updatedAt: DateTimeOutput;
   pictureUrl?: String;
 }
@@ -1167,6 +1189,7 @@ export interface BabyPromise extends Promise<Baby>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   dob: () => Promise<DateTimeOutput>;
+  gender: () => Promise<GenderEnum>;
   updatedAt: () => Promise<DateTimeOutput>;
   parent: <T = UserPromise>() => T;
   pictureUrl: () => Promise<String>;
@@ -1200,6 +1223,7 @@ export interface BabySubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   dob: () => Promise<AsyncIterator<DateTimeOutput>>;
+  gender: () => Promise<AsyncIterator<GenderEnum>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   parent: <T = UserSubscription>() => T;
   pictureUrl: () => Promise<AsyncIterator<String>>;
@@ -1392,6 +1416,7 @@ export interface BabyPreviousValues {
   id: ID_Output;
   name: String;
   dob: DateTimeOutput;
+  gender?: GenderEnum;
   updatedAt: DateTimeOutput;
   pictureUrl?: String;
 }
@@ -1402,6 +1427,7 @@ export interface BabyPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   dob: () => Promise<DateTimeOutput>;
+  gender: () => Promise<GenderEnum>;
   updatedAt: () => Promise<DateTimeOutput>;
   pictureUrl: () => Promise<String>;
 }
@@ -1412,6 +1438,7 @@ export interface BabyPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   dob: () => Promise<AsyncIterator<DateTimeOutput>>;
+  gender: () => Promise<AsyncIterator<GenderEnum>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   pictureUrl: () => Promise<AsyncIterator<String>>;
 }
@@ -1538,6 +1565,10 @@ export const models: Model[] = [
   },
   {
     name: "DiaperType",
+    embedded: false
+  },
+  {
+    name: "GenderEnum",
     embedded: false
   },
   {

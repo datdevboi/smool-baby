@@ -18,6 +18,7 @@ type Baby {
   id: ID!
   name: String!
   dob: DateTime!
+  gender: GenderEnum
   updatedAt: DateTime!
   parent: User!
   pictureUrl: String
@@ -34,6 +35,7 @@ type BabyConnection {
 input BabyCreateInput {
   name: String!
   dob: DateTime!
+  gender: GenderEnum
   parent: UserCreateOneWithoutBabiesInput!
   pictureUrl: String
   diapers: DiaperCreateManyWithoutBabyInput
@@ -58,6 +60,7 @@ input BabyCreateOneWithoutDiapersInput {
 input BabyCreateWithoutBathsInput {
   name: String!
   dob: DateTime!
+  gender: GenderEnum
   parent: UserCreateOneWithoutBabiesInput!
   pictureUrl: String
   diapers: DiaperCreateManyWithoutBabyInput
@@ -66,6 +69,7 @@ input BabyCreateWithoutBathsInput {
 input BabyCreateWithoutDiapersInput {
   name: String!
   dob: DateTime!
+  gender: GenderEnum
   parent: UserCreateOneWithoutBabiesInput!
   pictureUrl: String
   baths: BathCreateManyWithoutBabyInput
@@ -74,6 +78,7 @@ input BabyCreateWithoutDiapersInput {
 input BabyCreateWithoutParentInput {
   name: String!
   dob: DateTime!
+  gender: GenderEnum
   pictureUrl: String
   diapers: DiaperCreateManyWithoutBabyInput
   baths: BathCreateManyWithoutBabyInput
@@ -91,6 +96,8 @@ enum BabyOrderByInput {
   name_DESC
   dob_ASC
   dob_DESC
+  gender_ASC
+  gender_DESC
   updatedAt_ASC
   updatedAt_DESC
   pictureUrl_ASC
@@ -103,6 +110,7 @@ type BabyPreviousValues {
   id: ID!
   name: String!
   dob: DateTime!
+  gender: GenderEnum
   updatedAt: DateTime!
   pictureUrl: String
 }
@@ -144,6 +152,10 @@ input BabyScalarWhereInput {
   dob_lte: DateTime
   dob_gt: DateTime
   dob_gte: DateTime
+  gender: GenderEnum
+  gender_not: GenderEnum
+  gender_in: [GenderEnum!]
+  gender_not_in: [GenderEnum!]
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -192,6 +204,7 @@ input BabySubscriptionWhereInput {
 input BabyUpdateInput {
   name: String
   dob: DateTime
+  gender: GenderEnum
   parent: UserUpdateOneRequiredWithoutBabiesInput
   pictureUrl: String
   diapers: DiaperUpdateManyWithoutBabyInput
@@ -201,12 +214,14 @@ input BabyUpdateInput {
 input BabyUpdateManyDataInput {
   name: String
   dob: DateTime
+  gender: GenderEnum
   pictureUrl: String
 }
 
 input BabyUpdateManyMutationInput {
   name: String
   dob: DateTime
+  gender: GenderEnum
   pictureUrl: String
 }
 
@@ -236,6 +251,7 @@ input BabyUpdateOneRequiredWithoutDiapersInput {
 input BabyUpdateWithoutDiapersDataInput {
   name: String
   dob: DateTime
+  gender: GenderEnum
   parent: UserUpdateOneRequiredWithoutBabiesInput
   pictureUrl: String
   baths: BathUpdateManyWithoutBabyInput
@@ -244,6 +260,7 @@ input BabyUpdateWithoutDiapersDataInput {
 input BabyUpdateWithoutParentDataInput {
   name: String
   dob: DateTime
+  gender: GenderEnum
   pictureUrl: String
   diapers: DiaperUpdateManyWithoutBabyInput
   baths: BathUpdateManyWithoutBabyInput
@@ -302,6 +319,10 @@ input BabyWhereInput {
   dob_lte: DateTime
   dob_gt: DateTime
   dob_gte: DateTime
+  gender: GenderEnum
+  gender_not: GenderEnum
+  gender_in: [GenderEnum!]
+  gender_not_in: [GenderEnum!]
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -648,6 +669,11 @@ input DiaperWhereInput {
 
 input DiaperWhereUniqueInput {
   id: ID
+}
+
+enum GenderEnum {
+  Male
+  Female
 }
 
 scalar Long

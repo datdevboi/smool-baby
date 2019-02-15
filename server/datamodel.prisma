@@ -23,10 +23,16 @@ type Bath {
   baby: Baby!
 }
 
+enum GenderEnum {
+  Male
+  Female
+}
+
 type Baby {
   id: ID! @unique
   name: String!
   dob: DateTime!
+  gender: GenderEnum
   updatedAt: DateTime!
   parent: User!
   pictureUrl: String
