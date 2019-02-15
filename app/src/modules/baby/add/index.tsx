@@ -159,6 +159,7 @@ export class AddBaby extends React.Component<any> {
                           name="gender"
                           titleColor={CONFIG.colors.JORDY_BLUE}
                           title="Gender:"
+                          getLabel={() => values.gender}
                           options={[
                             { label: "Male", value: "Male" },
                             { label: "Female", value: "Female" }
