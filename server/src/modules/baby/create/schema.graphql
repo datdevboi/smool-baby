@@ -2,10 +2,16 @@ type Baby {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  gender: GenderEnum
   name: String!
   dob: DateTime!
   parent: User!
   pictureUrl: String!
+}
+
+enum GenderEnum {
+  Male
+  Female
 }
 
 scalar DateTime
@@ -20,6 +26,7 @@ input CreateBabyInput {
   name: String!
   dob: DateTime!
   picture: Upload!
+  gender: GenderEnum!
 }
 
 type CreateBabyResponse {

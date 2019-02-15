@@ -32,11 +32,12 @@ export const resolvers: IResolvers = {
       const pictureUrl = await processUpload(args.input.picture);
 
       const query = `
-        mutation createBaby($name: String!, $dob: DateTime!, $userId: ID!, $pictureUrl: String!) {
+        mutation createBaby($name: String!, $dob: DateTime!, $userId: ID!, $pictureUrl: String!, $gender: GenderEnum!) {
           createBaby(data: {
             name: $name,
             dob: $dob,
             pictureUrl: $pictureUrl,
+            gender: $gender
             parent: {
               connect: {
                 id: $userId
@@ -47,6 +48,7 @@ export const resolvers: IResolvers = {
             dob
             id
             pictureUrl
+            gender
           }
         }
 
@@ -56,7 +58,8 @@ export const resolvers: IResolvers = {
         name: args.input.name,
         dob,
         userId: req.userId,
-        pictureUrl
+        pictureUrl,
+        gender: args.input.gender
       });
 
       if (!baby) {
