@@ -51,7 +51,8 @@ export class AddBaby extends React.Component<any> {
               picture: {
                 pictureUri: "",
                 pictureType: ""
-              }
+              },
+              gender: ""
             }}
             onSubmit={async (values, actions) => {
               if (values.name === "") {
@@ -133,25 +134,33 @@ export class AddBaby extends React.Component<any> {
                   >
                     <View style={styles.inputView}>
                       <Text style={styles.title}>Add Baby</Text>
-                      <Field
-                        component={InputField}
-                        name="name"
-                        title="name"
-                        autoCapitalize="none"
-                        titleColor="black"
-                        enableErrors={true}
-                      />
-                      <Field component={CalendarInput} name="dob" />
+                      <View style={{ flex: 4 }}>
+                        <Field
+                          component={InputField}
+                          name="name"
+                          title="name"
+                          autoCapitalize="none"
+                          titleColor="black"
+                          enableErrors={true}
+                        />
+                        <Field component={CalendarInput} name="dob" />
 
-                      <View>
-                        <Field component={PictureInput} name="picture" />
-                        {!!values.picture.pictureUri && (
-                          <BabyImage
-                            src={values.picture.pictureUri}
-                            babyName={values.name}
-                            size={40}
-                          />
-                        )}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between"
+                          }}
+                        >
+                          <Field component={PictureInput} name="picture" />
+                          {!!values.picture.pictureUri && (
+                            <BabyImage
+                              src={values.picture.pictureUri}
+                              babyName={values.name}
+                              size={40}
+                            />
+                          )}
+                        </View>
                       </View>
 
                       <View style={styles.buttonView}>
@@ -175,17 +184,19 @@ export class AddBaby extends React.Component<any> {
 
 const styles = StyleSheet.create({
   inputView: {
-    flex: 2,
+    flex: 1,
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "flex-start"
   },
   title: {
     alignSelf: "center",
     marginBottom: 10,
-    fontSize: 20
+    fontSize: 20,
+    flex: 1
   },
   buttonView: {
     display: "flex",
+    flex: 1,
 
     marginTop: 5,
 
