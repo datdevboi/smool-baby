@@ -5,6 +5,10 @@ import { TouchableWithoutFeedback } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { CONFIG } from "../config";
 import { Permissions, ImagePicker } from "expo";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 export class PictureInput extends React.Component<
   FieldProps<any> & {
@@ -51,7 +55,7 @@ export class PictureInput extends React.Component<
       >
         <Ionicons
           name={CONFIG.OS == "ios" ? "ios-camera" : "md-camera"}
-          size={40}
+          size={wp("7%")}
         />
       </TouchableWithoutFeedback>
     );
