@@ -55,7 +55,7 @@ export class AddBaby extends React.Component<any> {
                 pictureUri: "",
                 pictureType: ""
               },
-              gender: "Male"
+              gender: ""
             }}
             onSubmit={async (values, actions) => {
               if (values.name === "") {
@@ -64,7 +64,7 @@ export class AddBaby extends React.Component<any> {
               }
 
               if (values.gender === "") {
-                actions.setFieldError("gender", "Name is required");
+                actions.setFieldError("gender", "Gender is required");
                 return;
               }
 
