@@ -139,11 +139,24 @@ export class AddBaby extends React.Component<any> {
                         <Field
                           component={InputField}
                           name="name"
-                          title="name"
+                          placeholder="Name"
                           autoCapitalize="none"
                           titleColor="black"
                           enableErrors={true}
                         />
+
+                        <Field
+                          component={PickerField}
+                          name="gender"
+                          placeholder="Gender"
+                          showSearch={true}
+                          options={[
+                            { label: "Male", value: "Male" },
+                            { label: "Female", value: "Female" }
+                          ]}
+                          getLabel={() => <Text>Gender</Text>}
+                        />
+
                         <Field component={CalendarInput} name="dob" />
 
                         <View
@@ -161,20 +174,6 @@ export class AddBaby extends React.Component<any> {
                               size={40}
                             />
                           )}
-                        </View>
-
-                        <View>
-                          <Field
-                            component={PickerField}
-                            name="gender"
-                            placeholder="Gender"
-                            showSearch={true}
-                            options={[
-                              { label: "Male", value: "Male" },
-                              { label: "Female", value: "Female" }
-                            ]}
-                            getLabel={() => <Text>Gender</Text>}
-                          />
                         </View>
                       </View>
 
