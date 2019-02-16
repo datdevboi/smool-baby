@@ -34,8 +34,17 @@ const ADD_BABY_MUTATION = gql`
     $name: String!
     $dob: DateTime!
     $picture: Upload!
+    $gender: GenderEnum!
   ) {
-    createBaby(input: { name: $name, dob: $dob, picture: $picture })
+    createBaby(
+      input: { name: $name, dob: $dob, picture: $picture, gender: $gender }
+    ) {
+      id
+      name
+      dob
+      pictureUrl
+      gender
+    }
   }
 `;
 
@@ -81,7 +90,8 @@ export class AddBaby extends React.Component<any> {
                   variables: {
                     name: values.name,
                     dob: values.dob,
-                    picture: file
+                    picture: file,
+                    gender: values.gender
                   }
                 });
 
