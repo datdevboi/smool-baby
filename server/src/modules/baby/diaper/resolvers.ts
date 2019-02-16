@@ -20,5 +20,14 @@ export const resolvers: IResolvers<any, Context> = {
 
       return diaper;
     }
+  },
+  Baby: {
+    diapers: async (parent, _, { prisma }, info) => {
+      return prisma.diapers({
+        where: {
+          id: parent.id
+        }
+      });
+    }
   }
 };
