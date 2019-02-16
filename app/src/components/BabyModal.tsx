@@ -58,7 +58,7 @@ export const BabyModal: React.SFC<Props> = ({
         <View style={styles.closeView}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <Ionicons
-              size={45}
+              size={wp("5%")}
               name={OS === "ios" ? "ios-close-circle" : "md-close-circle"}
             />
           </TouchableWithoutFeedback>
@@ -89,7 +89,7 @@ export const BabyModal: React.SFC<Props> = ({
                         <BabyImage
                           babyName={baby.name}
                           src={`${host}/images/${baby.pictureUrl}`}
-                          size={35}
+                          size={wp("7%")}
                         />
                       </TouchableOpacity>
                     )}
@@ -102,7 +102,7 @@ export const BabyModal: React.SFC<Props> = ({
                   {Babies}
                   <TouchableWithoutFeedback onPress={goToAddBaby}>
                     <Ionicons
-                      size={35}
+                      size={wp("7%")}
                       name={
                         OS === "ios"
                           ? "ios-add-circle-outline"
@@ -135,9 +135,10 @@ const styles = StyleSheet.create({
     width: wp("45%")
   },
   babies: {
+    padding: wp("1%"),
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     flex: 1,
     flexWrap: "wrap"
   }
