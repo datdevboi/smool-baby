@@ -3,6 +3,7 @@ import { createWriteStream } from "fs";
 import * as shortid from "shortid";
 import { GraphQLScalarType, Kind } from "graphql";
 import { IResolvers } from "apollo-server";
+import { Context } from "../../../types";
 
 const storeUpload = async (stream: any, mimetype: string): Promise<any> => {
   // aseq2
@@ -24,66 +25,58 @@ const processUpload = async (upload: any) => {
   return id;
 };
 
-export const resolvers: IResolvers = {
+export const resolvers: IResolvers<any, Context> = {
   Mutation: {
     createBaby: async (_, args, { prisma, res, req }) => {
       const dob = dayjs(args.input.dob).format("YYYY-MM-DD");
 
       const pictureUrl = await processUpload(args.input.picture);
 
-      const query = `
-        mutation createBaby($name: String!, $dob: DateTime!, $userId: ID!, $pictureUrl: String!, $gender: GenderEnum!) {
-          createBaby(data: {
-            name: $name,
-            dob: $dob,
-            pictureUrl: $pictureUrl,
-            gender: $gender
-            parent: {
-              connect: {
-                id: $userId
-              }
-            }
-          }) {
-            name
-            dob
-            id
-            pictureUrl
-            gender
-          }
-        }
-
-      `;
-
-      const baby = await prisma.$graphql(query, {
+      const baby = await prisma.createBaby({
         name: args.input.name,
         dob,
-        userId: req.userId,
         pictureUrl,
-        gender: args.input.gender
+        gender: args.input.gender,
+        parent: {
+          connect: {
+            id: req.userId
+          }
+        }
       });
 
-      if (!baby) {
-        return null;
-      }
+      // const query = `
+      //   mutation createBaby($name: String!, $dob: DateTime!, $userId: ID!, $pictureUrl: String!, $gender: GenderEnum!) {
+      //     createBaby(data: {
+      //       name: $name,
+      //       dob: $dob,
+      //       pictureUrl: $pictureUrl,
+      //       gender: $gender,
+      //       parent: {
+      //         connect: {
+      //           id: $userId
+      //         }
+      //       }
+      //     }) {
+      //       id
+      //       name
+      //       dob
+      //       pictureUrl
+      //       gender
+
+      //     }
+      //   }
+
+      // `;
+
+      // const baby = await prisma.$graphql(query, {
+      //   name: args.input.name,
+      //   dob,
+      //   userId: req.userId,
+      //   pictureUrl,
+      //   gender: args.input.gender
+      // });
 
       return baby;
     }
   }
-  //   Date: new GraphQLScalarType({
-  //     name: "Date",
-  //     description: "Custom description for the date scalar",
-  //     parseValue(value) {
-  //       return dayjs(value);
-  //     },
-  //     serialize(value) {
-  //       return dayjs(value).format("MM-DD-YYYY");
-  //     },
-  //     parseLiteral(ast) {
-  //       if (ast.kind === Kind.STRING) {
-  //         return dayjs(ast.value);
-  //       }
-
-  //       return null;
-  //     }
-  //   })
 };
