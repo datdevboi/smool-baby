@@ -2,7 +2,7 @@ import { Prisma } from "../generated/prisma-client";
 import { Response, Request } from "express-serve-static-core";
 
 export interface ServerResReq {
-  req: Request;
+  req: Request & { userId: string };
   res: Response;
 }
 
