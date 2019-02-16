@@ -44,38 +44,6 @@ export const resolvers: IResolvers<any, Context> = {
         }
       });
 
-      // const query = `
-      //   mutation createBaby($name: String!, $dob: DateTime!, $userId: ID!, $pictureUrl: String!, $gender: GenderEnum!) {
-      //     createBaby(data: {
-      //       name: $name,
-      //       dob: $dob,
-      //       pictureUrl: $pictureUrl,
-      //       gender: $gender,
-      //       parent: {
-      //         connect: {
-      //           id: $userId
-      //         }
-      //       }
-      //     }) {
-      //       id
-      //       name
-      //       dob
-      //       pictureUrl
-      //       gender
-
-      //     }
-      //   }
-
-      // `;
-
-      // const baby = await prisma.$graphql(query, {
-      //   name: args.input.name,
-      //   dob,
-      //   userId: req.userId,
-      //   pictureUrl,
-      //   gender: args.input.gender
-      // });
-
       return baby;
     }
   }
