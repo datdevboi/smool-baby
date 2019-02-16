@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
-    flex: 1
+    flex: 1,
+    flexWrap: "wrap"
   }
 });
