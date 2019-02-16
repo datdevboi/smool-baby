@@ -8,8 +8,9 @@ type Diaper {
   id: ID!
   type: DiaperType!
   time: DateTime!
+  baby: Baby!
 }
 
 type Mutation {
-  addDiaper(babyId: ID!, type: DiaperType!, time: DateTime!): Boolean!
+  addDiaper(babyId: ID!, type: DiaperType!, time: DateTime!): Diaper
 }
