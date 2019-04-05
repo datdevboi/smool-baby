@@ -5,7 +5,7 @@ import { createUploadLink } from "apollo-upload-client";
 import { resolvers, defaults } from "./resolvers";
 import { ApolloLink } from "apollo-link";
 
-export const host = "http://10.0.0.87:4000";
+export const host = "http://10.0.0.49:4000";
 const cache = new InMemoryCache();
 
 const stateLink = withClientState({
