@@ -50,7 +50,7 @@ export class Register extends React.Component<any> {
                 actions.setFieldError(err.path, err.message);
                 actions.setSubmitting(false);
               } else {
-                this.props.navigation.navigate("Main");
+                this.props.navigation.navigate("AddBaby");
               }
             }}
           >
